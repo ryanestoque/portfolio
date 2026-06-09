@@ -1,26 +1,249 @@
 @import "tailwindcss";
+@import "tw-animate-css";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@custom-variant dark (&:is(.dark *));
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-heading: var(--font-clash-display);
+  --font-body: var(--font-satoshi);
+
+  /* Color tokens — resolved via CSS custom properties below */
+  --color-background: var(--bg);
+  --color-foreground: var(--fg);
+  --color-surface: var(--surface);
+  --color-surface-elevated: var(--surface-el);
+  --color-border: var(--border-clr);
+  --color-border-subtle: var(--border-subtle);
+  --color-text-primary: var(--t-primary);
+  --color-text-secondary: var(--t-secondary);
+  --color-text-tertiary: var(--t-tertiary);
+  --color-accent: var(--accent-clr);
+  --color-accent-dim: var(--accent-dim);
+  --color-accent-glow: var(--accent-glow);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/* ── Light theme values (default) ──────────────── */
+:root {
+  --bg: #dbeafe;
+  --bg-navbar-scrolled: #dbeafeaa;
+  --fg: rgb(23, 37, 84);
+  --surface: #dbeafe;
+  --surface-el: #bfdbfe;
+  --border-clr: rgba(23, 37, 84, 0.2);
+  --border-subtle: rgba(23, 37, 84, 0.1);
+  --grid-subtle: rgba(23, 37, 84, 0.05);
+  --grid-loading: rgba(23, 37, 84, 0.15);
+  --t-primary: rgb(23, 37, 84);
+  --t-secondary: rgba(23, 37, 84, 0.65);
+  --t-tertiary: rgba(23, 37, 84, 0.4);
+  --accent-clr: #172554;
+  --accent-dim: rgba(23, 37, 84, 0.1);
+  --accent-glow: rgba(23, 37, 84, 0.04);
+}
+
+/* ── Dark theme values ────────────────────────── */
+.dark {
+  --bg: #172554;
+  --bg-navbar-scrolled: #172554aa;
+  --fg: rgb(219, 234, 254);
+  --surface: #172554;
+  --surface-el: #1e3a8a;
+  --border-clr: rgba(219, 234, 254, 0.15);
+  --border-subtle: rgba(219, 234, 254, 0.1);
+  --grid-subtle: rgba(219, 234, 254, 0.05);
+  --grid-loading: rgba(219, 234, 254, 0.5);
+  --t-primary: rgb(219, 234, 254);
+  --t-secondary: rgba(219, 234, 254, 0.65);
+  --t-tertiary: rgba(219, 234, 254, 0.35);
+  --accent-clr: #dbeafe;
+  --accent-dim: rgba(219, 234, 254, 0.1);
+  --accent-glow: rgba(219, 234, 254, 0.04);
+}
+
+/* ── Base ─────────────────────────────────────── */
+@layer base {
+  * {
+    @apply border-border;
+    cursor: none !important;
+  }
+
+  html {
+    @apply font-body;
+    scroll-behavior: auto;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: var(--font-satoshi);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background-image:
+      linear-gradient(var(--grid-subtle) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid-subtle) 1px, transparent 1px);
+    background-size: 50px 50px;
+    background-position: center top;
+    background-attachment: fixed;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-clash-display);
+  }
+
+  /* ::selection {
+    background: var(--accent-dim);
+    color: var(--t-primary);
+  } */
+
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* ── Magnetic Button ──────────────────────────── */
+.magnetic-button {
+  transition: transform 0.3s cubic-bezier(0.33, 1, 0.68, 1);
 }
+
+/* ── Custom Scrollbar ─────────────────────────── */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--fg);
+  border-radius: 0;
+}
+
+/* Hide thumb during loading screen to keep track space but prevent layout shift */
+body.loading-locked::-webkit-scrollbar-thumb {
+  background: transparent;
+}
+
+/* ::-webkit-scrollbar-thumb:hover {
+  background: var(--t-tertiary);
+} */
+
+/* ── Navbar — solid separation ────────────────── */
+.navbar {
+  background: var(--bg);
+  border-bottom: 1px solid var(--border-clr);
+}
+
+.navbar-scrolled {
+  background: var(--bg-navbar-scrolled);
+  border-bottom: 1px solid var(--border-clr);
+}
+
+/* ── Section divider ──────────────────────────── */
+.editorial-line {
+  height: 1px;
+  background: var(--border-clr);
+}
+
+/* ── Card / surface ───────────────────────────── */
+.float-shape {
+  border-radius: 50%;
+  background: var(--accent-dim);
+  border: 1px solid var(--border-clr);
+}
+
+/* ── Text Color (replaces old text-gradient) ─── */
+.text-gradient {
+  color: var(--t-primary);
+}
+
+.text-gradient-accent {
+  color: var(--t-primary);
+  opacity: 0.85;
+}
+
+/* ── Status Dot ───────────────────────────────── */
+@keyframes pulse-dot {
+
+  0%,
+  100% {
+    opacity: 1;
+    box-shadow: 0 0 0 0 rgba(74, 222, 128, 0.4);
+  }
+
+  50% {
+    opacity: 0.8;
+    box-shadow: 0 0 0 6px rgba(74, 222, 128, 0);
+  }
+}
+
+.status-dot {
+  animation: pulse-dot 2s ease-in-out infinite;
+}
+
+/* ── Marquee ──────────────────────────────────── */
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee {
+  animation: marquee 30s linear infinite;
+}
+
+/* ── Custom Square Cursor ─────────────────────── */
+.custom-cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 10px;
+  height: 10px;
+  background: var(--fg);
+  pointer-events: none;
+  z-index: 99999;
+  /* offset so the square's center sits on the pointer hotspot */
+  margin-top: -5px;
+  margin-left: -5px;
+  /* mix-blend-mode: difference; */
+  will-change: transform;
+}
+
+/* ── Loading Screen ──────────────────────────── */
+.loading-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: var(--bg);
+  pointer-events: all;
+}
+
+.loading-line {
+  position: absolute;
+  background: var(--grid-loading);
+  will-change: transform, opacity;
+}
+
+.loading-line--h {
+  height: 1px;
+  width: 100%;
+  left: 0;
+  /* transform-origin: left center; */
+}
+
+.loading-line--v {
+  width: 1px;
+  height: 100%;
+  top: 0;
+  /* transform-origin: center top; */
+}
+
