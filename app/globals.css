@@ -25,7 +25,7 @@
 /* ── Light theme values (default) ──────────────── */
 :root {
   --bg: #dbeafe;
-  --bg-navbar-scrolled: #dbeafeaa;
+  --bg-navbar-scrolled: #dbeafecc;
   --fg: rgb(23, 37, 84);
   --surface: #dbeafe;
   --surface-el: #bfdbfe;
@@ -44,7 +44,7 @@
 /* ── Dark theme values ────────────────────────── */
 .dark {
   --bg: #172554;
-  --bg-navbar-scrolled: #172554aa;
+  --bg-navbar-scrolled: #172554cc;
   --fg: rgb(219, 234, 254);
   --surface: #172554;
   --surface-el: #1e3a8a;
@@ -64,7 +64,12 @@
 @layer base {
   * {
     @apply border-border;
-    cursor: none !important;
+  }
+
+  @media (min-width: 768px) {
+    * {
+      cursor: none !important;
+    }
   }
 
   html {
@@ -73,7 +78,7 @@
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground overflow-x-hidden;
     font-family: var(--font-satoshi);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -206,44 +211,13 @@ body.loading-locked::-webkit-scrollbar-thumb {
   position: fixed;
   top: 0;
   left: 0;
-  width: 10px;
-  height: 10px;
+  width: 12px;
+  height: 12px;
   background: var(--fg);
   pointer-events: none;
   z-index: 99999;
-  /* offset so the square's center sits on the pointer hotspot */
   margin-top: -5px;
   margin-left: -5px;
-  /* mix-blend-mode: difference; */
   will-change: transform;
+  mix-blend-mode: difference;
 }
-
-/* ── Loading Screen ──────────────────────────── */
-.loading-overlay {
-  position: fixed;
-  inset: 0;
-  z-index: 100;
-  background: var(--bg);
-  pointer-events: all;
-}
-
-.loading-line {
-  position: absolute;
-  background: var(--grid-loading);
-  will-change: transform, opacity;
-}
-
-.loading-line--h {
-  height: 1px;
-  width: 100%;
-  left: 0;
-  /* transform-origin: left center; */
-}
-
-.loading-line--v {
-  width: 1px;
-  height: 100%;
-  top: 0;
-  /* transform-origin: center top; */
-}
-

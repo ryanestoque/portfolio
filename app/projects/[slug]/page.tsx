@@ -1,0 +1,438 @@
+"use client";
+
+import { use, useEffect, useRef } from "react";
+import { notFound } from "next/navigation";
+import { motion, useInView } from "framer-motion";
+import Image from "next/image";
+import Link from "next/link";
+import { getProjectBySlug, projects } from "@/lib/projects-data";
+import type { Project } from "@/lib/projects-data";
+import Navbar from "@/components/layout/Navbar";
+import Footer from "@/components/layout/Footer";
+
+const ease = [0.33, 1, 0.68, 1] as [number, number, number, number];
+
+export default function ProjectDetailPage({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  const { slug } = use(params);
+  const project = getProjectBySlug(slug);
+
+  if (!project) {
+    notFound();
+  }
+
+  return (
+    <>
+      <Navbar />
+      <main>
+        <ProjectContent project={project} />
+      </main>
+      <Footer />
+    </>
+  );
+}
+
+function ProjectContent({ project }: { project: Project }) {
+  const ref = useRef<HTMLElement>(null);
+  const isInView = useInView(ref, { once: true, margin: "-50px" });
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  const fadeUp = {
+    hidden: { y: 0, opacity: 1 },
+    visible: (i: number) => ({
+      y: 0,
+      opacity: 1,
+      transition: {
+        duration: 0,
+      },
+    }),
+  };
+
+  /* Find adjacent projects for navigation */
+  const currentIndex = projects.findIndex((p) => p.slug === project.slug);
+  const prevProject = currentIndex > 0 ? projects[currentIndex - 1] : null;
+  const nextProject = currentIndex < projects.length - 1 ? projects[currentIndex + 1] : null;
+
+  return (
+    <section ref={ref} className="relative py-24 md:py-32 overflow-hidden">
+      <div className="relative z-10 max-w-[1400px] mx-auto px-6 md:px-10 lg:px-16">
+        {/* ── Hero ───────────────────────────────── */}
+        <motion.div
+          custom={1}
+          variants={fadeUp}
+          initial="hidden"
+          animate={isInView ? "visible" : "hidden"}
+          className="mb-8"
+        >
+          {/* <div className="flex items-center gap-3 mb-8">
+            <span className="text-xs tracking-[0.3em] uppercase text-text-tertiary font-medium">
+              {project.id}
+            </span>
+            <div className="w-8 h-[1px] bg-border" />
+            <span className="text-xs tracking-[0.3em] uppercase text-text-tertiary font-medium">
+              {project.category || "Project"}
+            </span>
+          </div> */}
+
+          <h1 className="font-heading text-[clamp(2.5rem,5vw,4rem)] font-semibold leading-[1.1] text-gradient mb-4">
+            {project.title}
+          </h1>
+
+          {project.subtitle && (
+            <p className="text-lg md:text-xl text-text-secondary font-medium mb-8">
+              {project.subtitle}
+            </p>
+          )}
+
+          {(project.github || project.demo) && (
+            <div className="flex flex-wrap items-center gap-4 mb-10">
+              {project.demo && (
+                <a
+                  href={project.demo}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group relative inline-flex items-center gap-3 px-7 py-3.5 text-xs font-medium uppercase tracking-wider bg-accent text-background overflow-hidden transition-all duration-300 hover:opacity-80"
+                >
+                  <div className="relative flex h-2.5 w-2.5 items-center justify-center">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-background opacity-75"></span>
+                    <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-background"></span>
+                  </div>
+                  <span>Live Demo</span>
+                  {/* <svg className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                  </svg> */}
+                </a>
+              )}
+              {project.github && (
+                <a
+                  href={project.github}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group inline-flex items-center gap-3 px-7 py-3.5 text-xs font-medium uppercase tracking-wider border border-border text-text-secondary hover:text-text-primary hover:border-accent transition-all duration-300"
+                >
+                  <svg
+                    className="w-4 h-4"
+                    fill="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
+                  </svg>
+                  <span>Source Code</span>
+                  {/* <span className="w-1.5 h-1.5 rounded-full bg-accent/60 group-hover:bg-accent transition-colors duration-300" /> */}
+                </a>
+              )}
+            </div>
+          )}
+
+          {/* Meta Row */}
+          {/* <div className="flex flex-wrap items-center gap-4 mb-10">
+            <span className="text-xs tracking-wider uppercase text-text-primary border border-border px-3 py-1.5">
+              {project.year}
+            </span>
+            {project.category && (
+              <span className="text-xs tracking-wider uppercase text-text-primary border border-border px-3 py-1.5">
+                {project.category}
+              </span>
+            )}
+            {project.status && (
+              <span
+                className={`text-xs tracking-wider uppercase px-3 py-1.5 border ${
+                  project.status === "In Progress"
+                    ? "border-emerald-400/30 text-emerald-400"
+                    : "border-border text-text-tertiary"
+                }`}
+              >
+                {project.status === "In Progress" && (
+                  <span className="inline-block w-1.5 h-1.5 rounded-full bg-emerald-400 status-dot mr-2 align-middle" />
+                )}
+                {project.status}
+              </span>
+            )}
+
+          </div> */}
+        </motion.div>
+        <motion.div
+          custom={2}
+          variants={fadeUp}
+          initial="hidden"
+          animate={isInView ? "visible" : "hidden"}
+          className="relative aspect-[16/9] overflow-hidden border border-border mb-20"
+        >
+          <Image
+            src={project.image}
+            alt={project.title}
+            fill
+            sizes="(max-width: 768px) 100vw, 1400px"
+            className="object-cover"
+            priority
+          />
+        </motion.div>
+
+        {/* ── Content Grid ────────────────────────── */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-8 mb-20">
+          {/* Main Content */}
+          <div className="lg:col-span-8">
+            {/* Overview */}
+            {project.longDescription && (
+              <motion.div
+                custom={3}
+                variants={fadeUp}
+                initial="hidden"
+                animate={isInView ? "visible" : "hidden"}
+                className="mb-16"
+              >
+                <h2 className="font-heading text-2xl font-semibold text-text-primary mb-6">
+                  Overview
+                </h2>
+                <div className="editorial-line mb-6" />
+                <p className="text-base md:text-lg leading-relaxed text-text-secondary">
+                  {project.longDescription}
+                </p>
+              </motion.div>
+            )}
+
+            {/* Problem */}
+            {project.problem && (
+              <motion.div
+                custom={4}
+                variants={fadeUp}
+                initial="hidden"
+                animate={isInView ? "visible" : "hidden"}
+                className="mb-16"
+              >
+                <h2 className="font-heading text-2xl font-semibold text-text-primary mb-6">
+                  Problem
+                </h2>
+                <div className="editorial-line mb-6" />
+                <p className="text-base md:text-lg leading-relaxed text-text-secondary">
+                  {project.problem}
+                </p>
+              </motion.div>
+            )}
+
+            {/* Solution */}
+            {project.solution && (
+              <motion.div
+                custom={5}
+                variants={fadeUp}
+                initial="hidden"
+                animate={isInView ? "visible" : "hidden"}
+                className="mb-16"
+              >
+                <h2 className="font-heading text-2xl font-semibold text-text-primary mb-6">
+                  Solution
+                </h2>
+                <div className="editorial-line mb-6" />
+                <p className="text-base md:text-lg leading-relaxed text-text-secondary">
+                  {project.solution}
+                </p>
+              </motion.div>
+            )}
+
+            {/* Features */}
+            {project.features && project.features.length > 0 && (
+              <motion.div
+                custom={6}
+                variants={fadeUp}
+                initial="hidden"
+                animate={isInView ? "visible" : "hidden"}
+                className="mb-16"
+              >
+                <h2 className="font-heading text-2xl font-semibold text-text-primary mb-6">
+                  Key Features
+                </h2>
+                <div className="editorial-line mb-6" />
+                <ul className="space-y-4">
+                  {project.features.map((feature, i) => (
+                    <li key={i} className="flex items-start gap-4">
+                      <span className="text-xs tracking-[0.3em] text-text-tertiary font-medium mt-1.5 flex-shrink-0">
+                        {String(i + 1).padStart(2, "0")}
+                      </span>
+                      <span className="text-base leading-relaxed text-text-secondary">
+                        {feature}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              </motion.div>
+            )}
+          </div>
+
+          {/* Sidebar */}
+          <div className="lg:col-span-4">
+            <motion.div
+              custom={3}
+              variants={fadeUp}
+              initial="hidden"
+              animate={isInView ? "visible" : "hidden"}
+              className="lg:sticky lg:top-[96px] space-y-8"
+            >
+              <div className="border border-border p-6">
+                <h3 className="font-heading text-base text-text-primary mb-6 font-semibold">
+                  Project Details
+                </h3>
+                <div className="editorial-line mb-6" />
+
+                <div className="space-y-5">
+                  {project.role && (
+                    <div>
+                      <span className="text-xs tracking-wide text-text-secondary block mb-1">
+                        Role
+                      </span>
+                      <span className="text-sm text-text-primary font-medium">
+                        {project.role}
+                      </span>
+                    </div>
+                  )}
+                  {project.team && (
+                    <div>
+                      <span className="text-xs tracking-wide text-text-secondary block mb-1">
+                        Team
+                      </span>
+                      <span className="text-sm text-text-primary font-medium">
+                        {project.team}
+                      </span>
+                    </div>
+                  )}
+                  {project.duration && (
+                    <div>
+                      <span className="text-xs tracking-wide text-text-secondary block mb-1">
+                        Duration
+                      </span>
+                      <span className="text-sm text-text-primary font-medium">
+                        {project.duration}
+                      </span>
+                    </div>
+                  )}                  
+                  {project.tags && project.tags.length > 0 && (
+                    <div className="pt-2">
+                      <span className="text-xs tracking-wide text-text-secondary block mb-2">
+                        Tech Stack
+                      </span>
+                      <div className="flex flex-wrap gap-2">
+                        {project.tags.map((tag) => (
+                          <span
+                            key={tag}
+                            className="text-sm tracking-wide px-3 py-1.5 border border-border text-text-primary hover:text-text-primary hover:border-accent/40 hover:bg-surface-elevated transition-all duration-300"
+                          >
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </div>
+
+
+            </motion.div>
+          </div>
+        </div>
+
+        {/* ── Gallery ────────────────────────────── */}
+        {project.gallery && project.gallery.length > 0 && (
+          <motion.div
+            custom={7}
+            variants={fadeUp}
+            initial="hidden"
+            animate={isInView ? "visible" : "hidden"}
+            className="mb-20"
+          >
+            <h2 className="font-heading text-2xl font-semibold text-text-primary mb-6">
+              Gallery
+            </h2>
+            <div className="editorial-line mb-8" />
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {project.gallery.map((img, i) => (
+                <div key={i} className="relative aspect-[16/10] overflow-hidden border border-border">
+                  <Image
+                    src={img}
+                    alt={`${project.title} screenshot ${i + 1}`}
+                    fill
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                    className="object-cover"
+                  />
+                </div>
+              ))}
+            </div>
+          </motion.div>
+        )}
+
+        {/* ── Navigation ─────────────────────────── */}
+        <motion.div
+          className="editorial-line"
+          initial={{ scaleX: 1 }}
+          animate={{ scaleX: 1 }}
+          transition={{ duration: 1.5, delay: 0.5, ease }}
+          style={{ originX: 0 }}
+        />
+
+        <motion.div
+          custom={8}
+          variants={fadeUp}
+          initial="hidden"
+          animate={isInView ? "visible" : "hidden"}
+          className="mt-16"
+        >
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-6">
+            {/* Previous Project */}
+            <div className="flex-1">
+              {prevProject && (
+                <Link
+                  href={`/projects/${prevProject.slug}`}
+                  className="group inline-flex items-center gap-3 text-[12px] uppercase tracking-[0.2em] text-text-tertiary hover:text-text-primary transition-colors duration-300"
+                >
+                  <svg
+                    className="w-4 h-4 transition-transform duration-300 group-hover:-translate-x-1"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    strokeWidth={1.5}
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M7 16l-4-4m0 0l4-4m-4 4h18" />
+                  </svg>
+                  <span>{prevProject.title}</span>
+                </Link>
+              )}
+            </div>
+
+            {/* All Projects */}
+            <Link
+              href="/#projects"
+              className="group inline-flex items-center gap-3 px-8 py-4 text-[12px] uppercase tracking-[0.2em] border border-border text-text-secondary hover:text-text-primary hover:border-accent transition-all duration-300"
+            >
+              <span>Back to Projects</span>
+            </Link>
+
+            {/* Next Project */}
+            <div className="flex-1 text-right">
+              {nextProject && (
+                <Link
+                  href={`/projects/${nextProject.slug}`}
+                  className="group inline-flex items-center gap-3 text-[12px] uppercase tracking-[0.2em] text-text-tertiary hover:text-text-primary transition-colors duration-300"
+                >
+                  <span>{nextProject.title}</span>
+                  <svg
+                    className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    strokeWidth={1.5}
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                  </svg>
+                </Link>
+              )}
+            </div>
+          </div>
+        </motion.div>
+      </div>
+    </section>
+  );
+}

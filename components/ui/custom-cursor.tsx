@@ -57,7 +57,7 @@ export default function CustomCursor() {
     <div
       ref={cursorRef}
       aria-hidden="true"
-      className="custom-cursor"
+      className="custom-cursor hidden md:block"
     />
   );
 }

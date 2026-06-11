@@ -1,8 +1,10 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { usePathname, useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import MagneticButton from "../ui/MagneticButton";
+import ThemeToggle from "../ui/ThemeToggle";
 
 const ease = [0.33, 1, 0.68, 1] as [number, number, number, number];
 
@@ -17,12 +19,16 @@ const navLinks = [
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const pathname = usePathname();
+  const router = useRouter();
+
+  const isHome = pathname === "/";
 
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 50);
     };
-    
+
     const handleResize = () => {
       if (window.innerWidth >= 768) {
         setMenuOpen(false);
@@ -31,7 +37,7 @@ export default function Navbar() {
 
     window.addEventListener("scroll", handleScroll, { passive: true });
     window.addEventListener("resize", handleResize);
-    
+
     return () => {
       window.removeEventListener("scroll", handleScroll);
       window.removeEventListener("resize", handleResize);
@@ -49,11 +55,21 @@ export default function Navbar() {
     };
   }, [menuOpen]);
 
+  // When already on home, just smooth-scroll to the section.
+  // When on another page (e.g. /projects/[slug]), store the target section
+  // in sessionStorage then navigate to "/" — the home page picks it up on mount.
   const handleNavClick = (href: string) => {
     setMenuOpen(false);
-    const el = document.querySelector(href);
-    if (el) {
-      el.scrollIntoView({ behavior: "smooth" });
+
+    if (isHome) {
+      const el = document.querySelector(href);
+      if (el) {
+        el.scrollIntoView({ behavior: "smooth" });
+      }
+    } else {
+      // Store which section to scroll to after landing on home
+      sessionStorage.setItem("scrollTo", href);
+      router.push("/");
     }
   };
 
@@ -67,21 +83,15 @@ export default function Navbar() {
       >
         <div className="max-w-[1400px] mx-auto px-6 md:px-10 lg:px-16">
           <div className="flex items-center justify-between h-[72px]">
-            {/* Logo */}
             <MagneticButton strength={0.15}>
-              <a
-                href="#home"
-                onClick={(e) => {
-                  e.preventDefault();
-                  handleNavClick("#home");
-                }}
+              <button
+                onClick={() => handleNavClick("#home")}
                 className="font-heading text-lg font-semibold tracking-tight text-text-primary hover:text-accent transition-colors duration-300"
               >
                 Ryan Estoque
-              </a>
+              </button>
             </MagneticButton>
 
-            {/* Desktop Links */}
             <div className="hidden md:flex items-center gap-1">
               {navLinks.map((link) => (
                 <MagneticButton key={link.label} strength={0.1}>
@@ -99,7 +109,7 @@ export default function Navbar() {
             {/* Status + Hamburger */}
             <div className="flex items-center gap-3">
               {/* Theme Toggle — always visible */}
-              {/* <ThemeToggle /> */}
+              <ThemeToggle />
 
               {/* Hamburger */}
               <button

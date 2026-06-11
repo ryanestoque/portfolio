@@ -62,7 +62,7 @@ export const projects: Project[] = [
       "Vercel",
     ],
 
-    role: "Full Stack Developer",
+    role: "Frontend Developer",
     team: "4 Members",
     duration: "2025–2026",
     category: "Full Stack",
@@ -81,8 +81,8 @@ export const projects: Project[] = [
       "Comprehensive incident history and analytics",
     ],
 
-    github: "",
-    demo: "",
+    github: "https://github.com/ryanestoque/crosshere",
+    demo: "https://crosshere.vercel.app",
 
     featured: true,
   },
@@ -135,8 +135,8 @@ export const projects: Project[] = [
       "Historical data logging and trend analysis",
     ],
 
-    github: "",
-    demo: "",
+    github: "https://github.com/ryanestoque/dripdrop",
+    demo: "https://dripdrop.vercel.app",
 
     featured: true,
   },
@@ -187,8 +187,8 @@ export const projects: Project[] = [
       "Smooth page transitions and micro-interactions",
     ],
 
-    github: "",
-    demo: "",
+    github: "https://github.com/ryanestoque/efz-2",
+    demo: "https://efz-2.vercel.app",
 
     featured: true,
   },
@@ -241,8 +241,8 @@ export const projects: Project[] = [
       "Mobile-optimized camera interface with smooth AR overlays",
     ],
 
-    github: "",
-    demo: "",
+    github: "https://github.com/ryanestoque/flag-and-play",
+    demo: "https://flag-and-play.vercel.app",
 
     featured: true,
   },
@@ -300,8 +300,8 @@ export const projects: Project[] = [
       "Transaction history with receipt generation",
     ],
 
-    github: "",
-    demo: "",
+    github: "https://github.com/ryanestoque/arado-pos",
+    demo: "https://arado-pos.vercel.app",
 
     featured: false,
   },
@@ -353,8 +353,8 @@ export const projects: Project[] = [
       "Transaction history with receipt generation",
     ],
 
-    github: "",
-    demo: "",
+    github: "https://github.com/ryanestoque/wordol",
+    demo: "https://wordol.vercel.app",
 
     featured: false,
   },
@@ -363,7 +363,7 @@ export const projects: Project[] = [
     slug: "cross-server",
 
     title: "Cross-Server",
-    subtitle: ": A Cebuano Wordle Game",
+    subtitle: "A Cebuano Wordle Game",
 
     description:
       "A 2024 unofficial online Holy Cross of Davo College (HCDC) Canteen mockup utilizing local storage",
@@ -404,8 +404,8 @@ export const projects: Project[] = [
       "Transaction history with receipt generation",
     ],
 
-    github: "",
-    demo: "",
+    github: "https://github.com/ryanestoque/cross-server",
+    demo: "https://cross-server.vercel.app",
 
     featured: false,
   },

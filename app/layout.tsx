@@ -4,6 +4,7 @@ import "./globals.css";
 import "lenis/dist/lenis.css";
 import CustomCursor from "@/components/ui/custom-cursor";
 import { SmoothScroll } from "@/components/ui/smooth-scroll";
+import { ThemeProvider } from "@/components/theme-provider";
 
 export const clashDisplay = localFont({
   src: "../public/fonts/clash-display/ClashDisplay-Variable.woff2",
@@ -49,10 +50,17 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <body className="min-h-screen flex flex-col bg-background text-foreground">
-        <CustomCursor />
-        <SmoothScroll>
-          {children}
-        </SmoothScroll>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <CustomCursor />
+          <SmoothScroll>
+            {children}
+          </SmoothScroll>
+        </ThemeProvider>
       </body>
     </html>
   );
