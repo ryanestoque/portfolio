@@ -21,6 +21,7 @@ function DesktopExperience() {
   const imageContainerRef = useRef<HTMLDivElement>(null);
 
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const [lightbox, setLightbox] = useState<{
     open: boolean;
     src: string;
@@ -106,7 +107,7 @@ function DesktopExperience() {
     <>
       <section
         ref={sectionRef}
-        className="hidden lg:block relative py-32 md:py-40 overflow-hidden"
+        className="hidden lg:block relative py-32 md:py-40"
       >
         <div className="relative z-10 max-w-[1400px] mx-auto px-6 md:px-10 lg:px-16">
           {/* ── Section Header ────────────────────── */}
@@ -122,49 +123,70 @@ function DesktopExperience() {
             </div>
 
             <div className="mb-20">
-              <h2 className="font-heading text-[clamp(3rem,6vw,5rem)] font-semibold leading-[1.1] text-gradient lg:max-w-3xl">
-                Experiences that shaped{" "}
-                <span className="font-normal">my craft.</span>
+              <h2 className="font-heading text-[clamp(2.5rem,6vw,5rem)] font-semibold leading-[1.1] text-gradient lg:max-w-3xl">
+                <span className="font-normal">Enrolled</span> in experiences.
               </h2>
             </div>
           </div>
 
+          {/* ── Tooltip ───────────────────────────── */}
+          <AnimatePresence>
+            {hoveredIndex !== null && (
+              <motion.div
+                className="fixed pointer-events-none z-[100] max-w-sm bg-surface-el/90 backdrop-blur-md border border-border/50 p-4 shadow-2xl"
+                style={{ 
+                  left: mousePos.x + 20, 
+                  top: mousePos.y + 20 
+                }}
+                initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: 10, scale: 0.95 }}
+                transition={{ duration: 0.2 }}
+              >
+                <p className="text-sm text-text-secondary leading-relaxed">
+                  {experiences[hoveredIndex].description}
+                </p>
+              </motion.div>
+            )}
+          </AnimatePresence>
+
           {/* ── Two-Column Layout ─────────────────── */}
-          <div className="grid grid-cols-12 gap-8">
-            {/* Left: Sticky Image */}
-            <div className="col-span-5">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-start">
+            {/* Left: Sticky Image Container (Aspect Square) */}
+            <div className="hidden lg:block sticky top-32 w-full">
               <div
                 ref={imageContainerRef}
-                className="experience-image-container sticky top-32"
+                className="experience-image-container relative aspect-square w-full overflow-hidden border border-border bg-foreground"
               >
-                <div className="relative aspect-[4/5] w-full overflow-hidden border border-border bg-surface">
-                  <AnimatePresence mode="wait">
-                    <motion.div
-                      key={activeExperience.id}
-                      className="absolute inset-0"
-                      initial={{ clipPath: "inset(100% 0 0 0)" }}
-                      animate={{ clipPath: "inset(0% 0 0 0)" }}
-                      exit={{ clipPath: "inset(0 0 100% 0)" }}
-                      transition={{ duration: 0.6, ease }}
-                    >
-                      <Image
-                        src={activeExperience.image}
-                        alt={activeExperience.company}
-                        fill
-                        className="object-cover"
-                        sizes="(max-width: 1024px) 100vw, 40vw"
-                      />
-                    </motion.div>
-                  </AnimatePresence>
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={activeExperience.id}
+                    className="absolute inset-0"
+                    initial={{ clipPath: "inset(100% 0 0 0)" }}
+                    animate={{ clipPath: "inset(0% 0 0 0)" }}
+                    exit={{ clipPath: "inset(0 0 100% 0)" }}
+                    transition={{ duration: 0.6, ease }}
+                  >
+                    <Image
+                      src={activeExperience.image}
+                      alt={activeExperience.company}
+                      fill
+                      className="object-cover"
+                      sizes="(max-width: 1024px) 100vw, 50vw"
+                    />
+                  </motion.div>
+                </AnimatePresence>
 
-                  {/* Subtle overlay gradient */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-background/20 to-transparent pointer-events-none" />
-                </div>
+                {/* Subtle overlay gradient */}
+                <div className="absolute inset-0 bg-gradient-to-t from-background/20 to-transparent pointer-events-none" />
               </div>
             </div>
 
             {/* Right: Experience List */}
-            <div className="col-span-7">
+            <div 
+              className="relative w-full"
+              onMouseMove={(e) => setMousePos({ x: e.clientX, y: e.clientY })}
+            >
               <div className="border-t border-border">
                 {experiences.map((exp, i) => (
                   <div
@@ -190,52 +212,51 @@ function DesktopExperience() {
                     />
 
                     {/* Row Content */}
-                    <div className="relative z-10 flex items-start justify-between gap-6 py-7 px-5">
-                      {/* Left: Role + Description */}
-                      <div className="flex-1 min-w-0">
-                        <h3 className="font-heading text-lg xl:text-xl font-medium text-text-primary mb-1.5 flex items-center gap-3">
-                          {exp.role}
-                          {exp.certificate && (
-                            <button
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                openCertificate(exp.certificate!, exp.company);
-                              }}
-                              className="inline-flex items-center gap-1.5 px-2.5 py-1 text-[10px] tracking-[0.15em] uppercase border border-border text-text-tertiary hover:text-text-primary hover:border-accent/40 transition-all duration-300"
-                              aria-label={`View ${exp.company} certificate`}
-                            >
-                              <svg
-                                width="12"
-                                height="12"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                stroke="currentColor"
-                                strokeWidth="1.5"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                              >
-                                <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z" />
-                                <polyline points="14 2 14 8 20 8" />
-                                <path d="M12 18v-6" />
-                                <path d="M9 15l3 3 3-3" />
-                              </svg>
-                              Cert
-                            </button>
-                          )}
-                        </h3>
-                        <p className="text-sm leading-relaxed text-text-secondary font-normal line-clamp-2">
-                          {exp.description}
-                        </p>
-                      </div>
-
-                      {/* Right: Company + Date */}
-                      <div className="flex-shrink-0 text-right">
-                        <span className="font-heading text-base xl:text-lg font-semibold text-text-primary block">
-                          {exp.company}
-                        </span>
-                        <span className="text-xs tracking-wider uppercase text-text-tertiary mt-1 block">
+                    <div className="relative z-10 flex items-center justify-between gap-6 py-7 px-5">
+                      {/* Left Column: Company, Role, and Date */}
+                      <div className="flex-1 min-w-0 flex items-center justify-between pr-4">
+                        <div className="flex flex-col">
+                          <span className="font-heading text-lg xl:text-xl font-semibold text-text-primary block">
+                            {exp.company}
+                          </span>
+                          <span className="font-heading text-sm xl:text-base font-medium text-text-secondary mt-1 block">
+                            {exp.role}
+                          </span>
+                        </div>
+                        <span className="text-xs tracking-wider uppercase text-text-tertiary whitespace-nowrap ml-6">
                           {exp.dateRange}
                         </span>
+                      </div>
+
+                      {/* Right Column: Certificate Button */}
+                      <div className="flex-shrink-0 min-w-[80px] flex justify-end">
+                        {exp.certificate && (
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              openCertificate(exp.certificate!, exp.company);
+                            }}
+                            className="inline-flex items-center gap-1.5 px-3 py-1.5 text-[10px] tracking-[0.15em] uppercase border border-border text-text-tertiary hover:text-text-primary hover:border-accent/40 transition-all duration-300"
+                            aria-label={`View ${exp.company} certificate`}
+                          >
+                            <svg
+                              width="12"
+                              height="12"
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              stroke="currentColor"
+                              strokeWidth="1.5"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                            >
+                              <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z" />
+                              <polyline points="14 2 14 8 20 8" />
+                              <path d="M12 18v-6" />
+                              <path d="M9 15l3 3 3-3" />
+                            </svg>
+                            Cert
+                          </button>
+                        )}
                       </div>
                     </div>
 
@@ -331,22 +352,19 @@ function MobileExperience() {
 
                 {/* Content */}
                 <div className="p-5">
-                  <div className="flex items-start justify-between gap-4 mb-2">
-                    <h3 className="font-heading text-lg font-medium text-text-primary">
-                      {exp.role}
+                  <div className="flex flex-col gap-1 mb-4">
+                    <h3 className="font-heading text-lg font-semibold text-text-primary">
+                      {exp.company}
                     </h3>
-                    <span className="text-xs tracking-wider uppercase text-text-tertiary flex-shrink-0 pt-1">
-                      {exp.dateRange}
-                    </span>
+                    <div className="flex items-center justify-between gap-4">
+                      <span className="font-heading text-sm font-medium text-text-secondary">
+                        {exp.role}
+                      </span>
+                      <span className="text-xs tracking-wider uppercase text-text-tertiary flex-shrink-0">
+                        {exp.dateRange}
+                      </span>
+                    </div>
                   </div>
-
-                  <span className="font-heading text-sm font-semibold text-text-primary block mb-3">
-                    {exp.company}
-                  </span>
-
-                  <p className="text-sm leading-relaxed text-text-secondary font-normal mb-4">
-                    {exp.description}
-                  </p>
 
                   {exp.certificate && (
                     <button

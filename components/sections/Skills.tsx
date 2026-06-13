@@ -12,7 +12,8 @@ const techCategories = [
       "JavaScript", 
       "TypeScript",
       "Java",
-      "Python"
+      "Python",
+      "C++"
     ],
   },
   {
@@ -106,8 +107,8 @@ export default function Skills() {
           initial="hidden"
           animate={isInView ? "visible" : "hidden"}
         >
-          <h2 className="font-heading text-[clamp(3rem,6vw,5rem)] font-semibold leading-[1.1] text-gradient lg:max-w-3xl">
-            Technologies I can <span className="font-normal">confidently</span> use.
+          <h2 className="font-heading text-[clamp(2.5rem,6vw,5rem)] font-semibold leading-[1.1] text-gradient lg:max-w-3xl">
+            <span className="font-normal">Thoughtfully</span> used technologies.
           </h2>
         </motion.div>
 

@@ -31,7 +31,6 @@ export default function Projects() {
     }),
   };
 
-  /* ── GSAP Horizontal Scroll ────────────────────── */
   useEffect(() => {
     const mainSection = ref.current;
     const track = trackRef.current;
@@ -45,10 +44,8 @@ export default function Projects() {
       };
 
       const ctx = gsap.context(() => {
-        // We calculate the total pin distance once so both triggers sync perfectly
         const pinDuration = Math.abs(getScrollAmount()) - 200;
 
-        // 1. PIN TRIGGER: Only handles locking the section in the center
         ScrollTrigger.create({
           trigger: mainSection,
           pin: true,
@@ -107,28 +104,9 @@ export default function Projects() {
           initial="hidden"
           animate={isInView ? "visible" : "hidden"}
         >
-          <h2 className="font-heading text-[clamp(3rem,6vw,5rem)] font-semibold leading-[1.1] text-gradient lg:max-w-3xl">
-            Works I have <span className="font-normal">carefully</span> crafted.
+          <h2 className="font-heading text-[clamp(2.5rem,6vw,5rem)] font-semibold leading-[1.1] text-gradient lg:max-w-3xl">
+            Works <span className="font-normal">proudly</span> crafted.
           </h2>
-          {/* <div className="hidden md:block">
-            <MagneticButton strength={0.2}>
-              <Link
-                href="/projects"
-                className="group inline-flex items-center gap-3 px-7 py-3.5 text-xs uppercase tracking-wider border border-border text-text-secondary hover:text-text-primary hover:border-accent transition-all duration-300"
-              >
-                <span>View All Projects</span>
-                <svg
-                  className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  strokeWidth={1.5}
-                >
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                </svg>
-              </Link>
-            </MagneticButton>
-          </div> */}
         </motion.div>
       </div>
 
@@ -252,13 +230,13 @@ export default function Projects() {
                     {project.tags.slice(0, 3).map((tag) => (
                       <span
                         key={tag}
-                        className="text-xs tracking-wider uppercase px-2.5 py-1 border border-border text-text-tertiary"
+                        className="text-xs tracking-wider px-4 py-2 border border-border text-text-primary"
                       >
                         {tag}
                       </span>
                     ))}
                     {project.tags.length > 3 && (
-                      <span className="text-[10px] tracking-wider uppercase px-2.5 py-1 border border-border text-text-tertiary">
+                      <span className="text-xs tracking-wider px-4 py-2 border border-border text-text-secondary">
                         +{project.tags.length - 3}
                       </span>
                     )}
@@ -296,17 +274,6 @@ export default function Projects() {
           </MagneticButton>
         </motion.div>
       </div>
-
-      {/* Editorial Line */}
-      {/* <div className="relative z-10 max-w-[1400px] mx-auto px-6 md:px-10 lg:px-16">
-        <motion.div
-          className="editorial-line mt-16 hidden lg:block"
-          initial={{ scaleX: 0 }}
-          animate={isInView ? { scaleX: 1 } : { scaleX: 0 }}
-          transition={{ duration: 1.5, delay: 0.8, ease }}
-          style={{ originX: 0 }}
-        />
-      </div> */}
     </section>
   );
 }

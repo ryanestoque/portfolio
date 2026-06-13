@@ -117,7 +117,7 @@ export const projects: Project[] = [
     ],
 
     role: "Full Stack Developer",
-    team: "4 Members",
+    team: "8 Members",
     duration: "2025",
     category: "IoT / Full Stack",
 
@@ -136,7 +136,7 @@ export const projects: Project[] = [
     ],
 
     github: "https://github.com/ryanestoque/dripdrop",
-    demo: "https://dripdrop.vercel.app",
+    demo: "https://drip-drop-alpha.vercel.app/",
 
     featured: true,
   },
