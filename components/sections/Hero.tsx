@@ -12,7 +12,7 @@ function AbstractVisual() {
       <div className="relative w-[200px] h-[200px] sm:w-[240px] sm:h-[240px] lg:w-full lg:h-full">
         <div className="relative w-full h-full overflow-hidden">
           <Image
-            src="/images/ryan-the-hacker.jpg"
+            src="/images/hero/ryan-the-hacker.webp"
             alt="Ryan Estoque"
             fill
             className="object-cover" style={{ objectPosition: "center 60%" }}
@@ -26,40 +26,6 @@ function AbstractVisual() {
         <div className="absolute -bottom-3 -right-3 lg:-bottom-4 lg:-right-4 w-4 h-4 lg:w-5 lg:h-5 border-b-2 border-r-2 border-accent/40" />
       </div>
     </div>
-  );
-}
-
-function ScrollIndicator() {
-  const { scrollY } = useScroll();
-  const [hidden, setHidden] = useState(false);
-
-  useMotionValueEvent(scrollY, "change", (latest) => {
-    if (latest > 50) {
-      setHidden(true);
-    } else {
-      setHidden(false);
-    }
-  });
-
-  return (
-    <motion.div
-      className="absolute bottom-4 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3"
-      initial={{ opacity: 1 }}
-      animate={{ opacity: hidden ? 0 : 1 }}
-      transition={{ duration: 0.3 }}
-    >
-      <span className="text-[10px] tracking-[0.3em] uppercase text-text-tertiary">
-        Scroll
-      </span>
-      <div className="w-[1px] h-12 relative overflow-hidden bg-border">
-        <motion.div
-          className="w-full bg-accent"
-          style={{ height: "40%" }}
-          animate={{ y: ["-100%", "250%"] }}
-          transition={{ repeat: Infinity, duration: 1.5, ease: "linear" }}
-        />
-      </div>
-    </motion.div>
   );
 }
 

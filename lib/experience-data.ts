@@ -16,8 +16,8 @@ export const experiences: Experience[] = [
     dateRange: "Present",
     description:
       "Contributed to backend API development and database optimization. Participated in agile sprints and code review processes.",
-    image: "/images/experience/ryan-full-stack.png",
-    certificate: "/images/certificates/ryan-full-stack.png",
+    image: "/images/experience/ryan-full-stack.webp",
+    certificate: "/images/certificates/ryan-full-stack.webp",
   },
   {
     id: "experience-3",
@@ -36,7 +36,7 @@ export const experiences: Experience[] = [
     dateRange: "May 2025",
     description:
       "Developed responsive user interfaces and interactive components. Collaborated with design teams to translate Figma mockups into production-ready code.",
-    image: "/images/experience/ideas-plug-in-experience.jpg",
+    image: "/images/experience/ideas-plug-in-experience.webp",
     certificate: "/images/certificates/placeholder-cert-2.jpg",
   },
   {
@@ -46,7 +46,7 @@ export const experiences: Experience[] = [
     dateRange: "June 2024 – May 2025",
     description:
       "Designed user-centered interfaces for mobile and web applications. Conducted user research and created interactive prototypes in Figma.",
-    image: "/images/experience/its-creatives-committee.jpg",
+    image: "/images/experience/its-creatives-committee.webp",
     certificate: "/images/certificates/placeholder-cert-3.jpg",
   },
   {
@@ -56,7 +56,7 @@ export const experiences: Experience[] = [
     dateRange: "June 2024 – May 2025",
     description:
       "Contributed to backend API development and database optimization. Participated in agile sprints and code review processes.",
-    image: "/images/experience/cetso-representative.jpg",
+    image: "/images/experience/cetso-representative.webp",
     certificate: "/images/certificates/placeholder-cert-3.jpg",
   },
   {
@@ -66,7 +66,7 @@ export const experiences: Experience[] = [
     dateRange: "March 2025",
     description:
       "Contributed to backend API development and database optimization. Participated in agile sprints and code review processes.",
-    image: "/images/experience/psits-quiz-bowl.jpg",
+    image: "/images/experience/psits-quiz-bowl.webp",
     certificate: "/images/certificates/psits-quiz-bowl.jpg",
   },
   {
@@ -76,7 +76,7 @@ export const experiences: Experience[] = [
     dateRange: "November 2024",
     description:
       "Built and maintained scalable web applications using React, Next.js, and Node.js. Led frontend architecture decisions and implemented CI/CD pipelines.",
-    image: "/images/experience/codechum-programming-2024.jpg",
+    image: "/images/experience/codechum-programming-2024.webp",
     certificate: "/images/certificates/placeholder-cert-1.jpg",
   },
   {
@@ -86,7 +86,7 @@ export const experiences: Experience[] = [
     dateRange: "March 2024",
     description:
       "Contributed to backend API development and database optimization. Participated in agile sprints and code review processes.",
-    image: "/images/experience/technofair-prog-2024.png",
+    image: "/images/experience/technofair-prog-2024.webp",
     certificate: "/images/certificates/2024-technofair-programming.jpg",
   },
 ];

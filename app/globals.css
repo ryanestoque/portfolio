@@ -134,6 +134,18 @@ body.loading-locked::-webkit-scrollbar-thumb {
   background: transparent;
 }
 
+body.loading-locked {
+  overflow: hidden;
+}
+
+/* ── Preloader ───────────────────────────────────── */
+.preloader-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100000;
+  background-color: var(--bg);
+}
+
 /* ::-webkit-scrollbar-thumb:hover {
   background: var(--t-tertiary);
 } */

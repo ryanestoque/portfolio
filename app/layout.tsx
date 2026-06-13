@@ -5,6 +5,8 @@ import "lenis/dist/lenis.css";
 import CustomCursor from "@/components/ui/custom-cursor";
 import { SmoothScroll } from "@/components/ui/smooth-scroll";
 import { ThemeProvider } from "@/components/theme-provider";
+import { PreloaderProvider } from "@/components/ui/PreloaderProvider";
+import Preloader from "@/components/ui/Preloader";
 
 export const clashDisplay = localFont({
   src: "../public/fonts/clash-display/ClashDisplay-Variable.woff2",
@@ -56,12 +58,16 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <CustomCursor />
-          <SmoothScroll>
-            {children}
-          </SmoothScroll>
+          <PreloaderProvider>
+            <Preloader />
+            <CustomCursor />
+            <SmoothScroll>
+              {children}
+            </SmoothScroll>
+          </PreloaderProvider>
         </ThemeProvider>
       </body>
     </html>
   );
 }
+

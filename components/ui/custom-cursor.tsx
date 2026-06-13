@@ -1,9 +1,12 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { usePreloader } from "./PreloaderProvider";
 
 export default function CustomCursor() {
   const cursorRef = useRef<HTMLDivElement>(null);
+  const { isLoading } = usePreloader();
+
   useEffect(() => {
     let mouseX = 0;
     let mouseY = 0;
@@ -53,11 +56,13 @@ export default function CustomCursor() {
       cancelAnimationFrame(raf);
     };
   }, []);
+
   return (
     <div
       ref={cursorRef}
       aria-hidden="true"
       className="custom-cursor hidden md:block"
+      style={{ opacity: isLoading ? 0 : undefined }}
     />
   );
 }
