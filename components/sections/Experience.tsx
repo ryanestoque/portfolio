@@ -6,6 +6,7 @@ import Image from "next/image";
 import { gsap, ScrollTrigger } from "@/lib/gsap";
 import { experiences } from "@/lib/experience-data";
 import CertificateLightbox from "@/components/ui/CertificateLightbox";
+import { FileText } from "lucide-react";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -134,16 +135,16 @@ function DesktopExperience() {
             {hoveredIndex !== null && (
               <motion.div
                 className="fixed pointer-events-none z-[100] max-w-sm bg-surface-el/90 backdrop-blur-md border border-border/50 p-4 shadow-2xl"
-                style={{ 
-                  left: mousePos.x + 20, 
-                  top: mousePos.y + 20 
+                style={{
+                  left: mousePos.x + 20,
+                  top: mousePos.y + 20
                 }}
                 initial={{ opacity: 0, y: 10, scale: 0.95 }}
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 exit={{ opacity: 0, y: 10, scale: 0.95 }}
                 transition={{ duration: 0.2 }}
               >
-                <p className="text-sm text-text-secondary leading-relaxed">
+                <p className="text-sm text-text-primary leading-relaxed">
                   {experiences[hoveredIndex].description}
                 </p>
               </motion.div>
@@ -183,7 +184,7 @@ function DesktopExperience() {
             </div>
 
             {/* Right: Experience List */}
-            <div 
+            <div
               className="relative w-full"
               onMouseMove={(e) => setMousePos({ x: e.clientX, y: e.clientY })}
             >
@@ -223,40 +224,33 @@ function DesktopExperience() {
                             {exp.role}
                           </span>
                         </div>
-                        <span className="text-xs tracking-wider uppercase text-text-tertiary whitespace-nowrap ml-6">
+                        <span className="text-sm tracking-wide text-text-tertiary whitespace-nowrap ml-6">
                           {exp.dateRange}
                         </span>
                       </div>
-
                       {/* Right Column: Certificate Button */}
-                      <div className="flex-shrink-0 min-w-[80px] flex justify-end">
-                        {exp.certificate && (
-                          <button
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              openCertificate(exp.certificate!, exp.company);
-                            }}
-                            className="inline-flex items-center gap-1.5 px-3 py-1.5 text-[10px] tracking-[0.15em] uppercase border border-border text-text-tertiary hover:text-text-primary hover:border-accent/40 transition-all duration-300"
-                            aria-label={`View ${exp.company} certificate`}
-                          >
-                            <svg
-                              width="12"
-                              height="12"
-                              viewBox="0 0 24 24"
-                              fill="none"
-                              stroke="currentColor"
-                              strokeWidth="1.5"
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                            >
-                              <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z" />
-                              <polyline points="14 2 14 8 20 8" />
-                              <path d="M12 18v-6" />
-                              <path d="M9 15l3 3 3-3" />
-                            </svg>
-                            Cert
-                          </button>
-                        )}
+                      <div className="flex-shrink-0 min-w-[80px] flex justify-end relative group">
+                        <button
+                          onClick={(e) => {
+                            if (!exp.certificateAvailable) return;
+                            e.stopPropagation();
+                            if (exp.certificate) openCertificate(exp.certificate, exp.company);
+                          }}
+                          disabled={!exp.certificateAvailable}
+                          className={`inline-flex items-center gap-1.5 px-2 py-2 border transition-all duration-300 ${
+                            exp.certificateAvailable 
+                              ? "border-border text-text-tertiary hover:text-text-primary hover:border-accent/40 cursor-pointer"
+                              : "border-border/50 text-text-tertiary/50 cursor-not-allowed"
+                          }`}
+                          aria-label={exp.certificateAvailable ? `View ${exp.company} certificate` : "Certificate not yet available"}
+                        >
+                          <FileText className="w-5 h-5" />
+                        </button>
+
+                        {/* Tooltip */}
+                        <div className="absolute bottom-full right-0 mb-3 px-3 py-1.5 bg-background border border-border text-xs tracking-wider text-text-secondary whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none z-50">
+                          {exp.certificateAvailable ? "View certificate" : "Certificate not yet available"}
+                        </div>
                       </div>
                     </div>
 
@@ -360,38 +354,28 @@ function MobileExperience() {
                       <span className="font-heading text-sm font-medium text-text-secondary">
                         {exp.role}
                       </span>
-                      <span className="text-xs tracking-wider uppercase text-text-tertiary flex-shrink-0">
+                      <span className="text-sm tracking-wide text-text-secondary flex-shrink-0">
                         {exp.dateRange}
                       </span>
                     </div>
                   </div>
 
-                  {exp.certificate && (
-                    <button
-                      onClick={() =>
-                        openCertificate(exp.certificate!, exp.company)
-                      }
-                      className="inline-flex items-center gap-2 px-4 py-2 text-xs tracking-[0.15em] uppercase border border-border text-text-secondary hover:text-text-primary hover:border-accent/40 transition-all duration-300"
-                      aria-label={`View ${exp.company} certificate`}
-                    >
-                      <svg
-                        width="14"
-                        height="14"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="1.5"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      >
-                        <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z" />
-                        <polyline points="14 2 14 8 20 8" />
-                        <path d="M12 18v-6" />
-                        <path d="M9 15l3 3 3-3" />
-                      </svg>
-                      View Certificate
-                    </button>
-                  )}
+                  <button
+                    onClick={() => {
+                      if (!exp.certificateAvailable) return;
+                      if (exp.certificate) openCertificate(exp.certificate, exp.company);
+                    }}
+                    disabled={!exp.certificateAvailable}
+                    className={`inline-flex items-center gap-2 px-4 py-2 text-xs tracking-[0.15em] uppercase border transition-all duration-300 ${
+                      exp.certificateAvailable
+                        ? "border-border text-text-secondary hover:text-text-primary hover:border-accent/40 cursor-pointer"
+                        : "border-border/50 text-text-secondary/50 cursor-not-allowed"
+                    }`}
+                    aria-label={exp.certificateAvailable ? `View ${exp.company} certificate` : "Certificate not yet available"}
+                  >
+                    <FileText className="w-5 h-5" />
+                    {exp.certificateAvailable ? "View Certificate" : "Not Available"}
+                  </button>
                 </div>
               </motion.div>
             ))}

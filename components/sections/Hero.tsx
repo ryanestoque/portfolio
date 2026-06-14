@@ -53,11 +53,11 @@ export default function Hero() {
               data-hero="location"
               className="flex items-center justify-center lg:justify-start gap-3 mb-8 lg:mb-12"
             >
-              <svg className="w-4 h-4 text-accent/60" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+              <svg className="w-4 h-4 text-accent/50" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
                 <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
               </svg>
-              <span className="text-xs tracking-[0.3em] uppercase text-text-secondary font-medium">
+              <span className="text-xs tracking-[0.3em] uppercase text-text-secondary font-normal">
                 Davao City, Philippines
               </span>
             </motion.div>
@@ -89,11 +89,11 @@ export default function Hero() {
 
             <motion.h6
               data-hero="role"
-              className="mt-3 lg:mt-4 text-xl leading-relaxed text-text-primary font-medium flex items-center justify-center lg:justify-start gap-3 sm:gap-4"
+              className="mt-3 lg:mt-4 text-xl leading-relaxed text-text-secondary font-medium flex items-center justify-center lg:justify-start gap-3 sm:gap-4"
             >
-              <span className="w-6 lg:w-8 h-[2px] bg-text-primary block rounded-full"></span>
+              <span className="w-6 lg:w-8 h-[2px] bg-text-secondary block rounded-full"></span>
               <span>Full Stack Developer</span>
-              <span className="w-6 h-[2px] bg-text-primary block rounded-full lg:hidden"></span>
+              <span className="w-6 h-[2px] bg-text-secondary block rounded-full lg:hidden"></span>
             </motion.h6>
 
             <motion.div data-hero="cta" className="flex flex-wrap items-center justify-center lg:justify-start gap-4 mt-8 lg:mt-10">

@@ -42,7 +42,7 @@ const stages = [
         Currently, I challenge myself through complex academic projects and
         self-directed learning. I focus on creating scalable systems that are
         practical, highly interactive, and ready for deployment, while utilizing
-        modern technologies to streamline workflows.
+        modern technologies such as AI-assisted tools to streamline workflows.
       </>
     ),
   },

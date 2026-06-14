@@ -6,38 +6,42 @@ export interface Experience {
   description: string;
   image: string;
   certificate?: string;
+  certificateAvailable?: boolean;
 }
 
 export const experiences: Experience[] = [
   {
-    id: "experience-8",
+    id: "experience-1",
     role: "Freelancer",
-    company: "Full Stack Development",
+    company: "Full Stack Web Development",
     dateRange: "Present",
     description:
-      "Contributed to backend API development and database optimization. Participated in agile sprints and code review processes.",
+      "Built full-stack academic projects integrating frontends with backend databases, and developed custom web systems to streamline operations for small businesses.",
     image: "/images/experience/ryan-full-stack.webp",
     certificate: "/images/certificates/ryan-full-stack.webp",
+    certificateAvailable: false,
   },
   {
-    id: "experience-3",
+    id: "experience-2",
     role: "3rd-Year BSIT Student",
     company: "BSIT Educational Tour 2025",
     dateRange: "November 2025",
     description:
-      "Delivered custom web solutions for small businesses, including e-commerce platforms and portfolio sites with modern UI/UX standards.",
+      "Gained industry exposure by visiting tech companies in Cebu, including UP Cebu BIIT, Dynata, Rivan IT, and Mata Technologies, and the T.a.R.S.I.E.R. 117 emergency response center in Bohol, studying enterprise workflows and tech infrastructure.",
     image: "/images/experience/with-loml.webp",
-    certificate: "/images/certificates/placeholder-cert-2.jpg",
+    certificate: "/images/certificates/cebu-bohol-cert.webp",
+    certificateAvailable: true,
   },
   {
-    id: "experience-2",
+    id: "experience-3",
     role: "Participant",
     company: "DICT XI IDEAS Plugin Activity",
     dateRange: "May 2025",
     description:
-      "Developed responsive user interfaces and interactive components. Collaborated with design teams to translate Figma mockups into production-ready code.",
+      "Participated in an intensive startup incubation and pitching bootcamp by the Wadhwani Foundation, collaborating to develop and pitch tech startup solutions.",
     image: "/images/experience/ideas-plug-in-experience.webp",
-    certificate: "/images/certificates/placeholder-cert-2.jpg",
+    certificate: "/images/certificates/ideas-pitch.webp",
+    certificateAvailable: true,
   },
   {
     id: "experience-4",
@@ -45,9 +49,10 @@ export const experiences: Experience[] = [
     company: "HCDC Information Technology Society",
     dateRange: "June 2024 – May 2025",
     description:
-      "Designed user-centered interfaces for mobile and web applications. Conducted user research and created interactive prototypes in Figma.",
+      "Designed and produced visually engaging publication materials for the official Facebook page, promoting departmental events and enhancing student community engagement.",
     image: "/images/experience/its-creatives-committee.webp",
-    certificate: "/images/certificates/placeholder-cert-3.jpg",
+    certificate: "/images/certificates/2024-hcdc-its-certificate.webp",
+    certificateAvailable: true,
   },
   {
     id: "experience-5",
@@ -55,38 +60,42 @@ export const experiences: Experience[] = [
     company: "HCDC College of Engineering and Technology Society",
     dateRange: "June 2024 – May 2025",
     description:
-      "Contributed to backend API development and database optimization. Participated in agile sprints and code review processes.",
+      "Managed the official Facebook page using Meta Business Suite, creating engaging posts and publication materials while scheduling and tracking audience engagement.",
     image: "/images/experience/cetso-representative.webp",
     certificate: "/images/certificates/placeholder-cert-3.jpg",
+    certificateAvailable: false,
   },
   {
-    id: "experience-7",
+    id: "experience-6",
     role: "1st Runner-Up",
     company: "2025 PSITS XI Programming Quiz Bowl",
     dateRange: "March 2025",
     description:
-      "Contributed to backend API development and database optimization. Participated in agile sprints and code review processes.",
+      "Represented Holy Cross of Davao College and secured 1st Runner-Up, demonstrating core knowledge in fundamentals of Java Programming.",
     image: "/images/experience/psits-quiz-bowl.webp",
-    certificate: "/images/certificates/psits-quiz-bowl.jpg",
+    certificate: "/images/certificates/psits-2025-cert_1.webp",
+    certificateAvailable: true,
   },
   {
-    id: "experience-1",
+    id: "experience-7",
     role: "Participant",
     company: "2024 CodeChum National Programming Challenge",
     dateRange: "November 2024",
     description:
-      "Built and maintained scalable web applications using React, Next.js, and Node.js. Led frontend architecture decisions and implemented CI/CD pipelines.",
+      "Competed against BSIT and BSCS students nationwide, tackling advanced algorithmic challenges and logical problem-solving tasks under strict time constraints.",
     image: "/images/experience/codechum-programming-2024.webp",
-    certificate: "/images/certificates/placeholder-cert-1.jpg",
+    certificate: "/images/certificates/codechum-prog-comp.webp",
+    certificateAvailable: true,
   },
   {
-    id: "experience-6",
+    id: "experience-8",
     role: "Champion",
-    company: "2024 CET TechnoFair Programming Competition",
+    company: "2024 HCDC-CET Technofair Programming Competition",
     dateRange: "March 2024",
     description:
-      "Contributed to backend API development and database optimization. Participated in agile sprints and code review processes.",
+      "Secured the Championship title in the departmental programming competition, competing against other teams in solving coding challenges.",
     image: "/images/experience/technofair-prog-2024.webp",
-    certificate: "/images/certificates/2024-technofair-programming.jpg",
+    certificate: "/images/certificates/champ2024.png",
+    certificateAvailable: true,
   },
 ];

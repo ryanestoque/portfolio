@@ -118,7 +118,7 @@ export default function Navbar() {
                 className="md:hidden relative w-10 h-10 flex items-center justify-center"
                 aria-label="Toggle menu"
               >
-                <div className="relative w-6 h-4">
+                <div className="relative w-6 h-4 scale-[0.85]">
                   <motion.span
                     className="absolute left-0 w-full h-[2px] bg-text-primary origin-center"
                     animate={{

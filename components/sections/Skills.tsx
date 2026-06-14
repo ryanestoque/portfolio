@@ -41,9 +41,10 @@ const techCategories = [
     {
     title: "DATABASES",
     items: [
+      "MySQL",
+      "PostgreSQL", 
       "Firebase", 
       "Supabase", 
-      "MySQL", 
     ],
   },
   {
