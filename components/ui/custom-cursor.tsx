@@ -12,7 +12,7 @@ export default function CustomCursor() {
     let mouseY = 0;
     let curX = 0;
     let curY = 0;
-    const ease = 0.25;
+    const ease = 0.2;
     let needsSnap = true;
     let isVisible = false;
 

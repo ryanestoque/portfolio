@@ -258,7 +258,7 @@ body.loading-locked {
   left: 0;
   width: 12px;
   height: 12px;
-  background: var(--fg);
+  background: #fff;
   pointer-events: none;
   z-index: 99999;
   margin-top: -5px;

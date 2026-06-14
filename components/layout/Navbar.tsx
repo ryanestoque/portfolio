@@ -30,18 +30,10 @@ export default function Navbar() {
       setScrolled(window.scrollY > 50);
     };
 
-    const handleResize = () => {
-      if (window.innerWidth >= 768) {
-        setMenuOpen(false);
-      }
-    };
-
     window.addEventListener("scroll", handleScroll, { passive: true });
-    window.addEventListener("resize", handleResize);
 
     return () => {
       window.removeEventListener("scroll", handleScroll);
-      window.removeEventListener("resize", handleResize);
     };
   }, []);
 
@@ -93,31 +85,18 @@ export default function Navbar() {
               </button>
             </MagneticButton>
 
-            <div className="hidden md:flex items-center gap-1">
-              {navLinks.map((link) => (
-                <MagneticButton key={link.label} strength={0.1}>
-                  <button
-                    onClick={() => handleNavClick(link.href)}
-                    className="relative px-4 py-2 text-sm tracking-wide font-medium text-text-secondary hover:text-text-primary transition-colors duration-300 group"
-                  >
-                    {link.label}
-                    <span className="absolute bottom-1 left-4 right-4 h-px bg-accent scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
-                  </button>
-                </MagneticButton>
-              ))}
-            </div>
-
             {/* Status + Hamburger */}
             <div className="flex items-center gap-3">
               {/* Theme Toggle — always visible */}
               <ThemeToggle />
 
               {/* Hamburger */}
-              <button
-                onClick={() => setMenuOpen(!menuOpen)}
-                className="md:hidden relative w-10 h-10 flex items-center justify-center"
-                aria-label="Toggle menu"
-              >
+              <MagneticButton strength={0.2}>
+                <button
+                  onClick={() => setMenuOpen(!menuOpen)}
+                  className="relative w-10 h-10 flex items-center justify-center text-text-primary hover:text-accent transition-colors"
+                  aria-label="Toggle menu"
+                >
                 <div className="relative w-6 h-4 scale-[0.85]">
                   <motion.span
                     className="absolute left-0 w-full h-[2px] bg-text-primary origin-center"
@@ -139,36 +118,37 @@ export default function Navbar() {
                     transition={{ duration: 0.3, ease }}
                   />
                 </div>
-              </button>
+                </button>
+              </MagneticButton>
             </div>
           </div>
         </div>
       </nav>
 
-      {/* Mobile Menu */}
+      {/* Full Screen Menu */}
       <AnimatePresence>
         {menuOpen && (
           <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.4 }}
+            initial={{ y: "-100%" }}
+            animate={{ y: "0%" }}
+            exit={{ y: "-100%" }}
+            transition={{ duration: 0.6, ease }}
             className="fixed inset-0 z-40 bg-background flex flex-col items-center justify-center border-t border-border"
           >
-            <nav className="flex flex-col items-center gap-2">
+            <nav className="flex flex-col items-center gap-8">
               {navLinks.map((link, i) => (
                 <motion.button
                   key={link.label}
-                  initial={{ opacity: 0, y: 30 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: 20 }}
+                  initial={{ y: 30 }}
+                  animate={{ y: 0 }}
+                  exit={{ y: 20 }}
                   transition={{
                     delay: i * 0.08,
                     duration: 0.5,
                     ease,
                   }}
                   onClick={() => handleNavClick(link.href)}
-                  className="font-heading text-4xl font-medium text-text-primary hover:text-accent transition-colors duration-300 py-3"
+                  className="font-heading text-4xl md:text-5xl font-medium text-text-primary hover:text-accent transition-colors duration-300 py-3 md:py-4"
                 >
                   {link.label}
                 </motion.button>
