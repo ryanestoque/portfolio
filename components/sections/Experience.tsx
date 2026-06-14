@@ -6,7 +6,7 @@ import Image from "next/image";
 import { gsap, ScrollTrigger } from "@/lib/gsap";
 import { experiences } from "@/lib/experience-data";
 import CertificateLightbox from "@/components/ui/CertificateLightbox";
-import { FileText } from "lucide-react";
+import { FileText, ChevronDown } from "lucide-react";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -278,6 +278,7 @@ function DesktopExperience() {
 /*  Mobile Experience Section                       */
 /* ──────────────────────────────────────────────── */
 function MobileExperience() {
+  const [expandedId, setExpandedId] = useState<string | null>(null);
   const [lightbox, setLightbox] = useState<{
     open: boolean;
     src: string;
@@ -286,6 +287,10 @@ function MobileExperience() {
 
   const openCertificate = (src: string, company: string) => {
     setLightbox({ open: true, src, alt: `${company} Certificate` });
+  };
+
+  const toggleAccordion = (id: string) => {
+    setExpandedId((prev) => (prev === id ? null : id));
   };
 
   return (
@@ -322,63 +327,98 @@ function MobileExperience() {
             <span className="font-normal">my craft.</span>
           </motion.h2>
 
-          {/* Experience Cards */}
-          <div className="flex flex-col gap-8">
-            {experiences.map((exp, i) => (
-              <motion.div
-                key={exp.id}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-30px" }}
-                transition={{ duration: 0.7, delay: i * 0.08, ease }}
-                className="border border-border bg-surface overflow-hidden"
-              >
-                {/* Image */}
-                <div className="relative aspect-video w-full overflow-hidden">
-                  <Image
-                    src={exp.image}
-                    alt={exp.company}
-                    fill
-                    className="object-cover"
-                    sizes="100vw"
-                  />
-                </div>
+          {/* Accordion List */}
+          <div className="flex flex-col border-t border-border">
+            {experiences.map((exp, i) => {
+              const isExpanded = expandedId === exp.id;
 
-                {/* Content */}
-                <div className="p-5">
-                  <div className="flex flex-col gap-1 mb-4">
-                    <h3 className="font-heading text-lg font-semibold text-text-primary">
-                      {exp.company}
-                    </h3>
-                    <div className="flex items-center justify-between gap-4">
+              return (
+                <motion.div
+                  key={exp.id}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-30px" }}
+                  transition={{ duration: 0.7, delay: i * 0.08, ease }}
+                  className="border-b border-border bg-surface overflow-hidden"
+                >
+                  {/* Accordion Header */}
+                  <button
+                    onClick={() => toggleAccordion(exp.id)}
+                    className="w-full flex items-center justify-between py-6 px-4 text-left transition-colors hover:bg-white/[0.02]"
+                  >
+                    <div className="flex flex-col gap-1 pr-4">
+                      <span className="font-heading text-lg font-semibold text-text-primary">
+                        {exp.company}
+                      </span>
                       <span className="font-heading text-sm font-medium text-text-secondary">
                         {exp.role}
                       </span>
-                      <span className="text-sm tracking-wide text-text-secondary flex-shrink-0">
-                        {exp.dateRange}
-                      </span>
                     </div>
-                  </div>
-
-                  <button
-                    onClick={() => {
-                      if (!exp.certificateAvailable) return;
-                      if (exp.certificate) openCertificate(exp.certificate, exp.company);
-                    }}
-                    disabled={!exp.certificateAvailable}
-                    className={`inline-flex items-center gap-2 px-4 py-2 text-xs tracking-[0.15em] uppercase border transition-all duration-300 ${
-                      exp.certificateAvailable
-                        ? "border-border text-text-secondary hover:text-text-primary hover:border-accent/40 cursor-pointer"
-                        : "border-border/50 text-text-secondary/50 cursor-not-allowed"
-                    }`}
-                    aria-label={exp.certificateAvailable ? `View ${exp.company} certificate` : "Certificate not yet available"}
-                  >
-                    <FileText className="w-5 h-5" />
-                    {exp.certificateAvailable ? "View Certificate" : "Not Available"}
+                    <motion.div
+                      animate={{ rotate: isExpanded ? 180 : 0 }}
+                      transition={{ duration: 0.3, ease: [0.33, 1, 0.68, 1] }}
+                      className="flex-shrink-0 text-text-tertiary"
+                    >
+                      <ChevronDown className="w-5 h-5" />
+                    </motion.div>
                   </button>
-                </div>
-              </motion.div>
-            ))}
+
+                  {/* Accordion Content */}
+                  <AnimatePresence initial={false}>
+                    {isExpanded && (
+                      <motion.div
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: "auto", opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.4, ease: [0.33, 1, 0.68, 1] }}
+                      >
+                        <div className="pb-6 px-4">
+                          {/* Image at top */}
+                          <div className="relative aspect-video w-full overflow-hidden mb-6 bg-border/20 rounded-sm">
+                            <Image
+                              src={exp.image}
+                              alt={exp.company}
+                              fill
+                              className="object-cover"
+                              sizes="(max-width: 1024px) 100vw, 50vw"
+                            />
+                          </div>
+
+                          {/* Date Range & Description */}
+                          <div className="flex flex-col gap-4 mb-6">
+                            <span className="text-sm tracking-wide text-accent font-medium">
+                              {exp.dateRange}
+                            </span>
+                            <p className="text-sm text-text-secondary leading-relaxed">
+                              {exp.description}
+                            </p>
+                          </div>
+
+                          {/* Certificate Button */}
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              if (!exp.certificateAvailable) return;
+                              if (exp.certificate) openCertificate(exp.certificate, exp.company);
+                            }}
+                            disabled={!exp.certificateAvailable}
+                            className={`inline-flex items-center gap-2 px-4 py-2 text-xs tracking-wider border transition-all duration-300 ${
+                              exp.certificateAvailable
+                                ? "border-border text-text-secondary hover:text-text-primary hover:border-accent/40 cursor-pointer"
+                                : "border-border/50 text-text-secondary/50 cursor-not-allowed"
+                            }`}
+                            aria-label={exp.certificateAvailable ? `View ${exp.company} certificate` : "Certificate not yet available"}
+                          >
+                            <FileText className="w-4 h-4" />
+                            {exp.certificateAvailable ? "View certificate" : "Certifcate not yet available"}
+                          </button>
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </motion.div>
+              );
+            })}
           </div>
         </div>
       </section>
