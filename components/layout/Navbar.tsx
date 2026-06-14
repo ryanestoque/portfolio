@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
+import { useLenis } from "lenis/react";
 import MagneticButton from "../ui/MagneticButton";
 import ThemeToggle from "../ui/ThemeToggle";
 
@@ -22,6 +23,7 @@ export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const pathname = usePathname();
   const router = useRouter();
+  const lenis = useLenis();
 
   const isHome = pathname === "/";
 
@@ -40,13 +42,16 @@ export default function Navbar() {
   useEffect(() => {
     if (menuOpen) {
       document.body.style.overflow = "hidden";
+      lenis?.stop();
     } else {
       document.body.style.overflow = "";
+      lenis?.start();
     }
     return () => {
       document.body.style.overflow = "";
+      lenis?.start();
     };
-  }, [menuOpen]);
+  }, [menuOpen, lenis]);
 
   // When already on home, just smooth-scroll to the section.
   // When on another page (e.g. /projects/[slug]), store the target section

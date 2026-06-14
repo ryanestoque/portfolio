@@ -43,7 +43,7 @@ export default function Contact() {
           animate={isInView ? "visible" : "hidden"}
         >
           <h2 className="font-heading text-[clamp(2.5rem,6vw,5rem)] font-semibold leading-[1.05] text-gradient max-w-3xl">
-            Let&apos;s build something great together.
+            Let's meet<br /> <span className="font-normal">halfway</span>
           </h2>
         </motion.div>
 
@@ -114,7 +114,7 @@ export default function Contact() {
                   ))}
                 </ul>
               </div>
-
+              {/* 
               <div>
                 <h4 className="text-[11px] tracking-[0.3em] uppercase text-text-tertiary mb-6">
                   Navigation
@@ -131,7 +131,7 @@ export default function Contact() {
                     </li>
                   ))}
                 </ul>
-              </div>
+              </div> */}
             </div>
           </motion.div>
         </div>

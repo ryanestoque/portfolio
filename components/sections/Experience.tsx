@@ -3,12 +3,9 @@
 import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
-import { gsap, ScrollTrigger } from "@/lib/gsap";
 import { experiences } from "@/lib/experience-data";
 import CertificateLightbox from "@/components/ui/CertificateLightbox";
 import { FileText, ChevronDown } from "lucide-react";
-
-gsap.registerPlugin(ScrollTrigger);
 
 const ease = [0.33, 1, 0.68, 1] as [number, number, number, number];
 
@@ -17,10 +14,6 @@ const ease = [0.33, 1, 0.68, 1] as [number, number, number, number];
 /* ──────────────────────────────────────────────── */
 function DesktopExperience() {
   const sectionRef = useRef<HTMLElement>(null);
-  const headerRef = useRef<HTMLDivElement>(null);
-  const rowsRef = useRef<(HTMLDivElement | null)[]>([]);
-  const imageContainerRef = useRef<HTMLDivElement>(null);
-
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const [lightbox, setLightbox] = useState<{
@@ -31,74 +24,6 @@ function DesktopExperience() {
 
   const activeIndex = hoveredIndex ?? 0;
   const activeExperience = experiences[activeIndex];
-
-  /* ── GSAP ScrollTrigger Stagger ──────────────── */
-  useEffect(() => {
-    const section = sectionRef.current;
-    if (!section) return;
-
-    const ctx = gsap.context(() => {
-      // Header animation
-      if (headerRef.current) {
-        gsap.fromTo(
-          headerRef.current.children,
-          { y: 40, opacity: 0 },
-          {
-            y: 0,
-            opacity: 1,
-            duration: 0.8,
-            stagger: 0.15,
-            ease: "power3.out",
-            scrollTrigger: {
-              trigger: headerRef.current,
-              start: "top 85%",
-              toggleActions: "play none none none",
-            },
-          }
-        );
-      }
-
-      // Image container
-      if (imageContainerRef.current) {
-        gsap.fromTo(
-          imageContainerRef.current,
-          { scale: 0.95, opacity: 0 },
-          {
-            scale: 1,
-            opacity: 1,
-            duration: 1,
-            ease: "power3.out",
-            scrollTrigger: {
-              trigger: imageContainerRef.current,
-              start: "top 85%",
-              toggleActions: "play none none none",
-            },
-          }
-        );
-      }
-
-      // Rows stagger
-      const rows = rowsRef.current.filter(Boolean) as HTMLDivElement[];
-      gsap.fromTo(
-        rows,
-        { y: 30, opacity: 0 },
-        {
-          y: 0,
-          opacity: 1,
-          duration: 0.6,
-          stagger: 0.1,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: rows[0],
-            start: "top 85%",
-            toggleActions: "play none none none",
-          },
-        }
-      );
-    }, section);
-
-    return () => ctx.revert();
-  }, []);
 
   const openCertificate = (src: string, company: string) => {
     setLightbox({ open: true, src, alt: `${company} Certificate` });
@@ -112,7 +37,7 @@ function DesktopExperience() {
       >
         <div className="relative z-10 max-w-[1400px] mx-auto px-6 md:px-10 lg:px-16">
           {/* ── Section Header ────────────────────── */}
-          <div ref={headerRef}>
+          <div>
             <div className="flex items-center gap-3 mb-16">
               <span className="text-xs tracking-[0.3em] uppercase text-text-tertiary">
                 04
@@ -156,7 +81,6 @@ function DesktopExperience() {
             {/* Left: Sticky Image Container (Aspect Square) */}
             <div className="hidden lg:block sticky top-32 w-full">
               <div
-                ref={imageContainerRef}
                 className="experience-image-container relative aspect-square w-full overflow-hidden border border-border bg-foreground"
               >
                 <AnimatePresence mode="wait">
@@ -192,9 +116,6 @@ function DesktopExperience() {
                 {experiences.map((exp, i) => (
                   <div
                     key={exp.id}
-                    ref={(el) => {
-                      rowsRef.current[i] = el;
-                    }}
                     className="experience-row"
                     onMouseEnter={() => setHoveredIndex(i)}
                     onMouseLeave={() => setHoveredIndex(null)}
@@ -300,13 +221,7 @@ function MobileExperience() {
       >
         <div className="max-w-[1400px] mx-auto px-6 md:px-10">
           {/* Section Label */}
-          <motion.div
-            className="flex items-center gap-3 mb-12"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-50px" }}
-            transition={{ duration: 0.7, ease }}
-          >
+          <div className="flex items-center gap-3 mb-12">
             <span className="text-xs tracking-[0.3em] uppercase text-text-tertiary">
               04
             </span>
@@ -314,18 +229,12 @@ function MobileExperience() {
             <span className="text-xs tracking-[0.3em] uppercase text-text-tertiary">
               ROAD TO MASTERY
             </span>
-          </motion.div>
+          </div>
 
-          <motion.h2
-            className="font-heading text-[clamp(3rem,6vw,5rem)] font-semibold leading-[1.1] text-gradient mb-14"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-50px" }}
-            transition={{ duration: 0.8, ease }}
-          >
+          <h2 className="font-heading text-[clamp(3rem,6vw,5rem)] font-semibold leading-[1.1] text-gradient mb-14">
             Experiences that shaped{" "}
             <span className="font-normal">my craft.</span>
-          </motion.h2>
+          </h2>
 
           {/* Accordion List */}
           <div className="flex flex-col border-t border-border">
@@ -333,12 +242,8 @@ function MobileExperience() {
               const isExpanded = expandedId === exp.id;
 
               return (
-                <motion.div
+                <div
                   key={exp.id}
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: "-30px" }}
-                  transition={{ duration: 0.7, delay: i * 0.08, ease }}
                   className="border-b border-border bg-surface overflow-hidden"
                 >
                   {/* Accordion Header */}
@@ -416,7 +321,7 @@ function MobileExperience() {
                       </motion.div>
                     )}
                   </AnimatePresence>
-                </motion.div>
+                </div>
               );
             })}
           </div>
