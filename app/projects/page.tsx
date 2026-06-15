@@ -3,10 +3,10 @@
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import Image from "next/image";
-import Link from "next/link";
+import TransitionLink from "@/components/ui/TransitionLink";
 import { projects } from "@/lib/projects-data";
 import Navbar from "@/components/layout/Navbar";
-import Footer from "@/components/layout/Footer";
+import Contact from "@/components/layout/Contact";
 
 const ease = [0.33, 1, 0.68, 1] as [number, number, number, number];
 
@@ -40,7 +40,7 @@ export default function ProjectsPage() {
               animate={isInView ? "visible" : "hidden"}
               className="mb-16"
             >
-              <Link
+              <TransitionLink
                 href="/"
                 className="inline-flex items-center gap-2 text-[12px] uppercase tracking-[0.2em] text-text-tertiary hover:text-text-primary transition-colors duration-300 group"
               >
@@ -54,7 +54,7 @@ export default function ProjectsPage() {
                   <path strokeLinecap="round" strokeLinejoin="round" d="M7 16l-4-4m0 0l4-4m-4 4h18" />
                 </svg>
                 <span>Back to Home</span>
-              </Link>
+              </TransitionLink>
             </motion.div>
 
             {/* Header */}
@@ -95,7 +95,7 @@ export default function ProjectsPage() {
                   initial="hidden"
                   animate={isInView ? "visible" : "hidden"}
                 >
-                  <Link
+                  <TransitionLink
                     href={`/projects/${project.slug}`}
                     className="group block border border-border bg-surface hover:border-accent/30 transition-all duration-500"
                   >
@@ -137,7 +137,7 @@ export default function ProjectsPage() {
                         ))}
                       </div>
                     </div>
-                  </Link>
+                  </TransitionLink>
                 </motion.div>
               ))}
             </div>
@@ -158,7 +158,7 @@ export default function ProjectsPage() {
               initial="hidden"
               animate={isInView ? "visible" : "hidden"}
             >
-              <Link
+              <TransitionLink
                 href="/"
                 className="group inline-flex items-center gap-3 px-8 py-4 text-[12px] uppercase tracking-[0.2em] border border-border text-text-secondary hover:text-text-primary hover:border-accent transition-all duration-300"
               >
@@ -172,13 +172,13 @@ export default function ProjectsPage() {
                   <path strokeLinecap="round" strokeLinejoin="round" d="M7 16l-4-4m0 0l4-4m-4 4h18" />
                 </svg>
                 <span>Back to Home</span>
-              </Link>
+              </TransitionLink>
             </motion.div>
           </div>
         </section>
       </main>
 
-      <Footer />
+      <Contact />
     </>
   );
 }

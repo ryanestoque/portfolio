@@ -4,11 +4,11 @@ import { use, useEffect, useRef } from "react";
 import { notFound } from "next/navigation";
 import { motion, useInView } from "framer-motion";
 import Image from "next/image";
-import Link from "next/link";
+import TransitionLink from "@/components/ui/TransitionLink";
 import { getProjectBySlug, projects } from "@/lib/projects-data";
 import type { Project } from "@/lib/projects-data";
 import Navbar from "@/components/layout/Navbar";
-import Footer from "@/components/layout/Footer";
+import Contact from "@/components/layout/Contact";
 
 const ease = [0.33, 1, 0.68, 1] as [number, number, number, number];
 
@@ -30,7 +30,7 @@ export default function ProjectDetailPage({
       <main>
         <ProjectContent project={project} />
       </main>
-      <Footer />
+      <Contact />
     </>
   );
 }
@@ -384,7 +384,7 @@ function ProjectContent({ project }: { project: Project }) {
             {/* Previous Project */}
             <div className="flex-1">
               {prevProject && (
-                <Link
+                <TransitionLink
                   href={`/projects/${prevProject.slug}`}
                   className="group inline-flex items-center gap-3 text-[12px] uppercase tracking-[0.2em] text-text-tertiary hover:text-text-primary transition-colors duration-300"
                 >
@@ -398,22 +398,22 @@ function ProjectContent({ project }: { project: Project }) {
                     <path strokeLinecap="round" strokeLinejoin="round" d="M7 16l-4-4m0 0l4-4m-4 4h18" />
                   </svg>
                   <span>{prevProject.title}</span>
-                </Link>
+                </TransitionLink>
               )}
             </div>
 
             {/* All Projects */}
-            <Link
+            <TransitionLink
               href="/#projects"
               className="group inline-flex items-center gap-3 px-8 py-4 text-[12px] uppercase tracking-[0.2em] border border-border text-text-secondary hover:text-text-primary hover:border-accent transition-all duration-300"
             >
               <span>Back to Projects</span>
-            </Link>
+            </TransitionLink>
 
             {/* Next Project */}
             <div className="flex-1 text-right">
               {nextProject && (
-                <Link
+                <TransitionLink
                   href={`/projects/${nextProject.slug}`}
                   className="group inline-flex items-center gap-3 text-[12px] uppercase tracking-[0.2em] text-text-tertiary hover:text-text-primary transition-colors duration-300"
                 >
@@ -427,7 +427,7 @@ function ProjectContent({ project }: { project: Project }) {
                   >
                     <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
                   </svg>
-                </Link>
+                </TransitionLink>
               )}
             </div>
           </div>

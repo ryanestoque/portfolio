@@ -50,12 +50,12 @@ export default function Contact() {
           initial="hidden"
           animate={isInView ? "visible" : "hidden"}
         >
-          <span className="text-xs tracking-[0.3em] uppercase text-text-tertiary">05</span>
-          <div className="w-12 h-[1px] bg-border" />
-          <span className="text-xs tracking-[0.3em] uppercase text-text-tertiary">INITIATION</span>
+          <span className="text-xs tracking-[0.3em] uppercase text-text-secondary">05</span>
+          <div className="w-12 h-[1px] bg-accent/50" />
+          <span className="text-xs tracking-[0.3em] uppercase text-text-secondary">INITIATION</span>
         </motion.div>
 
-        <div className="mb-16 flex flex-col sm:flex-row items-start sm:items-center justify-between">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between">
           <div className="flex flex-col justify-between">
             <h2 className="font-heading text-[clamp(2.5rem,6vw,5rem)] font-semibold leading-[1.05] text-gradient max-w-3xl flex flex-col items-start">
               <ScrollRevealBars duration={1} delay={0}>
@@ -66,7 +66,7 @@ export default function Contact() {
               </ScrollRevealBars>
             </h2>
             <motion.div
-              className="text-sm font-medium md:text-base text-text-secondary mt-10"
+              className="text-sm font-medium md:text-base text-text-secondary mt-10 tracking-wide"
               custom={4}
               variants={fadeUp}
               initial="hidden"
@@ -82,7 +82,7 @@ export default function Contact() {
             initial="hidden"
             animate={isInView ? "visible" : "hidden"}
           >
-            <div className="grid grid-cols-2 gap-8 mt-16 sm:mt-0">
+            <div className="flex justify-start sm:justify-end mt-16 sm:mt-0">
               <div>
                 {/* <h4 className="text-sm tracking-wide text-text-tertiary mb-6">
                   Social
@@ -108,7 +108,7 @@ export default function Contact() {
                           <span>{social.name}</span>
 
                           {/* Tooltip */}
-                          <span className="absolute left-full ml-4 top-1/2 -translate-y-1/2 px-3 py-1.5 bg-background text-text-primary text-sm rounded opacity-0 -translate-x-2 group-hover:translate-x-0 group-hover:opacity-100 transition-all duration-300 whitespace-nowrap border border-border pointer-events-none z-10 hidden sm:block">
+                          <span className="absolute right-full mr-4 top-1/2 -translate-y-1/2 px-3 py-1.5 bg-background text-text-primary text-sm rounded opacity-0 translate-x-2 group-hover:translate-x-0 group-hover:opacity-100 transition-all duration-300 whitespace-nowrap border border-border pointer-events-none z-10 hidden sm:block">
                             {social.url.replace("mailto:", "")}
                           </span>
                         </a>
@@ -118,16 +118,6 @@ export default function Contact() {
                 </ul>
               </div>
             </div>
-          </motion.div>
-        </div>
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20">
-          <motion.div
-            className="lg:col-span-6"
-            custom={2}
-            variants={fadeUp}
-            initial="hidden"
-            animate={isInView ? "visible" : "hidden"}
-          >
           </motion.div>
         </div>
       </div>

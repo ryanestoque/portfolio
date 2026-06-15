@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { usePreloader } from "./PreloaderProvider";
 import gsap from "gsap";
+import { useRouter, usePathname } from "next/navigation";
 
 /* ── Critical images the preloader waits for ──────────── */
 const CRITICAL_IMAGES = [
@@ -21,12 +22,18 @@ const MIN_DISPLAY_MS = 2500;
 const ASSET_TIMEOUT_MS = 12000;
 
 export default function Preloader() {
-  const { completeLoading } = usePreloader();
+  const { completeLoading, transitionHref, completeTransition } = usePreloader();
   const overlayRef = useRef<HTMLDivElement>(null);
   const progressBarRef = useRef<HTMLDivElement>(null);
+  const progressWrapperRef = useRef<HTMLDivElement>(null);
+  const barsRef = useRef<(HTMLDivElement | null)[]>([]);
   const progressTweenRef = useRef<gsap.core.Tween | null>(null);
   const [exiting, setExiting] = useState(false);
   const hasExitedRef = useRef(false);
+  const router = useRouter();
+  const pathname = usePathname();
+  const isTransitioningRef = useRef(false);
+  const lastPathnameRef = useRef(pathname);
 
   /* ── Preload images and handle progress ──────────────── */
   useEffect(() => {
@@ -116,19 +123,115 @@ export default function Preloader() {
       },
     });
 
-    // Slide overlay up
-    tl.to(overlayRef.current, {
-      yPercent: -100,
+    // Fade out progress wrapper
+    tl.to(progressWrapperRef.current, {
+      opacity: 0,
+      duration: 0.3,
+    }, 0);
+
+    // Slide bars left staggered
+    tl.to(barsRef.current, {
+      xPercent: -100,
       duration: 0.8,
+      stagger: 0.08,
       ease: "power3.inOut",
-    });
+    }, 0);
 
   }, [exiting, completeLoading]);
 
+  /* ── Route transition logic ────────────────────────── */
+  useEffect(() => {
+    if (transitionHref && overlayRef.current && !isTransitioningRef.current) {
+      isTransitioningRef.current = true;
+      
+      // Make sure overlay is visible
+      overlayRef.current.style.display = "flex";
+      
+      // Hide progress bar for transitions
+      if (progressWrapperRef.current) {
+        progressWrapperRef.current.style.display = "none";
+      }
+
+      // Reset bars to be off-screen right
+      gsap.set(barsRef.current, { xPercent: 100 });
+
+      // Slide in from right to cover screen
+      gsap.to(barsRef.current, {
+        xPercent: 0,
+        duration: 0.6,
+        stagger: 0.08,
+        ease: "power3.inOut",
+        onComplete: () => {
+          // Perform the actual route change
+          router.push(transitionHref);
+        }
+      });
+    }
+  }, [transitionHref, router]);
+
+  useEffect(() => {
+    // Detect route change completion
+    if (pathname !== lastPathnameRef.current) {
+      lastPathnameRef.current = pathname;
+      
+      if (isTransitioningRef.current && overlayRef.current) {
+        // Slide left to reveal new page
+        gsap.to(barsRef.current, {
+          xPercent: -100,
+          duration: 0.8,
+          stagger: 0.08,
+          ease: "power3.inOut",
+          onComplete: () => {
+            if (overlayRef.current) {
+              overlayRef.current.style.display = "none";
+            }
+            isTransitioningRef.current = false;
+            completeTransition();
+          }
+        });
+      } else if (hasExitedRef.current && overlayRef.current) {
+        // Browser back/forward (pathname changed without starting a transition)
+        if (progressWrapperRef.current) {
+          progressWrapperRef.current.style.display = "none";
+        }
+        
+        overlayRef.current.style.display = "flex";
+        gsap.set(barsRef.current, { xPercent: 0 });
+        
+        gsap.to(barsRef.current, {
+          xPercent: -100,
+          duration: 0.8,
+          stagger: 0.08,
+          ease: "power3.inOut",
+          onComplete: () => {
+            if (overlayRef.current) {
+              overlayRef.current.style.display = "none";
+            }
+          }
+        });
+      }
+    }
+  }, [pathname, completeTransition]);
+
   return (
-    <div ref={overlayRef} className="preloader-overlay flex flex-col justify-center items-center" aria-hidden="true">
-      <div className="w-64 h-[2px] bg-foreground/20 rounded-full overflow-hidden">
-        <div ref={progressBarRef} className="h-full bg-foreground origin-left w-0" />
+    <div ref={overlayRef} className="preloader-overlay" aria-hidden="true" style={{ backgroundColor: 'transparent' }}>
+      {/* 5 Staggered Horizontal Bars */}
+      <div className="absolute inset-0 flex flex-col w-full h-full pointer-events-none">
+        {Array.from({ length: 5 }).map((_, i) => (
+          <div 
+            key={i} 
+            ref={(el) => { barsRef.current[i] = el; }} 
+            className="flex-1 w-full bg-background pointer-events-auto"
+            style={{ willChange: "transform", scale: "1 1.05" }}
+          />
+        ))}
+      </div>
+      
+      {/* Progress Bar Wrapper */}
+      <div ref={progressWrapperRef} className="absolute inset-0 flex flex-col justify-center items-center pointer-events-none">
+        <div className="w-64 h-[2px] bg-foreground/20 rounded-full overflow-hidden">
+          <div ref={progressBarRef} className="h-full bg-foreground origin-left w-0" />
+        </div>
       </div>
     </div>
   );

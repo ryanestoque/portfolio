@@ -1,9 +1,8 @@
 "use client";
 
-import { motion, useScroll, useMotionValueEvent } from "framer-motion";
+import { motion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import { ScrollRevealBars } from "@/components/ui/ScrollRevealBars";
 
 const ease = [0.33, 1, 0.68, 1] as [number, number, number, number];
 
@@ -21,10 +20,10 @@ function AbstractVisual() {
           />
         </div>
 
-        <div className="absolute -top-3 -left-3 lg:-top-4 lg:-left-4 w-4 h-4 lg:w-5 lg:h-5 border-t-2 border-l-2 border-accent/40" />
-        <div className="absolute -top-3 -right-3 lg:-top-4 lg:-right-4 w-4 h-4 lg:w-5 lg:h-5 border-t-2 border-r-2 border-accent/40" />
-        <div className="absolute -bottom-3 -left-3 lg:-bottom-4 lg:-left-4 w-4 h-4 lg:w-5 lg:h-5 border-b-2 border-l-2 border-accent/40" />
-        <div className="absolute -bottom-3 -right-3 lg:-bottom-4 lg:-right-4 w-4 h-4 lg:w-5 lg:h-5 border-b-2 border-r-2 border-accent/40" />
+        <div className="absolute -top-3 -left-3 lg:-top-4 lg:-left-4 w-4 h-4 lg:w-5 lg:h-5 border-t-2 border-l-2 border-accent" />
+        <div className="absolute -top-3 -right-3 lg:-top-4 lg:-right-4 w-4 h-4 lg:w-5 lg:h-5 border-t-2 border-r-2 border-accent" />
+        <div className="absolute -bottom-3 -left-3 lg:-bottom-4 lg:-left-4 w-4 h-4 lg:w-5 lg:h-5 border-b-2 border-l-2 border-accent" />
+        <div className="absolute -bottom-3 -right-3 lg:-bottom-4 lg:-right-4 w-4 h-4 lg:w-5 lg:h-5 border-b-2 border-r-2 border-accent" />
       </div>
     </div>
   );
@@ -47,7 +46,7 @@ export default function Hero() {
       ref={containerRef}
       className="relative min-h-screen flex items-start lg:items-center overflow-hidden"
     >
-      <div className="relative z-10 w-full max-w-[1400px] mx-auto px-6 md:px-10 lg:px-16 pt-[100px] lg:pt-[72px] pb-24 lg:pb-0">
+      <div className="relative z-10 w-full max-w-[1400px] mx-auto px-6 md:px-10 lg:px-16 pt-[150px] lg:pt-[0px] pb-24 lg:pb-0">
         <div className="flex flex-col lg:flex-row lg:justify-between items-center gap-8 lg:gap-0 lg:min-h-[calc(100vh-72px)] w-full">
           <div className="flex flex-col justify-center items-center lg:items-start text-center lg:text-left order-last mt-4 lg:mt-0">
             <motion.div
@@ -68,26 +67,22 @@ export default function Hero() {
             >
               <motion.h1 className="font-heading font-semibold leading-[1] tracking-tight flex flex-col sm:flex-row lg:flex-col justify-center lg:justify-start items-center lg:items-start sm:gap-4 lg:gap-0">
                 <span className="block overflow-hidden">
-                  <ScrollRevealBars duration={1} delay={3}>
                     <motion.span
                       data-hero="firstname"
                       className="block text-[clamp(5rem,10vw,9rem)] text-gradient"
                     >
                       {headingLine1}
                     </motion.span>
-                  </ScrollRevealBars>
                 </span>
 
                 {/* Line 2 */}
                 <span className="block overflow-hidden">
-                  <ScrollRevealBars duration={1} delay={3.15}>
                     <motion.span
                       data-hero="lastname"
                       className="block text-[clamp(5rem,10vw,9rem)] text-gradient"
                     >
                       {headingLine2}
                     </motion.span>
-                  </ScrollRevealBars>
                 </span>
               </motion.h1>
             </motion.div>

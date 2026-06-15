@@ -138,9 +138,9 @@ function ScrollDrivenStory() {
             <div className="h-full flex flex-col justify-center">
               <div className="relative">
                 <div className="absolute bottom-full left-0 mb-12 flex items-center gap-3 whitespace-nowrap">
-                  <span className="text-xs tracking-[0.3em] uppercase text-text-tertiary">01</span>
-                  <div className="w-12 h-[1px] bg-border" />
-                  <span className="text-xs tracking-[0.3em] uppercase text-text-tertiary">PHILOSOPHY</span>
+                  <span className="text-xs tracking-[0.3em] uppercase text-text-secondary">01</span>
+                  <div className="w-12 h-[1px] bg-accent/50" />
+                  <span className="text-xs tracking-[0.3em] uppercase text-text-secondary">PHILOSOPHY</span>
                 </div>
                 <h2 className="font-heading text-[clamp(2.5rem,6vw,5rem)] font-semibold leading-[1.1] text-gradient flex flex-col items-start">
                   <ScrollRevealBars duration={1} delay={0}>
@@ -185,17 +185,11 @@ function MobileStory() {
     <div className="lg:hidden relative">
       <div className="max-w-[1400px] mx-auto px-6 md:px-10">
         {/* Section label */}
-        <motion.div
-          className="flex items-center gap-3 mb-12"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-50px" }}
-          transition={{ duration: 0.7, ease }}
-        >
-          <span className="text-xs tracking-[0.3em] uppercase text-text-secondary font-medium">01</span>
+        <div className="flex items-center gap-3 mb-12">
+          <span className="text-xs tracking-[0.3em] uppercase text-text-secondary">01</span>
           <div className="w-8 h-[1px] bg-accent/50" />
-          <span className="text-xs tracking-[0.3em] uppercase text-text-secondary font-medium">PHILOSOPHY</span>
-        </motion.div>
+          <span className="text-xs tracking-[0.3em] uppercase text-text-secondary">PHILOSOPHY</span>
+        </div>
 
         <div className="mb-14">
           <h2 className="font-heading text-[clamp(2.5rem,6vw,5rem)] font-semibold leading-[1.1] text-gradient flex flex-col items-start">
@@ -213,17 +207,11 @@ function MobileStory() {
 
         <div className="flex flex-col gap-8">
           {stages.map((stage, i) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-30px" }}
-              transition={{ duration: 0.7, delay: 0.1, ease }}
-            >
+            <div key={i}>
               <p className="text-lg leading-relaxed text-text-secondary font-medium">
                 {stage.paragraph}
               </p>
-            </motion.div>
+            </div>
           ))}
         </div>
       </div>

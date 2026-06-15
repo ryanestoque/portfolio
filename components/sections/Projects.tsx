@@ -3,7 +3,7 @@
 import { useEffect, useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import Image from "next/image";
-import Link from "next/link";
+import TransitionLink from "@/components/ui/TransitionLink";
 import { gsap, ScrollTrigger } from "@/lib/gsap";
 import { projects } from "@/lib/projects-data";
 import MagneticButton from "../ui/MagneticButton";
@@ -93,9 +93,9 @@ export default function Projects() {
           initial="hidden"
           animate={isInView ? "visible" : "hidden"}
         >
-          <span className="text-xs tracking-[0.3em] uppercase text-text-tertiary">04</span>
-          <div className="w-12 h-[1px] bg-border" />
-          <span className="text-xs tracking-[0.3em] uppercase text-text-tertiary">BUILDS</span>
+          <span className="text-xs tracking-[0.3em] uppercase text-text-secondary">04</span>
+          <div className="w-12 h-[1px] bg-accent/50" />
+          <span className="text-xs tracking-[0.3em] uppercase text-text-secondary">BUILDS</span>
         </motion.div>
 
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-20">
@@ -131,7 +131,7 @@ export default function Projects() {
               className="project-card flex-shrink-0"
               style={{ width: "min(550px, 42vw)" }}
             >
-              <Link
+              <TransitionLink
                 href={`/projects/${project.slug}`}
                 className="group flex flex-col h-full border border-border bg-surface hover:border-accent/30 transition-all duration-500"
               >
@@ -178,7 +178,7 @@ export default function Projects() {
                     )}
                   </div>
                 </div>
-              </Link>
+              </TransitionLink>
             </motion.div>
           ))}
         </div>
@@ -195,7 +195,7 @@ export default function Projects() {
               initial="hidden"
               animate={isInView ? "visible" : "hidden"}
             >
-              <Link
+              <TransitionLink
                 href={`/projects/${project.slug}`}
                 className="group flex flex-col h-full border border-border bg-surface hover:border-accent/30 transition-all duration-500"
               >
@@ -242,7 +242,7 @@ export default function Projects() {
                     )}
                   </div>
                 </div>
-              </Link>
+              </TransitionLink>
             </motion.div>
           ))}
         </div>
@@ -256,7 +256,7 @@ export default function Projects() {
           animate={isInView ? "visible" : "hidden"}
         >
           <MagneticButton strength={0.2}>
-            <Link
+            <TransitionLink
               href="/projects"
               className="group inline-flex items-center gap-3 px-7 py-3.5 text-xs uppercase tracking-wider border border-border text-text-secondary hover:text-text-primary hover:border-accent transition-all duration-300"
             >
@@ -270,7 +270,7 @@ export default function Projects() {
               >
                 <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
               </svg>
-            </Link>
+            </TransitionLink>
           </MagneticButton>
         </motion.div>
       </div>

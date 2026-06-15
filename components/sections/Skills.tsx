@@ -97,9 +97,9 @@ export default function Skills() {
           initial="hidden"
           animate={isInView ? "visible" : "hidden"}
         >
-          <span className="text-xs tracking-[0.3em] uppercase text-text-tertiary">02</span>
-          <div className="w-12 h-[1px] bg-border" />
-          <span className="text-xs tracking-[0.3em] uppercase text-text-tertiary">ARSENAL</span>
+          <span className="text-xs tracking-[0.3em] uppercase text-text-secondary">02</span>
+          <div className="w-12 h-[1px] bg-accent/50" />
+          <span className="text-xs tracking-[0.3em] uppercase text-text-secondary">ARSENAL</span>
         </motion.div>
 
         <div className="mb-20">

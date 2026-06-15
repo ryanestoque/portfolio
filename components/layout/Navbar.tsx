@@ -1,11 +1,12 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { useLenis } from "lenis/react";
 import MagneticButton from "../ui/MagneticButton";
 import ThemeToggle from "../ui/ThemeToggle";
+import { usePreloader } from "../ui/PreloaderProvider";
 
 const ease = [0.33, 1, 0.68, 1] as [number, number, number, number];
 
@@ -22,7 +23,7 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const pathname = usePathname();
-  const router = useRouter();
+  const { startTransition } = usePreloader();
   const lenis = useLenis();
 
   const isHome = pathname === "/";
@@ -67,7 +68,7 @@ export default function Navbar() {
     } else {
       // Store which section to scroll to after landing on home
       sessionStorage.setItem("scrollTo", href);
-      router.push("/");
+      startTransition("/");
     }
   };
 

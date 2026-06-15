@@ -40,11 +40,11 @@ function DesktopExperience() {
           {/* ── Section Header ────────────────────── */}
           <div>
             <div className="flex items-center gap-3 mb-16">
-              <span className="text-xs tracking-[0.3em] uppercase text-text-tertiary">
+              <span className="text-xs tracking-[0.3em] uppercase text-text-secondary">
                 03
               </span>
-              <div className="w-12 h-[1px] bg-border" />
-              <span className="text-xs tracking-[0.3em] uppercase text-text-tertiary">
+              <div className="w-12 h-[1px] bg-accent/50" />
+              <span className="text-xs tracking-[0.3em] uppercase text-text-secondary">
                 ROAD TO MASTERY
               </span>
             </div>
