@@ -43,7 +43,7 @@ export default function Contact() {
           animate={isInView ? "visible" : "hidden"}
         >
           <h2 className="font-heading text-[clamp(2.5rem,6vw,5rem)] font-semibold leading-[1.05] text-gradient max-w-3xl">
-            Let's meet<br /> <span className="font-normal">halfway</span>
+            Let's meet<br /> <span className="font-normal">halfway</span>.
           </h2>
         </motion.div>
 
@@ -63,10 +63,10 @@ export default function Contact() {
             initial="hidden"
             animate={isInView ? "visible" : "hidden"}
           >
-            <p className="text-[15px] leading-relaxed text-text-secondary max-w-md mb-10">
+            {/* <p className="text-[15px] leading-relaxed text-text-secondary max-w-md mb-10">
               I&apos;m currently available for freelance work, collaborations, and interesting
               projects. Whether you have a question or just want to say hello — my inbox is always open.
-            </p>
+            </p> */}
 
             <MagneticButton strength={0.2}>
               <a

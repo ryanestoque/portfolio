@@ -109,7 +109,7 @@ export default function Skills() {
           animate={isInView ? "visible" : "hidden"}
         >
           <h2 className="font-heading text-[clamp(2.5rem,6vw,5rem)] font-semibold leading-[1.1] text-gradient lg:max-w-3xl">
-            <span className="font-normal">Thoughtfully</span> used technologies.
+            <span className="font-normal">Thoughtfully</span> used<br/>technologies.
           </h2>
         </motion.div>
 

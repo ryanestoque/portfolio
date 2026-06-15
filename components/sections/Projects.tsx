@@ -105,7 +105,7 @@ export default function Projects() {
           animate={isInView ? "visible" : "hidden"}
         >
           <h2 className="font-heading text-[clamp(2.5rem,6vw,5rem)] font-semibold leading-[1.1] text-gradient lg:max-w-3xl">
-            Works <span className="font-normal">proudly</span> crafted.
+            Works <span className="font-normal">proudly</span><br/>crafted.
           </h2>
         </motion.div>
       </div>

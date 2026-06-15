@@ -189,13 +189,13 @@ function MobileStory() {
         </motion.div>
 
         <motion.h2
-          className="font-heading text-[clamp(3rem,6vw,5rem)] font-semibold leading-[1.1] text-gradient mb-14"
+          className="font-heading text-[clamp(2.5rem,6vw,5rem)] font-semibold leading-[1.1] text-gradient mb-14"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-50px" }}
           transition={{ duration: 0.8, ease }}
         >
-          Driven by <span className="font-normal">necessity</span> to create.
+          Driven by <span className="font-normal"><br/>necessity</span> to <br/>create.
         </motion.h2>
 
         <div className="flex flex-col gap-8">

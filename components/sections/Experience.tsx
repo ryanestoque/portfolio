@@ -231,9 +231,8 @@ function MobileExperience() {
             </span>
           </div>
 
-          <h2 className="font-heading text-[clamp(3rem,6vw,5rem)] font-semibold leading-[1.1] text-gradient mb-14">
-            Experiences that shaped{" "}
-            <span className="font-normal">my craft.</span>
+          <h2 className="font-heading text-[clamp(2.5rem,6vw,5rem)] font-semibold leading-[1.1] text-gradient mb-14">
+            <span className="font-normal">Enrolled</span> in<br/>experiences.
           </h2>
 
           {/* Accordion List */}
