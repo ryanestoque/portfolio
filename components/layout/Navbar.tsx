@@ -6,7 +6,6 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useLenis } from "lenis/react";
 import MagneticButton from "../ui/MagneticButton";
 import ThemeToggle from "../ui/ThemeToggle";
-import { ScrollRevealBars } from "@/components/ui/ScrollRevealBars";
 
 const ease = [0.33, 1, 0.68, 1] as [number, number, number, number];
 
@@ -136,29 +135,43 @@ export default function Navbar() {
         {menuOpen && (
           <motion.div
             initial={{ y: "-100%" }}
-            animate={{ y: "0%" }}
-            exit={{ y: "-100%" }}
-            transition={{ duration: 0.6, ease }}
+            animate={{ y: "0%", transition: { duration: 0.6, ease } }}
+            exit={{ y: "-100%", transition: { delay: 0.8, duration: 0.6, ease } }}
             className="fixed inset-0 z-40 bg-background flex flex-col items-center justify-center border-t border-border"
           >
             <nav className="flex flex-col items-center gap-6">
               {navLinks.map((link, i) => (
                 <motion.button
                   key={link.label}
-                  initial={{ y: 30 }}
-                  animate={{ y: 0 }}
-                  exit={{ y: 20 }}
-                  transition={{
-                    delay: i * 0.08,
-                    duration: 0.5,
-                    ease,
-                  }}
                   onClick={() => handleNavClick(link.href)}
-                  className="font-heading text-3xl md:text-4xl font-medium text-text-primary hover:text-accent transition-colors duration-300 py-3 md:py-4"
+                  className="relative overflow-hidden flex font-heading text-3xl md:text-4xl font-medium text-text-primary hover:text-accent transition-colors duration-300 py-3 md:py-4 px-2"
                 >
-                  <ScrollRevealBars duration={0.8} delay={0.1 + i * 0.1}>
-                    <span>{link.label}</span>
-                  </ScrollRevealBars>
+                  <motion.span
+                    initial={{ y: 30 }}
+                    animate={{ y: 0 }}
+                    exit={{ y: 0 }}
+                    transition={{
+                      delay: i * 0.08,
+                      duration: 0.5,
+                      ease,
+                    }}
+                  >
+                    {link.label}
+                  </motion.span>
+                  <motion.div
+                    className="absolute inset-0 bg-foreground z-10 pointer-events-none"
+                    initial={{ scaleX: 1, transformOrigin: "right" }}
+                    animate={{ 
+                      scaleX: 0, 
+                      transformOrigin: "right",
+                      transition: { duration: 0.8, ease, delay: 0.1 + i * 0.1 }
+                    }}
+                    exit={{ 
+                      scaleX: 1, 
+                      transformOrigin: "right",
+                      transition: { duration: 0.4, ease, delay: (navLinks.length - 1 - i) * 0.08 }
+                    }}
+                  />
                 </motion.button>
               ))}
             </nav>
