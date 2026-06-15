@@ -46,7 +46,7 @@ export default function Hero() {
       ref={containerRef}
       className="relative min-h-screen flex items-start lg:items-center overflow-hidden"
     >
-      <div className="relative z-10 w-full max-w-[1400px] mx-auto px-6 md:px-10 lg:px-16 pt-[150px] lg:pt-[0px] pb-24 lg:pb-0">
+      <div className="relative z-10 w-full max-w-[1400px] mx-auto px-6 md:px-10 lg:px-16 pt-[100px] lg:pt-[0px] pb-24 lg:pb-0">
         <div className="flex flex-col lg:flex-row lg:justify-between items-center gap-8 lg:gap-0 lg:min-h-[calc(100vh-72px)] w-full">
           <div className="flex flex-col justify-center items-center lg:items-start text-center lg:text-left order-last mt-4 lg:mt-0">
             <motion.div
