@@ -6,6 +6,7 @@ import Image from "next/image";
 import { experiences } from "@/lib/experience-data";
 import CertificateLightbox from "@/components/ui/CertificateLightbox";
 import { FileText, ChevronDown } from "lucide-react";
+import { ScrollRevealBars } from "@/components/ui/ScrollRevealBars";
 
 const ease = [0.33, 1, 0.68, 1] as [number, number, number, number];
 
@@ -49,8 +50,13 @@ function DesktopExperience() {
             </div>
 
             <div className="mb-20">
-              <h2 className="font-heading text-[clamp(2.5rem,6vw,5rem)] font-semibold leading-[1.1] text-gradient lg:max-w-3xl">
-                <span className="font-normal">Enrolled</span> in experiences.
+              <h2 className="font-heading text-[clamp(2.5rem,6vw,5rem)] font-semibold leading-[1.1] text-gradient lg:max-w-3xl flex flex-col items-start">
+                <ScrollRevealBars duration={1} delay={0}>
+                  <span><span className="font-normal">Enrolled</span> in</span>
+                </ScrollRevealBars>
+                <ScrollRevealBars duration={1} delay={0.15}>
+                  <span>experiences.</span>
+                </ScrollRevealBars>
               </h2>
             </div>
           </div>
@@ -231,9 +237,16 @@ function MobileExperience() {
             </span>
           </div>
 
-          <h2 className="font-heading text-[clamp(2.5rem,6vw,5rem)] font-semibold leading-[1.1] text-gradient mb-14">
-            <span className="font-normal">Enrolled</span> in<br/>experiences.
-          </h2>
+          <div className="mb-14">
+            <h2 className="font-heading text-[clamp(2.5rem,6vw,5rem)] font-semibold leading-[1.1] text-gradient flex flex-col items-start">
+              <ScrollRevealBars duration={1} delay={0}>
+                <span><span className="font-normal">Enrolled</span> in</span>
+              </ScrollRevealBars>
+              <ScrollRevealBars duration={1} delay={0.15}>
+                <span>experiences.</span>
+              </ScrollRevealBars>
+            </h2>
+          </div>
 
           {/* Accordion List */}
           <div className="flex flex-col border-t border-border">

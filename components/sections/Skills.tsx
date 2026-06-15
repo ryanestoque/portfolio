@@ -2,6 +2,7 @@
 
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
+import { ScrollRevealBars } from "@/components/ui/ScrollRevealBars";
 
 const ease = [0.33, 1, 0.68, 1] as [number, number, number, number];
 
@@ -96,22 +97,21 @@ export default function Skills() {
           initial="hidden"
           animate={isInView ? "visible" : "hidden"}
         >
-         <span className="text-xs tracking-[0.3em] uppercase text-text-tertiary">02</span>
+          <span className="text-xs tracking-[0.3em] uppercase text-text-tertiary">02</span>
           <div className="w-12 h-[1px] bg-border" />
           <span className="text-xs tracking-[0.3em] uppercase text-text-tertiary">ARSENAL</span>
         </motion.div>
 
-        <motion.div
-          className="mb-20"
-          custom={1}
-          variants={fadeUp}
-          initial="hidden"
-          animate={isInView ? "visible" : "hidden"}
-        >
-          <h2 className="font-heading text-[clamp(2.5rem,6vw,5rem)] font-semibold leading-[1.1] text-gradient lg:max-w-3xl">
-            <span className="font-normal">Thoughtfully</span> used<br/>technologies.
+        <div className="mb-20">
+          <h2 className="font-heading text-[clamp(2.5rem,6vw,5rem)] font-semibold leading-[1.1] text-gradient lg:max-w-3xl flex flex-col items-start">
+            <ScrollRevealBars duration={1} delay={0}>
+              <span><span className="font-normal">Thoughtfully</span> used</span>
+            </ScrollRevealBars>
+            <ScrollRevealBars duration={1} delay={0.15}>
+              <span>technologies.</span>
+            </ScrollRevealBars>
           </h2>
-        </motion.div>
+        </div>
 
         <div className="space-y-12">
           {techCategories.map((category, catIndex) => (

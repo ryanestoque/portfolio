@@ -3,6 +3,7 @@
 import { useEffect, useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import { gsap, ScrollTrigger } from "@/lib/gsap";
+import { ScrollRevealBars } from "@/components/ui/ScrollRevealBars";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -141,8 +142,16 @@ function ScrollDrivenStory() {
                   <div className="w-12 h-[1px] bg-border" />
                   <span className="text-xs tracking-[0.3em] uppercase text-text-tertiary">PHILOSOPHY</span>
                 </div>
-                <h2 className="font-heading text-[clamp(2.5rem,6vw,5rem)] font-semibold leading-[1.1] text-gradient">
-                  Driven by <span className="font-normal">necessity</span> to create.
+                <h2 className="font-heading text-[clamp(2.5rem,6vw,5rem)] font-semibold leading-[1.1] text-gradient flex flex-col items-start">
+                  <ScrollRevealBars duration={1} delay={0}>
+                    <span>Driven by</span>
+                  </ScrollRevealBars>
+                  <ScrollRevealBars duration={1} delay={0.15}>
+                    <span><span className="font-normal">necessity</span> to</span>
+                  </ScrollRevealBars>
+                  <ScrollRevealBars duration={1} delay={0.3}>
+                    <span>create.</span>
+                  </ScrollRevealBars>
                 </h2>
               </div>
             </div>
@@ -188,15 +197,19 @@ function MobileStory() {
           <span className="text-xs tracking-[0.3em] uppercase text-text-secondary font-medium">PHILOSOPHY</span>
         </motion.div>
 
-        <motion.h2
-          className="font-heading text-[clamp(2.5rem,6vw,5rem)] font-semibold leading-[1.1] text-gradient mb-14"
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-50px" }}
-          transition={{ duration: 0.8, ease }}
-        >
-          Driven by <span className="font-normal"><br/>necessity</span> to <br/>create.
-        </motion.h2>
+        <div className="mb-14">
+          <h2 className="font-heading text-[clamp(2.5rem,6vw,5rem)] font-semibold leading-[1.1] text-gradient flex flex-col items-start">
+            <ScrollRevealBars duration={1} delay={0}>
+              <span>Driven by</span>
+            </ScrollRevealBars>
+            <ScrollRevealBars duration={1} delay={0.15}>
+              <span><span className="font-normal">necessity</span> to</span>
+            </ScrollRevealBars>
+            <ScrollRevealBars duration={1} delay={0.3}>
+              <span>create.</span>
+            </ScrollRevealBars>
+          </h2>
+        </div>
 
         <div className="flex flex-col gap-8">
           {stages.map((stage, i) => (

@@ -3,6 +3,7 @@
 import { motion, useScroll, useMotionValueEvent } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
+import { ScrollRevealBars } from "@/components/ui/ScrollRevealBars";
 
 const ease = [0.33, 1, 0.68, 1] as [number, number, number, number];
 
@@ -67,22 +68,26 @@ export default function Hero() {
             >
               <motion.h1 className="font-heading font-semibold leading-[1] tracking-tight flex flex-col sm:flex-row lg:flex-col justify-center lg:justify-start items-center lg:items-start sm:gap-4 lg:gap-0">
                 <span className="block overflow-hidden">
-                  <motion.span
-                    data-hero="firstname"
-                    className="block text-[clamp(5rem,10vw,9rem)] text-gradient"
-                  >
-                    {headingLine1}
-                  </motion.span>
+                  <ScrollRevealBars duration={1} delay={3}>
+                    <motion.span
+                      data-hero="firstname"
+                      className="block text-[clamp(5rem,10vw,9rem)] text-gradient"
+                    >
+                      {headingLine1}
+                    </motion.span>
+                  </ScrollRevealBars>
                 </span>
 
                 {/* Line 2 */}
                 <span className="block overflow-hidden">
-                  <motion.span
-                    data-hero="lastname"
-                    className="block text-[clamp(5rem,10vw,9rem)] text-gradient"
-                  >
-                    {headingLine2}
-                  </motion.span>
+                  <ScrollRevealBars duration={1} delay={3.15}>
+                    <motion.span
+                      data-hero="lastname"
+                      className="block text-[clamp(5rem,10vw,9rem)] text-gradient"
+                    >
+                      {headingLine2}
+                    </motion.span>
+                  </ScrollRevealBars>
                 </span>
               </motion.h1>
             </motion.div>

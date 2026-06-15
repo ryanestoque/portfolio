@@ -7,6 +7,7 @@ import Link from "next/link";
 import { gsap, ScrollTrigger } from "@/lib/gsap";
 import { projects } from "@/lib/projects-data";
 import MagneticButton from "../ui/MagneticButton";
+import { ScrollRevealBars } from "@/components/ui/ScrollRevealBars";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -97,17 +98,16 @@ export default function Projects() {
           <span className="text-xs tracking-[0.3em] uppercase text-text-tertiary">BUILDS</span>
         </motion.div>
 
-        <motion.div
-          className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-20"
-          custom={1}
-          variants={fadeUp}
-          initial="hidden"
-          animate={isInView ? "visible" : "hidden"}
-        >
-          <h2 className="font-heading text-[clamp(2.5rem,6vw,5rem)] font-semibold leading-[1.1] text-gradient lg:max-w-3xl">
-            Works <span className="font-normal">proudly</span><br/>crafted.
+        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-20">
+          <h2 className="font-heading text-[clamp(2.5rem,6vw,5rem)] font-semibold leading-[1.1] text-gradient lg:max-w-3xl flex flex-col items-start">
+            <ScrollRevealBars duration={1} delay={0}>
+              <span>Works <span className="font-normal">proudly</span></span>
+            </ScrollRevealBars>
+            <ScrollRevealBars duration={1} delay={0.15}>
+              <span>crafted.</span>
+            </ScrollRevealBars>
           </h2>
-        </motion.div>
+        </div>
       </div>
 
       {/* ── Desktop: Horizontal Scroll ─────────────── */}

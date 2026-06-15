@@ -6,6 +6,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useLenis } from "lenis/react";
 import MagneticButton from "../ui/MagneticButton";
 import ThemeToggle from "../ui/ThemeToggle";
+import { ScrollRevealBars } from "@/components/ui/ScrollRevealBars";
 
 const ease = [0.33, 1, 0.68, 1] as [number, number, number, number];
 
@@ -140,7 +141,7 @@ export default function Navbar() {
             transition={{ duration: 0.6, ease }}
             className="fixed inset-0 z-40 bg-background flex flex-col items-center justify-center border-t border-border"
           >
-            <nav className="flex flex-col items-center gap-8">
+            <nav className="flex flex-col items-center gap-6">
               {navLinks.map((link, i) => (
                 <motion.button
                   key={link.label}
@@ -153,9 +154,11 @@ export default function Navbar() {
                     ease,
                   }}
                   onClick={() => handleNavClick(link.href)}
-                  className="font-heading text-4xl md:text-5xl font-medium text-text-primary hover:text-accent transition-colors duration-300 py-3 md:py-4"
+                  className="font-heading text-3xl md:text-4xl font-medium text-text-primary hover:text-accent transition-colors duration-300 py-3 md:py-4"
                 >
-                  {link.label}
+                  <ScrollRevealBars duration={0.8} delay={0.1 + i * 0.1}>
+                    <span>{link.label}</span>
+                  </ScrollRevealBars>
                 </motion.button>
               ))}
             </nav>
