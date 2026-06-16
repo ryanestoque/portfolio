@@ -65,7 +65,7 @@ function DesktopExperience() {
           <AnimatePresence>
             {hoveredIndex !== null && (
               <motion.div
-                className="fixed pointer-events-none z-[100] max-w-sm bg-surface-el/90 backdrop-blur-md border border-border/50 p-4 shadow-2xl"
+                className="fixed pointer-events-none z-[100] max-w-sm bg-surface-el/90 backdrop-blur-md border border-border p-4 shadow-2xl"
                 style={{
                   left: mousePos.x + 20,
                   top: mousePos.y + 20
@@ -87,7 +87,8 @@ function DesktopExperience() {
             {/* Left: Sticky Image Container (Aspect Square) */}
             <div className="hidden lg:block sticky top-32 w-full">
               <div
-                className="experience-image-container relative aspect-square w-full overflow-hidden border border-border bg-foreground"
+                className="experience-image-container relative aspect-square w-full overflow-hidden border border-border bg-surface-elevated"
+                data-cursor="target"
               >
                 <AnimatePresence mode="wait">
                   <motion.div

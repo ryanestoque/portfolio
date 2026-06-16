@@ -12,6 +12,7 @@ export interface Project {
   status?: "Completed" | "In Progress";
 
   image: string;
+  darkImage?: string;
   gallery?: string[];
 
   tags: string[];
@@ -27,6 +28,7 @@ export interface Project {
 
   github?: string;
   demo?: string;
+  demoAvailable?: boolean;
 
   featured?: boolean;
 }
@@ -49,6 +51,7 @@ export const projects: Project[] = [
     status: "In Progress",
 
     image: "/images/projects/crosshere-light.png",
+    darkImage: "/images/projects/crosshere-dark.png",
     gallery: [],
 
     tags: [
@@ -103,6 +106,7 @@ export const projects: Project[] = [
     status: "Completed",
 
     image: "/images/projects/dripdrop-light.png",
+    darkImage: "/images/projects/dripdrop-dark.png",
     gallery: [],
 
     tags: [
@@ -135,7 +139,7 @@ export const projects: Project[] = [
       "Historical data logging and trend analysis",
     ],
 
-    github: "https://github.com/ryanestoque/dripdrop",
+    github: "https://github.com/ryanestoque",
     demo: "https://drip-drop-alpha.vercel.app/",
 
     featured: true,
@@ -157,6 +161,7 @@ export const projects: Project[] = [
     status: "Completed",
 
     image: "/images/projects/efz-neo-light.png",
+    darkImage: "/images/projects/efz-neo-dark.png",
     gallery: [],
 
     tags: [
@@ -187,8 +192,8 @@ export const projects: Project[] = [
       "Smooth page transitions and micro-interactions",
     ],
 
-    github: "https://github.com/ryanestoque/efz-2",
-    demo: "https://efz-2.vercel.app",
+    github: "https://github.com/ryanestoque/efz-2.0",
+    demo: "https://efz-neo.vercel.app",
 
     featured: true,
   },
@@ -300,8 +305,8 @@ export const projects: Project[] = [
       "Transaction history with receipt generation",
     ],
 
-    github: "https://github.com/ryanestoque/arado-pos",
-    demo: "https://arado-pos.vercel.app",
+    github: "https://github.com/ryanestoque/arado-enterprises-pos",
+    demo: "https://arado-enterprises.vercel.app/",
 
     featured: false,
   },
@@ -353,10 +358,11 @@ export const projects: Project[] = [
       "Transaction history with receipt generation",
     ],
 
-    github: "https://github.com/ryanestoque/wordol",
+    github: "https://github.com/ryanestoque/wordol-web",
     demo: "https://wordol.vercel.app",
 
     featured: false,
+    demoAvailable: false,
   },
   {
     id: "07",
@@ -406,7 +412,6 @@ export const projects: Project[] = [
 
     github: "https://github.com/ryanestoque/cross-server",
     demo: "https://cross-server.vercel.app",
-
     featured: false,
   },
 ];

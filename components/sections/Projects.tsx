@@ -134,6 +134,7 @@ export default function Projects() {
               <TransitionLink
                 href={`/projects/${project.slug}`}
                 className="group flex flex-col h-full border border-border bg-surface hover:border-accent/30 transition-all duration-500"
+                data-cursor="project"
               >
                 {/* Image Preview */}
                 <div className="relative aspect-video overflow-hidden">
@@ -142,8 +143,17 @@ export default function Projects() {
                     alt={project.title}
                     fill
                     sizes="(max-width: 768px) 100vw, 42vw"
-                    className="object-cover transition-transform duration-700 group-hover:scale-105"
+                    className={`object-cover transition-transform duration-700 group-hover:scale-105 ${project.darkImage ? 'dark:hidden' : ''}`}
                   />
+                  {project.darkImage && (
+                    <Image
+                      src={project.darkImage}
+                      alt={project.title}
+                      fill
+                      sizes="(max-width: 768px) 100vw, 42vw"
+                      className="object-cover transition-transform duration-700 group-hover:scale-105 hidden dark:block"
+                    />
+                  )}
                   <div className="absolute inset-0 bg-background/0 group-hover:bg-background/10 transition-colors duration-500" />
                 </div>
 
@@ -198,6 +208,7 @@ export default function Projects() {
               <TransitionLink
                 href={`/projects/${project.slug}`}
                 className="group flex flex-col h-full border border-border bg-surface hover:border-accent/30 transition-all duration-500"
+                data-cursor="project"
               >
                 {/* Image Preview */}
                 <div className="relative aspect-video overflow-hidden">
@@ -206,8 +217,17 @@ export default function Projects() {
                     alt={project.title}
                     fill
                     sizes="(max-width: 768px) 100vw, 50vw"
-                    className="object-cover transition-transform duration-700 group-hover:scale-105"
+                    className={`object-cover transition-transform duration-700 group-hover:scale-105 ${project.darkImage ? 'dark:hidden' : ''}`}
                   />
+                  {project.darkImage && (
+                    <Image
+                      src={project.darkImage}
+                      alt={project.title}
+                      fill
+                      sizes="(max-width: 768px) 100vw, 50vw"
+                      className="object-cover transition-transform duration-700 group-hover:scale-105 hidden dark:block"
+                    />
+                  )}
                   <div className="absolute inset-0 bg-background/0 group-hover:bg-background/10 transition-colors duration-500" />
                 </div>
 

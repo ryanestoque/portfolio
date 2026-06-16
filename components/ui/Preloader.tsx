@@ -5,7 +5,6 @@ import { usePreloader } from "./PreloaderProvider";
 import gsap from "gsap";
 import { useRouter, usePathname } from "next/navigation";
 
-/* ── Critical images the preloader waits for ──────────── */
 const CRITICAL_IMAGES = [
   "/images/hero/ryan-the-hacker.webp",
   "/images/experience/ryan-full-stack.webp",

@@ -93,21 +93,39 @@ function ProjectContent({ project }: { project: Project }) {
           {(project.github || project.demo) && (
             <div className="flex flex-wrap items-center gap-4 mb-10">
               {project.demo && (
-                <a
-                  href={project.demo}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group relative inline-flex items-center gap-3 px-7 py-3.5 text-xs font-medium uppercase tracking-wider bg-accent text-background overflow-hidden transition-all duration-300 hover:opacity-80"
-                >
-                  <div className="relative flex h-2.5 w-2.5 items-center justify-center">
-                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-background opacity-75"></span>
-                    <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-background"></span>
+                project.demoAvailable === false ? (
+                  <div className="relative group/tooltip inline-block">
+                    <button
+                      disabled
+                      className="group relative inline-flex items-center gap-3 px-7 py-3.5 text-xs font-medium uppercase tracking-wider bg-accent text-background border border-border cursor-not-allowed opacity-60"
+                    >
+                      <div className="relative flex h-2.5 w-2.5 items-center justify-center">
+                        <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-background"></span>
+                      </div>
+                      <span>Live Demo</span>
+                    </button>
+                    {/* Tooltip */}
+                    <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 opacity-0 group-hover/tooltip:opacity-100 transition-opacity duration-300 pointer-events-none whitespace-nowrap bg-surface-el/90 backdrop-blur-md text-xs px-3 py-2 border border-border tracking-wider z-20 shadow-lg">
+                      Not yet available for this project
+                      {/* Triangle pointer */}
+                      <div className="absolute top-full left-1/2 -translate-x-1/2 -mt-[1px] border-4 border-transparent border-t-border"></div>
+                      <div className="absolute top-full left-1/2 -translate-x-1/2 -mt-[2px] border-4 border-transparent border-t-surface"></div>
+                    </div>
                   </div>
-                  <span>Live Demo</span>
-                  {/* <svg className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                  </svg> */}
-                </a>
+                ) : (
+                  <a
+                    href={project.demo}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group relative inline-flex items-center gap-3 px-7 py-3.5 text-xs font-medium uppercase tracking-wider bg-accent text-background overflow-hidden transition-all duration-300 hover:opacity-80"
+                  >
+                    <div className="relative flex h-2.5 w-2.5 items-center justify-center">
+                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-background opacity-75"></span>
+                      <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-background"></span>
+                    </div>
+                    <span>Live Demo</span>
+                  </a>
+                )
               )}
               {project.github && (
                 <a
@@ -169,9 +187,19 @@ function ProjectContent({ project }: { project: Project }) {
             alt={project.title}
             fill
             sizes="(max-width: 768px) 100vw, 1400px"
-            className="object-cover"
+            className={`object-cover ${project.darkImage ? 'dark:hidden' : ''}`}
             priority
           />
+          {project.darkImage && (
+            <Image
+              src={project.darkImage}
+              alt={project.title}
+              fill
+              sizes="(max-width: 768px) 100vw, 1400px"
+              className="object-cover hidden dark:block"
+              priority
+            />
+          )}
         </motion.div>
 
         {/* ── Content Grid ────────────────────────── */}

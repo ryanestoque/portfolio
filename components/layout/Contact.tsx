@@ -91,7 +91,7 @@ export default function Contact() {
                   {[
                     { name: "Gmail", url: "mailto:estoque02ryan@gmail.com", icon: <Mail className="w-5 h-5" /> },
                     { name: "GitHub", url: "https://github.com/ryanestoque", icon: <GithubIcon className="w-5 h-5" /> },
-                    { name: "LinkedIn", url: "#", icon: <LinkedinIcon className="w-4 h-4" /> },
+                    { name: "LinkedIn", url: "#", icon: <LinkedinIcon className="w-5 h-5" /> },
                     { name: "Facebook", url: "https://facebook.com/ryanestoque02", icon: <FacebookIcon className="w-5 h-5" /> },
                   ].map((social) => (
                     <li key={social.name}>
@@ -101,6 +101,7 @@ export default function Contact() {
                           target={social.name === "Gmail" ? "_self" : "_blank"}
                           rel="noopener noreferrer"
                           className="group relative inline-flex items-center gap-3 text-sm md:text-base text-text-secondary hover:text-text-primary transition-colors duration-300 py-1"
+                          data-cursor="target"
                         >
                           <span className="text-text-tertiary group-hover:text-accent transition-colors duration-300">
                             {social.icon}
@@ -108,7 +109,7 @@ export default function Contact() {
                           <span>{social.name}</span>
 
                           {/* Tooltip */}
-                          <span className="absolute right-full mr-4 top-1/2 -translate-y-1/2 px-3 py-1.5 bg-background text-text-primary text-sm rounded opacity-0 translate-x-2 group-hover:translate-x-0 group-hover:opacity-100 transition-all duration-300 whitespace-nowrap border border-border pointer-events-none z-10 hidden sm:block">
+                          <span className="absolute right-full mr-4 top-1/2 -translate-y-1/2 px-3 py-1.5 bg-surface-el/90 backdrop-blur-md text-text-primary text-sm rounded opacity-0 translate-x-2 group-hover:translate-x-0 group-hover:opacity-100 transition-all duration-300 whitespace-nowrap border border-border pointer-events-none z-10 hidden sm:block">
                             {social.url.replace("mailto:", "")}
                           </span>
                         </a>
