@@ -36,7 +36,8 @@ export const metadata: Metadata = {
     description:
       "A Full stack developer driven by necessity to create functional and beautiful digital explorations.",
     type: "website",
-    images: ["/images/open-graph/open-graph-portfolio.png"],
+    images: ["/images/open-graph/og-image.png"],
+    siteName: "Ryan Estoque",
   },
 };
 
