@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { usePreloader } from "./PreloaderProvider";
 import { gsap } from "gsap";
 
@@ -8,7 +8,9 @@ export default function CustomCursor() {
   const cursorRef = useRef<HTMLDivElement>(null);
   const bracketsRef = useRef<HTMLDivElement>(null);
   const { isLoading } = usePreloader();
-  const [isHoveringProject, setIsHoveringProject] = useState(false);
+  // Use a ref instead of state so hover transitions are synchronous —
+  // avoids React batching delays that cause stale animation sequences.
+  const isHoveringRef = useRef(false);
 
   useEffect(() => {
     let mouseX = 0;
@@ -28,6 +30,55 @@ export default function CustomCursor() {
         duration: 0.3,
       });
     };
+
+    const setHovering = (hovering: boolean) => {
+      // Bail early if nothing changed — prevents redundant tween spam.
+      if (isHoveringRef.current === hovering) return;
+      isHoveringRef.current = hovering;
+
+      if (!cursorRef.current || !bracketsRef.current) return;
+
+      // Kill any in-flight tweens so rapid toggling never leaves the
+      // brackets stuck in an intermediate state.
+      gsap.killTweensOf(cursorRef.current);
+      gsap.killTweensOf(bracketsRef.current);
+
+      if (hovering) {
+        gsap.to(cursorRef.current, {
+          width: 80,
+          height: 80,
+          marginLeft: -40,
+          marginTop: -40,
+          backgroundColor: "transparent",
+          duration: 0.4,
+          ease: "power3.out",
+        });
+        gsap.to(bracketsRef.current, {
+          opacity: 1,
+          scale: 1,
+          rotation: 90,
+          duration: 0.4,
+          ease: "back.out(1.5)",
+        });
+      } else {
+        gsap.to(cursorRef.current, {
+          width: 12,
+          height: 12,
+          marginLeft: -5,
+          marginTop: -5,
+          backgroundColor: "#fff",
+          duration: 0.3,
+          ease: "power2.out",
+        });
+        gsap.to(bracketsRef.current, {
+          opacity: 0,
+          scale: 0.5,
+          rotation: 0,
+          duration: 0.2,
+          ease: "power2.in",
+        });
+      }
+    };
     
     const onMouseMove = (e: MouseEvent) => {
       mouseX = e.clientX;
@@ -40,9 +91,9 @@ export default function CustomCursor() {
       setVisibility(true);
 
       const target = e.target as HTMLElement;
-      if (target && typeof target.closest === 'function') {
-        const isHovering = !!target.closest('[data-cursor="project"], [data-cursor="target"]');
-        setIsHoveringProject(isHovering);
+      if (target && typeof target.closest === "function") {
+        const hovering = !!target.closest('[data-cursor="project"], [data-cursor="target"]');
+        setHovering(hovering);
       }
     };
     
@@ -51,7 +102,7 @@ export default function CustomCursor() {
       mouseY = -200;
       setVisibility(false);
       needsSnap = true;
-      setIsHoveringProject(false);
+      setHovering(false);
     };
 
     let raf: number;
@@ -74,46 +125,6 @@ export default function CustomCursor() {
       cancelAnimationFrame(raf);
     };
   }, []);
-
-  useEffect(() => {
-    if (!cursorRef.current || !bracketsRef.current) return;
-    
-    if (isHoveringProject) {
-      gsap.to(cursorRef.current, {
-        width: 80,
-        height: 80,
-        marginLeft: -40,
-        marginTop: -40,
-        backgroundColor: "transparent",
-        duration: 0.4,
-        ease: "power3.out"
-      });
-      gsap.to(bracketsRef.current, {
-        opacity: 1,
-        scale: 1,
-        rotation: 90,
-        duration: 0.4,
-        ease: "back.out(1.5)",
-      });
-    } else {
-      gsap.to(cursorRef.current, {
-        width: 12,
-        height: 12,
-        marginLeft: -5,
-        marginTop: -5,
-        backgroundColor: "#fff",
-        duration: 0.3,
-        ease: "power2.out"
-      });
-      gsap.to(bracketsRef.current, {
-        opacity: 0,
-        scale: 0.5,
-        rotation: 0,
-        duration: 0.2,
-        ease: "power2.in"
-      });
-    }
-  }, [isHoveringProject]);
 
   return (
     <div
