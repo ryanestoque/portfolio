@@ -21,22 +21,22 @@ export const satoshi = localFont({
 export const metadata: Metadata = {
   title: "Ryan Estoque - Full Stack Developer",
   description:
-    "3rd Year BSIT Student and Full Stack Developer specializing in modern web applications, UI/UX design, and backend architecture. Building digital experiences that merge aesthetics with engineering precision.",
+    "A Full stack developer driven by necessity to create functional and beautiful digital explorations.",
   keywords: [
     "Ryan Estoque",
+    "Ryan Christopher Estoque",
     "Full Stack Developer",
-    "UI/UX Designer",
-    "Web Developer",
-    "React",
-    "Next.js",
-    "Portfolio",
+    "Next.js Developer",
+    "React Developer",
+    "Web Developer Davao City, Philippines"
   ],
   authors: [{ name: "Ryan Estoque" }],
   openGraph: {
-    title: "Ryan Estoque - Frontend Developer",
+    title: "Ryan Estoque - Full Stack Developer",
     description:
-      "Building digital experiences that merge aesthetics with engineering precision.",
+      "A Full stack developer driven by necessity to create functional and beautiful digital explorations.",
     type: "website",
+    images: ["/images/open-graph/open-graph-portfolio.png"],
   },
 };
 
