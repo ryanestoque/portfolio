@@ -86,6 +86,7 @@ export default function Navbar() {
               <button
                 onClick={() => handleNavClick("#home")}
                 className="font-heading text-lg font-semibold tracking-tight text-text-primary hover:text-accent transition-colors duration-300"
+                data-cursor="target"
               >
                 Ryan Estoque
               </button>
@@ -102,6 +103,7 @@ export default function Navbar() {
                   onClick={() => setMenuOpen(!menuOpen)}
                   className="relative w-10 h-10 flex items-center justify-center text-text-primary hover:text-accent transition-colors"
                   aria-label="Toggle menu"
+                  data-cursor="target"
                 >
                 <div className="relative w-6 h-4 scale-[0.85]">
                   <motion.span
@@ -146,6 +148,7 @@ export default function Navbar() {
                   key={link.label}
                   onClick={() => handleNavClick(link.href)}
                   className="relative overflow-hidden flex font-heading text-3xl md:text-4xl font-medium text-text-primary hover:text-accent transition-colors duration-300 py-3 md:py-4 px-2"
+                  data-cursor="target"
                 >
                   <motion.span
                     initial={{ y: 30 }}

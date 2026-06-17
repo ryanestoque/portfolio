@@ -29,7 +29,7 @@ export default function ProjectsPage() {
     <>
       <Navbar />
 
-      <main ref={ref} className="pt-[72px]">
+      <main ref={ref}>
         <section className="relative py-24 md:py-32 overflow-hidden">
           <div className="relative z-10 max-w-[1400px] mx-auto px-6 md:px-10 lg:px-16">
             {/* Back Link */}
@@ -42,7 +42,7 @@ export default function ProjectsPage() {
             >
               <TransitionLink
                 href="/"
-                className="inline-flex items-center gap-2 text-[12px] uppercase tracking-[0.2em] text-text-tertiary hover:text-text-primary transition-colors duration-300 group"
+                className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.2em] text-text-tertiary hover:text-text-primary transition-colors duration-300 group"
               >
                 <svg
                   className="w-4 h-4 transition-transform duration-300 group-hover:-translate-x-1"
@@ -56,20 +56,6 @@ export default function ProjectsPage() {
                 <span>Back to Home</span>
               </TransitionLink>
             </motion.div>
-
-            {/* Header */}
-            <motion.div
-              className="flex items-center gap-3 mb-16"
-              custom={1}
-              variants={fadeUp}
-              initial="hidden"
-              animate={isInView ? "visible" : "hidden"}
-            >
-              <span className="text-xs tracking-[0.3em] uppercase text-text-tertiary font-medium">03</span>
-              <div className="w-8 h-[1px] bg-border" />
-              <span className="text-xs tracking-[0.3em] uppercase text-text-tertiary font-medium">Projects</span>
-            </motion.div>
-
             <motion.div
               className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-20"
               custom={2}
@@ -77,12 +63,9 @@ export default function ProjectsPage() {
               initial="hidden"
               animate={isInView ? "visible" : "hidden"}
             >
-              <h1 className="font-heading text-[clamp(2.5rem,5vw,4rem)] font-semibold leading-[1.1] text-gradient max-w-2xl">
-                All projects & explorations.
+              <h1 className="font-heading text-[clamp(2.5rem,6vw,5rem)] font-semibold leading-[1.1] text-gradient max-w-2xl">
+                All works I have crafted
               </h1>
-              <p className="text-[13px] text-text-tertiary max-w-xs">
-                A comprehensive collection of my work — from academic projects to personal experiments and client builds.
-              </p>
             </motion.div>
 
             {/* Project Grid */}
@@ -122,7 +105,7 @@ export default function ProjectsPage() {
                     </div>
 
                     {/* Card Content */}
-                    <div className="p-6 lg:p-8">
+                    <div className="p-5 lg:p-6">
                       <div className="flex items-start justify-between gap-4 mb-4">
                         <h2 className="font-heading text-xl lg:text-2xl font-medium text-text-primary group-hover:text-accent transition-colors duration-500">
                           {project.title}
@@ -132,19 +115,24 @@ export default function ProjectsPage() {
                         </span>
                       </div>
 
-                      <p className="text-[13px] leading-relaxed text-text-secondary mb-6">
+                      <p className="text-sm lg:text-base leading-relaxed text-text-secondary mb-5 font-normal line-clamp-2">
                         {project.description}
                       </p>
 
                       <div className="flex flex-wrap gap-2">
-                        {project.tags.map((tag) => (
+                        {project.tags.slice(0, 4).map((tag) => (
                           <span
                             key={tag}
-                            className="text-[10px] tracking-wider uppercase px-2.5 py-1 border border-border text-text-tertiary"
+                            className="font-normal text-xs tracking-wide px-4 py-2 border border-border text-text-primary"
                           >
                             {tag}
                           </span>
                         ))}
+                        {project.tags.length > 4 && (
+                          <span className="font-normal text-xs tracking-wide px-4 py-2 border border-border text-text-secondary">
+                            +{project.tags.length - 4}
+                          </span>
+                        )}
                       </div>
                     </div>
                   </TransitionLink>

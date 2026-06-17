@@ -220,7 +220,7 @@ export default function Preloader() {
           <div 
             key={i} 
             ref={(el) => { barsRef.current[i] = el; }} 
-            className="flex-1 w-full bg-background pointer-events-auto"
+            className="flex-1 w-full bg-background pointer-events-auto border-l-1 border-r-1 border-accent"
             style={{ willChange: "transform", scale: "1 1.05" }}
           />
         ))}

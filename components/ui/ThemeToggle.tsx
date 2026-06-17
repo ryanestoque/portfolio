@@ -27,6 +27,7 @@ export default function ThemeToggle() {
       aria-label={isLight ? "Switch to dark mode" : "Switch to light mode"}
       whileTap={{ scale: 0.88 }}
       className="relative w-9 h-9 flex items-center justify-center border border-border transition-colors duration-300 hover:bg-accent-dim text-text-secondary hover:text-text-primary"
+      data-cursor="target"
     >
       <AnimatePresence mode="wait" initial={false}>
         {isLight ? (

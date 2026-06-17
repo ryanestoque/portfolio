@@ -50,9 +50,9 @@ export default function Contact() {
           initial="hidden"
           animate={isInView ? "visible" : "hidden"}
         >
-          <span className="text-xs tracking-[0.3em] uppercase text-text-secondary">05</span>
+          {/* <span className="text-xs tracking-[0.3em] uppercase text-text-secondary">05</span>
           <div className="w-12 h-[1px] bg-accent/50" />
-          <span className="text-xs tracking-[0.3em] uppercase text-text-secondary">INITIATION</span>
+          <span className="text-xs tracking-[0.3em] uppercase text-text-secondary">INITIATION</span> */}
         </motion.div>
 
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between">

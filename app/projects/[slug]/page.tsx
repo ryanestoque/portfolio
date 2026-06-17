@@ -118,6 +118,7 @@ function ProjectContent({ project }: { project: Project }) {
                     target="_blank"
                     rel="noopener noreferrer"
                     className="group relative inline-flex items-center gap-3 px-7 py-3.5 text-xs font-medium uppercase tracking-wider bg-accent text-background overflow-hidden transition-all duration-300 hover:opacity-80"
+                    data-cursor="target"
                   >
                     <div className="relative flex h-2.5 w-2.5 items-center justify-center">
                       <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-background opacity-75"></span>
@@ -133,6 +134,7 @@ function ProjectContent({ project }: { project: Project }) {
                   target="_blank"
                   rel="noopener noreferrer"
                   className="group inline-flex items-center gap-3 px-7 py-3.5 text-xs font-medium uppercase tracking-wider border border-border text-text-secondary hover:text-text-primary hover:border-accent transition-all duration-300"
+                  data-cursor="target"
                 >
                   <svg
                     className="w-4 h-4"
@@ -181,6 +183,7 @@ function ProjectContent({ project }: { project: Project }) {
           initial="hidden"
           animate={isInView ? "visible" : "hidden"}
           className="relative aspect-[16/9] overflow-hidden border border-border mb-20"
+          data-cursor="target"
         >
           <Image
             src={project.image}
@@ -415,6 +418,7 @@ function ProjectContent({ project }: { project: Project }) {
                 <TransitionLink
                   href={`/projects/${prevProject.slug}`}
                   className="group inline-flex items-center gap-3 text-[12px] uppercase tracking-[0.2em] text-text-tertiary hover:text-text-primary transition-colors duration-300"
+                  data-cursor="target"
                 >
                   <svg
                     className="w-4 h-4 transition-transform duration-300 group-hover:-translate-x-1"
@@ -434,6 +438,7 @@ function ProjectContent({ project }: { project: Project }) {
             <TransitionLink
               href="/#projects"
               className="group inline-flex items-center gap-3 px-8 py-4 text-[12px] uppercase tracking-[0.2em] border border-border text-text-secondary hover:text-text-primary hover:border-accent transition-all duration-300"
+              data-cursor="target"
             >
               <span>Back to Projects</span>
             </TransitionLink>
@@ -444,6 +449,7 @@ function ProjectContent({ project }: { project: Project }) {
                 <TransitionLink
                   href={`/projects/${nextProject.slug}`}
                   className="group inline-flex items-center gap-3 text-[12px] uppercase tracking-[0.2em] text-text-tertiary hover:text-text-primary transition-colors duration-300"
+                  data-cursor="target"
                 >
                   <span>{nextProject.title}</span>
                   <svg
