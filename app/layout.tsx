@@ -31,6 +31,7 @@ export const metadata: Metadata = {
     "Web Developer Davao City, Philippines"
   ],
   authors: [{ name: "Ryan Estoque" }],
+  metadataBase: new URL("https://ryanestoque.me"),
   openGraph: {
     title: "Ryan Estoque - Full Stack Developer",
     description:
