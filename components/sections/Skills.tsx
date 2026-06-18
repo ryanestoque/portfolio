@@ -10,7 +10,7 @@ const techCategories = [
   {
     title: "LANGUAGES",
     items: [
-      "JavaScript", 
+      "JavaScript",
       "TypeScript",
       "Java",
       "Python",
@@ -20,49 +20,49 @@ const techCategories = [
   {
     title: "FRONTEND",
     items: [
-      "React", 
-      "Next.js", 
+      "React",
+      "Next.js",
       "Vite",
-      "Tailwind CSS", 
-      "shadcn/ui", 
-      "Framer Motion", 
+      "Tailwind CSS",
+      "shadcn/ui",
+      "Framer Motion",
       "React Native",
-      "MindAR"  
+      "MindAR"
     ],
   },
   {
     title: "BACKEND",
     items: [
-      "Node.js", 
+      "Node.js",
       "Express.js",
-      "Django REST Framework", 
-      "JWT", 
+      "Django REST Framework",
+      "JWT",
     ],
   },
-    {
+  {
     title: "DATABASES",
     items: [
       "MySQL",
-      "PostgreSQL", 
-      "Firebase", 
-      "Supabase", 
+      "PostgreSQL",
+      "Firebase",
+      "Supabase",
     ],
   },
   {
     title: "DEVOPS & DEPLOYMENT",
     items: [
-      "Git", 
-      "GitHub", 
+      "Git",
+      "GitHub",
       "Vercel",
-      "Render", 
+      "Render",
     ],
   },
   {
     title: "TOOLS",
     items: [
-      "VS Code", 
-      "Antigravity", 
-      "Figma", 
+      "VS Code",
+      "Antigravity",
+      "Figma",
       "Google AI Studio",
       "Android Studio",
       "Postman",
@@ -104,12 +104,28 @@ export default function Skills() {
 
         <div className="mb-20">
           <h2 className="font-heading text-[clamp(2.5rem,6vw,5rem)] font-semibold leading-[1.1] text-gradient lg:max-w-3xl flex flex-col items-start">
-            <ScrollRevealBars duration={1} delay={0}>
-              <span><span className="font-normal">Thoughtfully</span> used</span>
-            </ScrollRevealBars>
-            <ScrollRevealBars duration={1} delay={0.15}>
-              <span>technologies.</span>
-            </ScrollRevealBars>
+            {/* Desktop / Tablet view (>= 425px) */}
+            <div className="hidden min-[425px]:contents">
+              <ScrollRevealBars duration={1} delay={0}>
+                <span><span className="font-normal">Thoughtfully</span> used</span>
+              </ScrollRevealBars>
+              <ScrollRevealBars duration={1} delay={0.15}>
+                <span>technologies.</span>
+              </ScrollRevealBars>
+            </div>
+    
+            {/* Mobile view (< 425px) */}
+            <div className="contents min-[425px]:hidden">
+              <ScrollRevealBars duration={1} delay={0}>
+                <span className="font-normal">Thoughtfully</span>
+              </ScrollRevealBars>
+              <ScrollRevealBars duration={1} delay={0.15}>
+                <span>used</span>
+              </ScrollRevealBars>
+              <ScrollRevealBars duration={1} delay={0.3}>
+                <span>technologies.</span>
+              </ScrollRevealBars>
+            </div>
           </h2>
         </div>
 

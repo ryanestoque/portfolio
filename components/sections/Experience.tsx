@@ -304,7 +304,7 @@ function MobileExperience() {
 
                           {/* Date Range & Description */}
                           <div className="flex flex-col gap-4 mb-6">
-                            <span className="text-sm tracking-wide text-accent font-medium">
+                            <span className="text-sm tracking-wide text-primary font-medium">
                               {exp.dateRange}
                             </span>
                             <p className="text-sm text-text-secondary leading-relaxed">
