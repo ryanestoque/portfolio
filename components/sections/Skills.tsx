@@ -123,7 +123,7 @@ export default function Skills() {
               animate={isInView ? "visible" : "hidden"}
             >
               <div className="flex items-center gap-4 mb-6">
-                <h3 className="font-heading text-sm tracking-[0.15em] uppercase font-semibold text-text-primary whitespace-nowrap">
+                <h3 className="font-heading text-xs md:text-sm tracking-[0.15em] uppercase font-semibold text-text-primary whitespace-nowrap">
                   {category.title}
                 </h3>
                 <div className="flex-1 h-[1px] bg-border" />
@@ -133,7 +133,7 @@ export default function Skills() {
                 {category.items.map((item, itemIndex) => (
                   <motion.span
                     key={item}
-                    className="px-4 py-2 text-sm tracking-wide border border-border bg-surface font-normal text-text-primary hover:text-text-primary hover:border-accent/40 hover:bg-surface-elevated transition-all duration-300"
+                    className="px-4 py-2 text-xs md:text-sm tracking-wide border border-border bg-surface font-normal text-text-primary hover:text-text-primary hover:border-accent/40 hover:bg-surface-elevated transition-all duration-300"
                     initial={{ opacity: 1, y: 0 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{

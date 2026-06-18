@@ -38,10 +38,11 @@ export default function CustomCursor() {
 
       if (!cursorRef.current || !bracketsRef.current) return;
 
-      // Kill any in-flight tweens so rapid toggling never leaves the
-      // brackets stuck in an intermediate state.
-      gsap.killTweensOf(cursorRef.current);
-      gsap.killTweensOf(bracketsRef.current);
+      // Kill only the shape/size tweens — NOT the opacity tween from
+      // setVisibility, otherwise rapid hover-entry right after the cursor
+      // enters the viewport can freeze opacity at a partial (pale) value.
+      gsap.killTweensOf(cursorRef.current, "width,height,marginLeft,marginTop,backgroundColor");
+      gsap.killTweensOf(bracketsRef.current, "opacity,scale,rotation");
 
       if (hovering) {
         gsap.to(cursorRef.current, {

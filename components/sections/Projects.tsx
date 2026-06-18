@@ -250,13 +250,13 @@ export default function Projects() {
                     {project.tags.slice(0, 3).map((tag) => (
                       <span
                         key={tag}
-                        className="text-xs tracking-wider px-4 py-2 border border-border text-text-primary"
+                        className="font-normal text-xs tracking-wide px-4 py-2 border border-border text-text-primary"
                       >
                         {tag}
                       </span>
                     ))}
                     {project.tags.length > 3 && (
-                      <span className="text-xs tracking-wider px-4 py-2 border border-border text-text-secondary">
+                      <span className="font-normal text-xs tracking-wide px-4 py-2 border border-border text-text-secondary">
                         +{project.tags.length - 3}
                       </span>
                     )}

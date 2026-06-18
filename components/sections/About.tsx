@@ -208,7 +208,7 @@ function MobileStory() {
         <div className="flex flex-col gap-8">
           {stages.map((stage, i) => (
             <div key={i}>
-              <p className="text-lg leading-relaxed text-text-secondary font-medium">
+              <p className="text-base md:text-lg leading-relaxed text-text-secondary font-medium">
                 {stage.paragraph}
               </p>
             </div>

@@ -46,7 +46,7 @@ export default function Hero() {
       ref={containerRef}
       className="relative min-h-screen flex items-start lg:items-center overflow-hidden"
     >
-      <div className="relative z-10 w-full max-w-[1400px] mx-auto px-6 md:px-10 lg:px-16 pt-[100px] lg:pt-[0px] pb-24 lg:pb-0">
+      <div className="relative z-10 w-full max-w-[1400px] mx-auto px-6 md:px-10 lg:px-16 pt-[128px] lg:pt-[0px] pb-24 lg:pb-0">
         <div className="flex flex-col lg:flex-row lg:justify-between items-center gap-8 lg:gap-0 lg:min-h-[calc(100vh-72px)] w-full">
           <div className="flex flex-col justify-center items-center lg:items-start text-center lg:text-left order-last mt-4 lg:mt-0">
             <motion.div
@@ -69,7 +69,7 @@ export default function Hero() {
                 <span className="block overflow-hidden">
                     <motion.span
                       data-hero="firstname"
-                      className="block text-[clamp(5rem,10vw,9rem)] text-gradient"
+                      className="block text-[clamp(4.5rem,10vw,9rem)] text-gradient"
                     >
                       {headingLine1}
                     </motion.span>
@@ -79,7 +79,7 @@ export default function Hero() {
                 <span className="block overflow-hidden">
                     <motion.span
                       data-hero="lastname"
-                      className="block text-[clamp(5rem,10vw,9rem)] text-gradient"
+                      className="block text-[clamp(4.5rem,10vw,9rem)] text-gradient"
                     >
                       {headingLine2}
                     </motion.span>
@@ -89,7 +89,7 @@ export default function Hero() {
 
             <motion.h6
               data-hero="role"
-              className="mt-3 lg:mt-4 text-xl leading-relaxed text-text-primary font-normal flex items-center justify-center lg:justify-start gap-3 sm:gap-4"
+              className="mt-3 lg:mt-4 text-lg md:text-xl leading-relaxed text-text-primary font-normal flex items-center justify-center lg:justify-start gap-3 sm:gap-4"
             >
               <span className="w-6 lg:w-8 h-[1px] bg-text-primary block rounded-full"></span>
               <span>Full Stack Developer</span>
