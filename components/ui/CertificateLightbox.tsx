@@ -51,6 +51,7 @@ export default function CertificateLightbox({
             onClick={onClose}
             className="absolute top-6 right-6 z-10 w-12 h-12 flex items-center justify-center text-white/80 hover:text-white transition-colors duration-200"
             aria-label="Close certificate"
+            data-cursor="target"
           >
             <svg
               width="24"

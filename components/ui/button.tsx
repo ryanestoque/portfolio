@@ -1,65 +1,117 @@
-import * as React from "react"
-import { cva, type VariantProps } from "class-variance-authority"
-import { Slot } from "radix-ui"
+"use client";
 
-import { cn } from "@/lib/utils"
+import * as React from "react";
+import TransitionLink from "./TransitionLink";
+import { Slot } from "radix-ui";
+import { motion, AnimatePresence } from "framer-motion";
 
-const buttonVariants = cva(
-  "group/button inline-flex shrink-0 items-center justify-center rounded-2xl border border-transparent bg-clip-padding text-sm font-medium whitespace-nowrap transition-all outline-none select-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/30 active:not-aria-[haspopup]:translate-y-px disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
-  {
-    variants: {
-      variant: {
-        default: "bg-primary text-primary-foreground hover:bg-primary/80",
-        outline:
-          "border-border bg-background hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:bg-transparent dark:hover:bg-input/30",
-        secondary:
-          "bg-secondary text-secondary-foreground hover:bg-[color-mix(in_oklch,var(--secondary),var(--foreground)_5%)] aria-expanded:bg-secondary aria-expanded:text-secondary-foreground",
-        ghost:
-          "hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:hover:bg-muted/50",
-        destructive:
-          "bg-destructive/10 text-destructive hover:bg-destructive/20 focus-visible:border-destructive/40 focus-visible:ring-destructive/20 dark:bg-destructive/20 dark:hover:bg-destructive/30 dark:focus-visible:ring-destructive/40",
-        link: "text-primary underline-offset-4 hover:underline",
-      },
-      size: {
-        default:
-          "h-8 gap-1.5 px-3 has-data-[icon=inline-end]:pr-2.5 has-data-[icon=inline-start]:pl-2.5",
-        xs: "h-6 gap-1 px-2.5 text-xs has-data-[icon=inline-end]:pr-2 has-data-[icon=inline-start]:pl-2 [&_svg:not([class*='size-'])]:size-3",
-        sm: "h-7 gap-1 px-3 has-data-[icon=inline-end]:pr-2 has-data-[icon=inline-start]:pl-2",
-        lg: "h-9 gap-1.5 px-4 has-data-[icon=inline-end]:pr-3 has-data-[icon=inline-start]:pl-3",
-        icon: "size-8",
-        "icon-xs": "size-6 [&_svg:not([class*='size-'])]:size-3",
-        "icon-sm": "size-7",
-        "icon-lg": "size-9",
-      },
-    },
-    defaultVariants: {
-      variant: "default",
-      size: "default",
-    },
-  }
-)
-
-function Button({
-  className,
-  variant = "default",
-  size = "default",
-  asChild = false,
-  ...props
-}: React.ComponentProps<"button"> &
-  VariantProps<typeof buttonVariants> & {
-    asChild?: boolean
-  }) {
-  const Comp = asChild ? Slot.Root : "button"
-
-  return (
-    <Comp
-      data-slot="button"
-      data-variant={variant}
-      data-size={size}
-      className={cn(buttonVariants({ variant, size, className }))}
-      {...props}
-    />
-  )
+export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  href?: string;
+  icon?: React.ReactNode;
+  asChild?: boolean;
+  target?: string;
+  rel?: string;
 }
 
-export { Button, buttonVariants }
+const Button = React.forwardRef<HTMLButtonElement | HTMLAnchorElement, ButtonProps>(
+  ({ className, href, icon, children, asChild, ...props }, ref) => {
+    const [isHovered, setIsHovered] = React.useState(false);
+    const [hoverCount, setHoverCount] = React.useState(0);
+
+    const content = (
+      <div 
+        className={`group relative inline-flex items-center border border-border overflow-hidden ${props.disabled ? 'bg-surface opacity-60 cursor-not-allowed' : 'bg-surface'} ${className || ""}`}
+        onMouseEnter={() => { if (!props.disabled) setIsHovered(true) }}
+        onMouseLeave={() => { if (!props.disabled) { setIsHovered(false); setHoverCount(c => c + 1); } }}
+      >
+        {/* Wipe Background - Covers the ENTIRE button container */}
+        <div className="absolute left-0 right-0 top-0 bottom-auto h-0 bg-accent transition-[height] duration-300 ease-[cubic-bezier(0.33,1,0.68,1)] group-hover:top-auto group-hover:bottom-0 group-hover:h-full z-0" />
+        
+        {/* Icon Box */}
+        {icon && (
+          <div className="relative z-10 flex items-center justify-center w-11 h-11 bg-foreground text-background shrink-0">
+            {icon}
+          </div>
+        )}
+        
+        {/* Main Text Area */}
+        <div className="relative z-10 flex-1 px-5 md:px-6 py-3.5 flex items-center justify-center overflow-hidden min-h-[44px]">
+          <AnimatePresence mode="popLayout">
+            <motion.span
+              key={isHovered ? "hover" : `unhover-${hoverCount}`}
+              initial={hoverCount === 0 && !isHovered ? false : { y: "150%" }}
+              animate={{ y: "0%" }}
+              exit={{ y: "-150%" }}
+              transition={{ duration: 0.3, ease: [0.33, 1, 0.68, 1] }}
+              className={`absolute flex items-center justify-center inset-0 text-xs font-medium uppercase tracking-wider whitespace-nowrap ${isHovered ? 'text-background' : 'text-text-primary'}`}
+            >
+              {children}
+            </motion.span>
+          </AnimatePresence>
+          {/* Invisible placeholder to maintain width since the absolute span doesn't take up space */}
+          <span className="opacity-0 pointer-events-none text-xs font-medium uppercase tracking-wider whitespace-nowrap">
+            {children}
+          </span>
+        </div>
+      </div>
+    );
+
+    const outerClassName = `inline-block outline-none ${className?.includes('w-full') ? 'w-full block' : ''}`;
+
+    if (asChild) {
+      return (
+        <Slot.Root className={outerClassName} ref={ref as any} {...props}>
+          {content}
+        </Slot.Root>
+      )
+    }
+
+    if (href) {
+      const isExternal = href.startsWith('http') || href.startsWith('mailto:') || href.endsWith('.pdf');
+      
+      if (isExternal) {
+        return (
+          <a href={href} target="_blank" rel="noopener noreferrer" className={outerClassName} ref={ref as any} {...(props as any)}>
+            {content}
+          </a>
+        );
+      }
+
+      if (href.startsWith('#')) {
+        return (
+          <a 
+            href={href} 
+            className={outerClassName} 
+            ref={ref as any} 
+            onClick={(e) => {
+              if (props.onClick) props.onClick(e as any);
+              const target = document.querySelector(href);
+              if (target) {
+                e.preventDefault();
+                target.scrollIntoView({ behavior: 'smooth' });
+              }
+            }}
+            {...(props as any)}
+          >
+            {content}
+          </a>
+        );
+      }
+
+      return (
+        <TransitionLink href={href} className={outerClassName} ref={ref as any} {...(props as any)}>
+          {content}
+        </TransitionLink>
+      );
+    }
+
+    return (
+      <button className={outerClassName} ref={ref as any} {...props}>
+        {content}
+      </button>
+    )
+  }
+)
+Button.displayName = "Button"
+
+export { Button }

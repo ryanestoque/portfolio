@@ -109,7 +109,7 @@ export default function Contact() {
                           <span>{social.name}</span>
 
                           {/* Tooltip */}
-                          <span className="absolute right-full mr-4 top-1/2 -translate-y-1/2 px-3 py-1.5 bg-surface-el/90 backdrop-blur-md text-text-primary text-sm rounded opacity-0 translate-x-2 group-hover:translate-x-0 group-hover:opacity-100 transition-all duration-300 whitespace-nowrap border border-border pointer-events-none z-10 hidden sm:block">
+                          <span className="absolute right-full mr-4 top-1/2 -translate-y-1/2 px-3 py-1.5 bg-surface-elevated/80 backdrop-blur-md text-text-primary text-sm  opacity-0 translate-x-2 group-hover:translate-x-0 group-hover:opacity-100 transition-all duration-300 whitespace-nowrap border border-border pointer-events-none z-10 hidden sm:block">
                             {social.url.replace("mailto:", "")}
                           </span>
                         </a>

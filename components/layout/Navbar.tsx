@@ -144,44 +144,82 @@ export default function Navbar() {
           >
             <nav className="flex flex-col items-center gap-6">
               {navLinks.map((link, i) => (
-                <motion.button
-                  key={link.label}
-                  onClick={() => handleNavClick(link.href)}
-                  className="relative overflow-hidden flex font-heading text-3xl md:text-4xl font-medium text-text-primary hover:text-accent transition-colors duration-300 py-3 md:py-4 px-2"
-                  data-cursor="target"
-                >
-                  <motion.span
-                    initial={{ y: 30 }}
-                    animate={{ y: 0 }}
-                    exit={{ y: 0 }}
-                    transition={{
-                      delay: i * 0.08,
-                      duration: 0.5,
-                      ease,
-                    }}
-                  >
-                    {link.label}
-                  </motion.span>
-                  <motion.div
-                    className="absolute inset-0 bg-foreground z-10 pointer-events-none"
-                    initial={{ scaleX: 1, transformOrigin: "right" }}
-                    animate={{ 
-                      scaleX: 0, 
-                      transformOrigin: "right",
-                      transition: { duration: 0.8, ease, delay: 0.1 + i * 0.1 }
-                    }}
-                    exit={{ 
-                      scaleX: 1, 
-                      transformOrigin: "right",
-                      transition: { duration: 0.4, ease, delay: (navLinks.length - 1 - i) * 0.08 }
-                    }}
-                  />
-                </motion.button>
+                <MenuLink 
+                  key={link.label} 
+                  link={link} 
+                  i={i} 
+                  handleNavClick={handleNavClick} 
+                  navLinksLength={navLinks.length} 
+                />
               ))}
             </nav>
           </motion.div>
         )}
       </AnimatePresence>
     </>
+  );
+}
+
+function MenuLink({ link, i, handleNavClick, navLinksLength }: any) {
+  const [isHovered, setIsHovered] = useState(false);
+  const [hoverCount, setHoverCount] = useState(0);
+
+  return (
+    <motion.button
+      onClick={() => handleNavClick(link.href)}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => { setIsHovered(false); setHoverCount((c) => c + 1); }}
+      className="relative overflow-hidden flex font-heading text-3xl md:text-4xl font-medium transition-colors duration-300 py-3 md:py-4 px-2"
+      data-cursor="target"
+    >
+      <motion.span
+        className="relative block overflow-hidden"
+        initial={{ y: 30 }}
+        animate={{ y: 0 }}
+        exit={{ y: 0 }}
+        transition={{
+          delay: i * 0.08,
+          duration: 0.5,
+          ease,
+        }}
+      >
+        <AnimatePresence mode="popLayout">
+          <motion.span
+            key={isHovered ? "hover" : `unhover-${hoverCount}`}
+            initial={hoverCount === 0 && !isHovered ? false : { y: "150%" }}
+            animate={{ y: "0%" }}
+            exit={{ y: "-150%" }}
+            transition={{ duration: 0.3, ease }}
+            className={`absolute inset-0 flex items-center justify-center whitespace-nowrap ${
+              isHovered ? "text-accent" : "text-text-primary"
+            }`}
+          >
+            {link.label}
+          </motion.span>
+        </AnimatePresence>
+        {/* Invisible placeholder to maintain width and height */}
+        <span className="opacity-0 pointer-events-none block whitespace-nowrap">
+          {link.label}
+        </span>
+      </motion.span>
+      <motion.div
+        className="absolute inset-0 bg-foreground z-10 pointer-events-none"
+        initial={{ scaleX: 1, transformOrigin: "right" }}
+        animate={{
+          scaleX: 0,
+          transformOrigin: "right",
+          transition: { duration: 0.8, ease, delay: 0.1 + i * 0.1 },
+        }}
+        exit={{
+          scaleX: 1,
+          transformOrigin: "right",
+          transition: {
+            duration: 0.4,
+            ease,
+            delay: (navLinksLength - 1 - i) * 0.08,
+          },
+        }}
+      />
+    </motion.button>
   );
 }

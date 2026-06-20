@@ -7,6 +7,7 @@ import TransitionLink from "@/components/ui/TransitionLink";
 import { gsap, ScrollTrigger } from "@/lib/gsap";
 import { projects } from "@/lib/projects-data";
 import MagneticButton from "../ui/MagneticButton";
+import { Button } from "@/components/ui/button";
 import { ScrollRevealBars } from "@/components/ui/ScrollRevealBars";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -276,21 +277,22 @@ export default function Projects() {
           animate={isInView ? "visible" : "hidden"}
         >
           <MagneticButton strength={0.2}>
-            <TransitionLink
+            <Button
               href="/projects"
-              className="group inline-flex items-center gap-3 px-7 py-3.5 text-xs uppercase tracking-wider border border-border text-text-secondary hover:text-text-primary hover:border-accent transition-all duration-300"
+              icon={
+                <svg
+                  className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  strokeWidth={1.5}
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                </svg>
+              }
             >
-              <span>View All Projects</span>
-              <svg
-                className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                strokeWidth={1.5}
-              >
-                <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-              </svg>
-            </TransitionLink>
+              View All Projects
+            </Button>
           </MagneticButton>
         </motion.div>
       </div>
