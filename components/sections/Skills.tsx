@@ -177,8 +177,8 @@ function SkillTag({ item, catIndex, itemIndex }: { item: string, catIndex: numbe
         duration: 0.5,
         ease,
       }}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => { setIsHovered(false); setHoverCount(c => c + 1); }}
+      onMouseEnter={() => { if (window.innerWidth >= 768) setIsHovered(true) }}
+      onMouseLeave={() => { if (isHovered) { setIsHovered(false); setHoverCount(c => c + 1); } }}
       data-cursor="target"
     >
       {/* Wipe Background */}

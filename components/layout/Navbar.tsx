@@ -167,8 +167,8 @@ function MenuLink({ link, i, handleNavClick, navLinksLength }: any) {
   return (
     <motion.button
       onClick={() => handleNavClick(link.href)}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => { setIsHovered(false); setHoverCount((c) => c + 1); }}
+      onMouseEnter={() => { if (window.innerWidth >= 768) setIsHovered(true) }}
+      onMouseLeave={() => { if (isHovered) { setIsHovered(false); setHoverCount((c) => c + 1); } }}
       className="relative overflow-hidden flex font-heading text-3xl md:text-4xl font-medium transition-colors duration-300 py-3 md:py-4 px-2"
       data-cursor="target"
     >

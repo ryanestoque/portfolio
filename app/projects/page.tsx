@@ -7,6 +7,7 @@ import TransitionLink from "@/components/ui/TransitionLink";
 import { projects } from "@/lib/projects-data";
 import Navbar from "@/components/layout/Navbar";
 import Contact from "@/components/layout/Contact";
+import { Button } from "@/components/ui/button";
 
 const ease = [0.33, 1, 0.68, 1] as [number, number, number, number];
 
@@ -30,32 +31,8 @@ export default function ProjectsPage() {
       <Navbar />
 
       <main ref={ref}>
-        <section className="relative py-24 md:py-32 overflow-hidden">
+        <section className="relative py-32 overflow-hidden">
           <div className="relative z-10 max-w-[1400px] mx-auto px-6 md:px-10 lg:px-16">
-            {/* Back Link */}
-            <motion.div
-              custom={0}
-              variants={fadeUp}
-              initial="hidden"
-              animate={isInView ? "visible" : "hidden"}
-              className="mb-16"
-            >
-              <TransitionLink
-                href="/"
-                className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.2em] text-text-tertiary hover:text-text-primary transition-colors duration-300 group"
-              >
-                <svg
-                  className="w-4 h-4 transition-transform duration-300 group-hover:-translate-x-1"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  strokeWidth={1.5}
-                >
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M7 16l-4-4m0 0l4-4m-4 4h18" />
-                </svg>
-                <span>Back to Home</span>
-              </TransitionLink>
-            </motion.div>
             <motion.div
               className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-20"
               custom={2}
@@ -140,14 +117,6 @@ export default function ProjectsPage() {
               ))}
             </div>
 
-            {/* Back to top */}
-            <motion.div
-              className="editorial-line mt-20"
-              initial={{ scaleX: 1 }}
-              animate={{ scaleX: 1 }}
-              transition={{ duration: 1.5, delay: 0.5, ease }}
-              style={{ originX: 0 }}
-            />
 
             <motion.div
               className="flex justify-center mt-16"
@@ -156,21 +125,23 @@ export default function ProjectsPage() {
               initial="hidden"
               animate={isInView ? "visible" : "hidden"}
             >
-              <TransitionLink
+              <Button
                 href="/"
-                className="group inline-flex items-center gap-3 px-8 py-4 text-[12px] uppercase tracking-[0.2em] border border-border text-text-secondary hover:text-text-primary hover:border-accent transition-all duration-300"
+                data-cursor="target"
+                icon={
+                  <svg
+                    className="w-4 h-4"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    strokeWidth={1.5}
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M7 16l-4-4m0 0l4-4m-4 4h18" />
+                  </svg>
+                }
               >
-                <svg
-                  className="w-4 h-4 transition-transform duration-300 group-hover:-translate-x-1"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  strokeWidth={1.5}
-                >
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M7 16l-4-4m0 0l4-4m-4 4h18" />
-                </svg>
-                <span>Back to Home</span>
-              </TransitionLink>
+                Back to Home
+              </Button>
             </motion.div>
           </div>
         </section>

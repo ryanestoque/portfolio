@@ -32,8 +32,8 @@ export default function ThemeToggle() {
     <motion.button
       id="theme-toggle"
       onClick={toggle}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => { setIsHovered(false); setHoverCount((c) => c + 1); }}
+      onMouseEnter={() => { if (window.innerWidth >= 768) setIsHovered(true) }}
+      onMouseLeave={() => { if (isHovered) { setIsHovered(false); setHoverCount((c) => c + 1); } }}
       aria-label={isLight ? "Switch to dark mode" : "Switch to light mode"}
       whileTap={{ scale: 0.88 }}
       className="group relative w-9 h-9 flex items-center justify-center border border-border overflow-hidden transition-colors duration-300 hover:border-accent/40"

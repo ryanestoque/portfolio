@@ -61,7 +61,7 @@ function ProjectContent({ project }: { project: Project }) {
   const nextProject = currentIndex < projects.length - 1 ? projects[currentIndex + 1] : null;
 
   return (
-    <section ref={ref} className="relative py-24 md:py-32 overflow-hidden">
+    <section ref={ref} className="relative py-32 overflow-hidden">
       <div className="relative z-10 max-w-[1400px] mx-auto px-6 md:px-10 lg:px-16">
         {/* ── Hero ───────────────────────────────── */}
         <motion.div
@@ -401,14 +401,6 @@ function ProjectContent({ project }: { project: Project }) {
           </motion.div>
         )}
 
-        {/* ── Navigation ─────────────────────────── */}
-        <motion.div
-          className="editorial-line"
-          initial={{ scaleX: 1 }}
-          animate={{ scaleX: 1 }}
-          transition={{ duration: 1.5, delay: 0.5, ease }}
-          style={{ originX: 0 }}
-        />
 
         <motion.div
           custom={8}
@@ -419,7 +411,7 @@ function ProjectContent({ project }: { project: Project }) {
         >
           <div className="flex flex-col sm:flex-row items-center justify-between gap-6">
             {/* Previous Project */}
-            <div className="flex-1">
+            {/* <div className="flex-1">
               {prevProject && (
                 <TransitionLink
                   href={`/projects/${prevProject.slug}`}
@@ -438,18 +430,32 @@ function ProjectContent({ project }: { project: Project }) {
                   <span>{prevProject.title}</span>
                 </TransitionLink>
               )}
-            </div>
+            </div> */}
 
             {/* All Projects */}
             <Button
-              href="/#projects"
+              href="/projects"
               data-cursor="target"
+              icon={
+                <svg
+                  className="w-4 h-4"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  strokeWidth={1.5}
+                >
+                  <rect x="4" y="4" width="6" height="6" rx="1" />
+                  <rect x="14" y="4" width="6" height="6" rx="1" />
+                  <rect x="4" y="14" width="6" height="6" rx="1" />
+                  <rect x="14" y="14" width="6" height="6" rx="1" />
+                </svg>
+              }
             >
               Back to Projects
             </Button>
 
             {/* Next Project */}
-            <div className="flex-1 text-right">
+            {/* <div className="flex-1 text-right">
               {nextProject && (
                 <TransitionLink
                   href={`/projects/${nextProject.slug}`}
@@ -468,7 +474,7 @@ function ProjectContent({ project }: { project: Project }) {
                   </svg>
                 </TransitionLink>
               )}
-            </div>
+            </div> */}
           </div>
         </motion.div>
       </div>

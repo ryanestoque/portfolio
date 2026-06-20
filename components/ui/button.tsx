@@ -21,8 +21,8 @@ const Button = React.forwardRef<HTMLButtonElement | HTMLAnchorElement, ButtonPro
     const content = (
       <div 
         className={`group relative inline-flex items-center border border-border overflow-hidden ${props.disabled ? 'bg-surface opacity-60 cursor-not-allowed' : 'bg-surface'} ${className || ""}`}
-        onMouseEnter={() => { if (!props.disabled) setIsHovered(true) }}
-        onMouseLeave={() => { if (!props.disabled) { setIsHovered(false); setHoverCount(c => c + 1); } }}
+        onMouseEnter={() => { if (!props.disabled && window.innerWidth >= 768) setIsHovered(true) }}
+        onMouseLeave={() => { if (!props.disabled && isHovered) { setIsHovered(false); setHoverCount(c => c + 1); } }}
       >
         {/* Wipe Background - Covers the ENTIRE button container */}
         <div className="absolute left-0 right-0 top-0 bottom-auto h-0 bg-accent transition-[height] duration-300 ease-[cubic-bezier(0.33,1,0.68,1)] group-hover:top-auto group-hover:bottom-0 group-hover:h-full z-0" />
