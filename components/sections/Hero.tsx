@@ -87,14 +87,14 @@ export default function Hero() {
               </motion.h1>
             </motion.div>
 
-            <motion.h6
+            <motion.h2
               data-hero="role"
               className="mt-3 lg:mt-4 text-lg md:text-xl leading-relaxed text-text-primary font-normal flex items-center justify-center lg:justify-start gap-3 sm:gap-4"
             >
               <span className="w-6 lg:w-8 h-[1px] bg-text-primary block rounded-full"></span>
               <span>Full Stack Developer</span>
               <span className="w-6 h-[1px] bg-text-primary block rounded-full lg:hidden"></span>
-            </motion.h6>
+            </motion.h2>
 
             <motion.div data-hero="cta" className="flex flex-wrap items-center justify-center lg:justify-start gap-4 mt-8 lg:mt-10">
               <a
