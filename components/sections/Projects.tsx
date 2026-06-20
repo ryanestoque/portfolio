@@ -94,7 +94,7 @@ export default function Projects() {
           animate={isInView ? "visible" : "hidden"}
         >
           <span className="text-xs tracking-[0.3em] uppercase text-text-secondary">04</span>
-          <div className="w-12 h-[1px] bg-accent/50" />
+          <div className="w-12 h-[1px] bg-accent/75" />
           <span className="text-xs tracking-[0.3em] uppercase text-text-secondary">BUILDS</span>
         </motion.div>
 

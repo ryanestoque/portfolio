@@ -187,7 +187,7 @@ function MobileStory() {
         {/* Section label */}
         <div className="flex items-center gap-3 mb-12">
           <span className="text-xs tracking-[0.3em] uppercase text-text-secondary">01</span>
-          <div className="w-8 h-[1px] bg-accent/50" />
+          <div className="w-8 h-[1px] bg-accent/75" />
           <span className="text-xs tracking-[0.3em] uppercase text-text-secondary">PHILOSOPHY</span>
         </div>
 
