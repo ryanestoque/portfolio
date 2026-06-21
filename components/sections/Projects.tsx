@@ -9,10 +9,11 @@ import { projects } from "@/lib/projects-data";
 import MagneticButton from "../ui/MagneticButton";
 import { Button } from "@/components/ui/button";
 import { ScrollRevealBars } from "@/components/ui/ScrollRevealBars";
+import SectionHeader from "@/components/ui/SectionHeader";
+import ProjectCard from "@/components/ui/ProjectCard";
+import { ease, fadeUp } from "@/lib/animations";
 
 gsap.registerPlugin(ScrollTrigger);
-
-const ease = [0.33, 1, 0.68, 1] as [number, number, number, number];
 
 const MOBILE_PROJECT_COUNT = 3;
 
@@ -22,16 +23,7 @@ export default function Projects() {
   const trackRef = useRef<HTMLDivElement>(null);
   const sectionRef = useRef<HTMLDivElement>(null);
 
-  const fadeUp = {
-    hidden: { y: 0, opacity: 1 },
-    visible: (i: number) => ({
-      y: 0,
-      opacity: 1,
-      transition: {
-        duration: 0,
-      },
-    }),
-  };
+
 
   useEffect(() => {
     const mainSection = ref.current;
@@ -94,9 +86,7 @@ export default function Projects() {
           initial="hidden"
           animate={isInView ? "visible" : "hidden"}
         >
-          <span className="text-xs tracking-[0.3em] uppercase text-text-secondary">04</span>
-          <div className="w-12 h-[1px] bg-accent/75" />
-          <span className="text-xs tracking-[0.3em] uppercase text-text-secondary">BUILDS</span>
+          <SectionHeader number="04" label="BUILDS" />
         </motion.div>
 
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-20">
@@ -132,66 +122,7 @@ export default function Projects() {
               className="project-card flex-shrink-0"
               style={{ width: "min(550px, 42vw)" }}
             >
-              <TransitionLink
-                href={`/projects/${project.slug}`}
-                className="group flex flex-col h-full border border-border bg-surface hover:border-accent/30 transition-all duration-500"
-                data-cursor="project"
-              >
-                {/* Image Preview */}
-                <div className="relative aspect-video overflow-hidden">
-                  <Image
-                    src={project.image}
-                    alt={project.title}
-                    fill
-                    priority
-                    sizes="(max-width: 768px) 100vw, 42vw"
-                    className={`object-cover transition-transform duration-700 group-hover:scale-105 ${project.darkImage ? 'dark:hidden' : ''}`}
-                  />
-                  {project.darkImage && (
-                    <Image
-                      src={project.darkImage}
-                      alt={project.title}
-                      fill
-                      priority
-                      sizes="(max-width: 768px) 100vw, 42vw"
-                      className="object-cover transition-transform duration-700 group-hover:scale-105 hidden dark:block"
-                    />
-                  )}
-                  <div className="absolute inset-0 bg-background/0 group-hover:bg-background/10 transition-colors duration-500" />
-                </div>
-
-                {/* Card Content */}
-                <div className="p-5 lg:p-6 flex flex-col flex-grow">
-                  <div className="flex items-start justify-between gap-4 mb-3">
-                    <h3 className="font-heading text-xl lg:text-2xl font-medium text-text-primary group-hover:text-accent transition-colors duration-500">
-                      {project.title}
-                    </h3>
-                    <span className="text-xs tracking-wider uppercase text-text-tertiary flex-shrink-0 pt-1.5">
-                      {project.year}
-                    </span>
-                  </div>
-
-                  <p className="text-sm lg:text-base leading-relaxed text-text-secondary mb-5 font-normal line-clamp-2">
-                    {project.description}
-                  </p>
-
-                  <div className="flex flex-wrap gap-2 mt-auto">
-                    {project.tags.slice(0, 4).map((tag) => (
-                      <span
-                        key={tag}
-                        className="font-normal text-xs tracking-wide px-4 py-2 border border-border text-text-primary"
-                      >
-                        {tag}
-                      </span>
-                    ))}
-                    {project.tags.length > 4 && (
-                      <span className="font-normal text-xs tracking-wide px-4 py-2 border border-border text-text-secondary">
-                        +{project.tags.length - 4}
-                      </span>
-                    )}
-                  </div>
-                </div>
-              </TransitionLink>
+              <ProjectCard project={project} />
             </motion.div>
           ))}
         </div>
@@ -208,66 +139,7 @@ export default function Projects() {
               initial="hidden"
               animate={isInView ? "visible" : "hidden"}
             >
-              <TransitionLink
-                href={`/projects/${project.slug}`}
-                className="group flex flex-col h-full border border-border bg-surface hover:border-accent/30 transition-all duration-500"
-                data-cursor="project"
-              >
-                {/* Image Preview */}
-                <div className="relative aspect-video overflow-hidden">
-                  <Image
-                    src={project.image}
-                    alt={project.title}
-                    fill
-                    priority
-                    sizes="(max-width: 768px) 100vw, 50vw"
-                    className={`object-cover transition-transform duration-700 group-hover:scale-105 ${project.darkImage ? 'dark:hidden' : ''}`}
-                  />
-                  {project.darkImage && (
-                    <Image
-                      src={project.darkImage}
-                      alt={project.title}
-                      fill
-                      priority
-                      sizes="(max-width: 768px) 100vw, 50vw"
-                      className="object-cover transition-transform duration-700 group-hover:scale-105 hidden dark:block"
-                    />
-                  )}
-                  <div className="absolute inset-0 bg-background/0 group-hover:bg-background/10 transition-colors duration-500" />
-                </div>
-
-                {/* Card Content */}
-                <div className="p-5 flex flex-col flex-grow">
-                  <div className="flex items-start justify-between gap-4 mb-3">
-                    <h3 className="font-heading text-xl font-medium text-text-primary group-hover:text-accent transition-colors duration-500">
-                      {project.title}
-                    </h3>
-                    <span className="text-xs tracking-wider uppercase text-text-secondary flex-shrink-0 pt-1.5">
-                      {project.year}
-                    </span>
-                  </div>
-
-                  <p className="text-sm leading-relaxed text-text-secondary mb-5 font-medium line-clamp-2">
-                    {project.description}
-                  </p>
-
-                  <div className="flex flex-wrap gap-2 mt-auto">
-                    {project.tags.slice(0, 3).map((tag) => (
-                      <span
-                        key={tag}
-                        className="font-normal text-xs tracking-wide px-4 py-2 border border-border text-text-primary"
-                      >
-                        {tag}
-                      </span>
-                    ))}
-                    {project.tags.length > 3 && (
-                      <span className="font-normal text-xs tracking-wide px-4 py-2 border border-border text-text-secondary">
-                        +{project.tags.length - 3}
-                      </span>
-                    )}
-                  </div>
-                </div>
-              </TransitionLink>
+              <ProjectCard project={project} maxTags={3} />
             </motion.div>
           ))}
         </div>

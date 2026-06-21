@@ -1,10 +1,11 @@
 "use client";
 
-import { useRef, useState } from "react";
-import { motion, useInView, AnimatePresence } from "framer-motion";
+import { useRef } from "react";
+import { motion, useInView } from "framer-motion";
 import { ScrollRevealBars } from "@/components/ui/ScrollRevealBars";
-
-const ease = [0.33, 1, 0.68, 1] as [number, number, number, number];
+import SectionHeader from "@/components/ui/SectionHeader";
+import WipeTag from "@/components/ui/WipeTag";
+import { ease, fadeUp } from "@/lib/animations";
 
 const techCategories = [
   {
@@ -76,17 +77,6 @@ export default function Skills() {
   const ref = useRef<HTMLElement>(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
-  const fadeUp = {
-    hidden: { y: 0, opacity: 1 },
-    visible: (i: number) => ({
-      y: 0,
-      opacity: 1,
-      transition: {
-        duration: 0,
-      },
-    }),
-  };
-
   return (
     <section id="skills" ref={ref} className="relative py-32 md:py-40 overflow-hidden">
       <div className="relative z-10 max-w-[1400px] mx-auto px-6 md:px-10 lg:px-16">
@@ -97,9 +87,7 @@ export default function Skills() {
           initial="hidden"
           animate={isInView ? "visible" : "hidden"}
         >
-          <span className="text-xs tracking-[0.3em] uppercase text-text-secondary">02</span>
-          <div className="w-12 h-[1px] bg-accent/75" />
-          <span className="text-xs tracking-[0.3em] uppercase text-text-secondary">ARSENAL</span>
+          <SectionHeader number="02" label="ARSENAL" />
         </motion.div>
 
         <div className="mb-20">
@@ -163,13 +151,10 @@ export default function Skills() {
   );
 }
 
-function SkillTag({ item, catIndex, itemIndex }: { item: string, catIndex: number, itemIndex: number }) {
-  const [isHovered, setIsHovered] = useState(false);
-  const [hoverCount, setHoverCount] = useState(0);
-
+function SkillTag({ item, catIndex, itemIndex }: { item: string; catIndex: number; itemIndex: number }) {
   return (
-    <motion.span
-      className="group relative inline-flex items-center justify-center px-4 py-2 border border-border bg-surface overflow-hidden cursor-default transition-colors duration-300 hover:border-accent/40"
+    <WipeTag
+      className="px-4 py-2 border border-border bg-surface hover:border-accent/40 text-xs md:text-sm tracking-wide font-normal"
       initial={{ opacity: 1, y: 0 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{
@@ -177,32 +162,9 @@ function SkillTag({ item, catIndex, itemIndex }: { item: string, catIndex: numbe
         duration: 0.5,
         ease,
       }}
-      onMouseEnter={() => { if (window.innerWidth >= 768) setIsHovered(true) }}
-      onMouseLeave={() => { if (isHovered) { setIsHovered(false); setHoverCount(c => c + 1); } }}
       data-cursor="target"
     >
-      {/* Wipe Background */}
-      <span className="absolute left-0 right-0 top-0 bottom-auto h-0 bg-accent transition-[height] duration-300 ease-[cubic-bezier(0.33,1,0.68,1)] group-hover:top-auto group-hover:bottom-0 group-hover:h-full z-0" />
-      
-      {/* Text Area */}
-      <span className="relative z-10 flex items-center justify-center overflow-hidden text-xs md:text-sm tracking-wide font-normal">
-        <AnimatePresence mode="popLayout">
-          <motion.span
-            key={isHovered ? "hover" : `unhover-${hoverCount}`}
-            initial={hoverCount === 0 && !isHovered ? false : { y: "150%" }}
-            animate={{ y: "0%" }}
-            exit={{ y: "-150%" }}
-            transition={{ duration: 0.3, ease: [0.33, 1, 0.68, 1] }}
-            className={`absolute flex items-center justify-center inset-0 whitespace-nowrap ${isHovered ? 'text-background' : 'text-text-primary'}`}
-          >
-            {item}
-          </motion.span>
-        </AnimatePresence>
-        {/* Invisible placeholder */}
-        <span className="opacity-0 pointer-events-none whitespace-nowrap">
-          {item}
-        </span>
-      </span>
-    </motion.span>
+      {item}
+    </WipeTag>
   );
 }

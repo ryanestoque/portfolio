@@ -8,23 +8,14 @@ import { projects } from "@/lib/projects-data";
 import Navbar from "@/components/layout/Navbar";
 import Contact from "@/components/layout/Contact";
 import { Button } from "@/components/ui/button";
-
-const ease = [0.33, 1, 0.68, 1] as [number, number, number, number];
+import ProjectCard from "@/components/ui/ProjectCard";
+import { ease, fadeUp } from "@/lib/animations";
 
 export default function ProjectsPage() {
   const ref = useRef<HTMLElement>(null);
   const isInView = useInView(ref, { once: true, margin: "-50px" });
 
-  const fadeUp = {
-    hidden: { y: 0, opacity: 1 },
-    visible: (i: number) => ({
-      y: 0,
-      opacity: 1,
-      transition: {
-        duration: 0,
-      },
-    }),
-  };
+
 
   return (
     <>
@@ -55,64 +46,7 @@ export default function ProjectsPage() {
                   initial="hidden"
                   animate={isInView ? "visible" : "hidden"}
                 >
-                  <TransitionLink
-                    href={`/projects/${project.slug}`}
-                    className="group block border border-border bg-surface hover:border-accent/30 transition-all duration-500"
-                    data-cursor="project"
-                  >
-                    {/* Image Preview */}
-                    <div className="relative aspect-[16/10] overflow-hidden">
-                      <Image
-                        src={project.image}
-                        alt={project.title}
-                        fill
-                        sizes="(max-width: 768px) 100vw, 50vw"
-                        className={`object-cover transition-transform duration-700 group-hover:scale-105 ${project.darkImage ? 'dark:hidden' : ''}`}
-                      />
-                      {project.darkImage && (
-                        <Image
-                          src={project.darkImage}
-                          alt={project.title}
-                          fill
-                          sizes="(max-width: 768px) 100vw, 50vw"
-                          className="object-cover transition-transform duration-700 group-hover:scale-105 hidden dark:block"
-                        />
-                      )}
-                      <div className="absolute inset-0 bg-background/0 group-hover:bg-background/10 transition-colors duration-500" />
-                    </div>
-
-                    {/* Card Content */}
-                    <div className="p-5 lg:p-6">
-                      <div className="flex items-start justify-between gap-4 mb-4">
-                        <h2 className="font-heading text-xl lg:text-2xl font-medium text-text-primary group-hover:text-accent transition-colors duration-500">
-                          {project.title}
-                        </h2>
-                        <span className="text-[11px] tracking-wider uppercase text-text-tertiary flex-shrink-0 pt-1.5">
-                          {project.year}
-                        </span>
-                      </div>
-
-                      <p className="text-sm lg:text-base leading-relaxed text-text-secondary mb-5 font-normal line-clamp-2">
-                        {project.description}
-                      </p>
-
-                      <div className="flex flex-wrap gap-2">
-                        {project.tags.slice(0, 4).map((tag) => (
-                          <span
-                            key={tag}
-                            className="font-normal text-xs tracking-wide px-4 py-2 border border-border text-text-primary"
-                          >
-                            {tag}
-                          </span>
-                        ))}
-                        {project.tags.length > 4 && (
-                          <span className="font-normal text-xs tracking-wide px-4 py-2 border border-border text-text-secondary">
-                            +{project.tags.length - 4}
-                          </span>
-                        )}
-                      </div>
-                    </div>
-                  </TransitionLink>
+                  <ProjectCard project={project} aspectRatioClass="aspect-[16/10]" />
                 </motion.div>
               ))}
             </div>

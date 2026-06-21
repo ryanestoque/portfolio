@@ -4,10 +4,9 @@ import { useEffect, useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import { gsap, ScrollTrigger } from "@/lib/gsap";
 import { ScrollRevealBars } from "@/components/ui/ScrollRevealBars";
+import { ease } from "@/lib/animations";
 
 gsap.registerPlugin(ScrollTrigger);
-
-const ease = [0.33, 1, 0.68, 1] as [number, number, number, number];
 
 const stages = [
   {

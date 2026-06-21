@@ -7,8 +7,7 @@ import { useLenis } from "lenis/react";
 import MagneticButton from "../ui/MagneticButton";
 import ThemeToggle from "../ui/ThemeToggle";
 import { usePreloader } from "../ui/PreloaderProvider";
-
-const ease = [0.33, 1, 0.68, 1] as [number, number, number, number];
+import { ease } from "@/lib/animations";
 
 const navLinks = [
   { label: "Home", href: "#home" },
@@ -160,7 +159,14 @@ export default function Navbar() {
   );
 }
 
-function MenuLink({ link, i, handleNavClick, navLinksLength }: any) {
+interface MenuLinkProps {
+  link: { label: string; href: string };
+  i: number;
+  handleNavClick: (href: string) => void;
+  navLinksLength: number;
+}
+
+function MenuLink({ link, i, handleNavClick, navLinksLength }: MenuLinkProps) {
   const [isHovered, setIsHovered] = useState(false);
   const [hoverCount, setHoverCount] = useState(0);
 

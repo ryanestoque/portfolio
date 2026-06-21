@@ -4,7 +4,7 @@ import Contact from "@/components/layout/Contact";
 import Hero from "@/components/sections/Hero";
 import Projects from "@/components/sections/Projects";
 import Skills from "@/components/sections/Skills";
-import Experience from "@/components/sections/Experience";
+import Experience from "@/components/sections/experience";
 import ScrollToSection from "@/components/ui/ScrollToSection";
 
 export default function Home() {

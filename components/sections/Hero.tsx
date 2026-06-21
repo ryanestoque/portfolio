@@ -4,8 +4,7 @@ import { motion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
-
-const ease = [0.33, 1, 0.68, 1] as [number, number, number, number];
+import { ease } from "@/lib/animations";
 
 function AbstractVisual() {
   return (
@@ -137,8 +136,6 @@ export default function Hero() {
           </motion.div>
         </div>
       </div>
-
-      {/* <ScrollIndicator /> */}
     </section>
   );
 }
