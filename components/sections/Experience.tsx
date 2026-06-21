@@ -1,7 +1,7 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { useEffect, useRef, useState, useCallback } from "react";
+import { motion, AnimatePresence, useMotionValue, useTransform } from "framer-motion";
 import Image from "next/image";
 import { experiences } from "@/lib/experience-data";
 import CertificateLightbox from "@/components/ui/CertificateLightbox";
@@ -16,19 +16,44 @@ const ease = [0.33, 1, 0.68, 1] as [number, number, number, number];
 function DesktopExperience() {
   const sectionRef = useRef<HTMLElement>(null);
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
-  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+  const [activeIndex, setActiveIndex] = useState<number>(0);
+  
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+  const tooltipX = useTransform(mouseX, (x) => x + 20);
+  const tooltipY = useTransform(mouseY, (y) => y + 20);
+
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  useEffect(() => {
+    return () => {
+      if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    };
+  }, []);
+
   const [lightbox, setLightbox] = useState<{
     open: boolean;
     src: string;
     alt: string;
   }>({ open: false, src: "", alt: "" });
 
-  const activeIndex = hoveredIndex ?? 0;
   const activeExperience = experiences[activeIndex];
 
-  const openCertificate = (src: string, company: string) => {
+  const openCertificate = useCallback((src: string, company: string) => {
     setLightbox({ open: true, src, alt: `${company} Certificate` });
-  };
+  }, []);
+
+  const handleMouseEnterRow = useCallback((i: number) => {
+    if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    setHoveredIndex(i);
+    setActiveIndex(i);
+  }, []);
+
+  const handleMouseLeaveRow = useCallback(() => {
+    timeoutRef.current = setTimeout(() => {
+      setHoveredIndex(null);
+    }, 50);
+  }, []);
 
   return (
     <>
@@ -67,8 +92,8 @@ function DesktopExperience() {
               <motion.div
                 className="fixed pointer-events-none z-[100] max-w-sm bg-surface-elevated/80 backdrop-blur-md border border-border p-4 shadow-2xl"
                 style={{
-                  left: mousePos.x + 20,
-                  top: mousePos.y + 20
+                  left: tooltipX,
+                  top: tooltipY
                 }}
                 initial={{ opacity: 0, y: 10, scale: 0.95 }}
                 animate={{ opacity: 1, y: 0, scale: 1 }}
@@ -118,7 +143,14 @@ function DesktopExperience() {
             {/* Right: Experience List */}
             <div
               className="relative w-full"
-              onMouseMove={(e) => setMousePos({ x: e.clientX, y: e.clientY })}
+              onMouseMove={(e) => {
+                mouseX.set(e.clientX);
+                mouseY.set(e.clientY);
+              }}
+              onMouseEnter={(e) => {
+                mouseX.set(e.clientX);
+                mouseY.set(e.clientY);
+              }}
             >
               <div className="border-t border-border">
                 {experiences.map((exp, i) => (
@@ -127,7 +159,8 @@ function DesktopExperience() {
                     exp={exp}
                     i={i}
                     hoveredIndex={hoveredIndex}
-                    setHoveredIndex={setHoveredIndex}
+                    onMouseEnterRow={handleMouseEnterRow}
+                    onMouseLeaveRow={handleMouseLeaveRow}
                     openCertificate={openCertificate}
                   />
                 ))}
@@ -309,7 +342,7 @@ export default function Experience() {
   );
 }
 
-function DesktopExperienceRow({ exp, i, hoveredIndex, setHoveredIndex, openCertificate }: any) {
+function DesktopExperienceRow({ exp, i, hoveredIndex, onMouseEnterRow, onMouseLeaveRow, openCertificate }: any) {
   const [isHoveredLocal, setIsHoveredLocal] = useState(false);
   const [hoverCount, setHoverCount] = useState(0);
 
@@ -325,8 +358,8 @@ function DesktopExperienceRow({ exp, i, hoveredIndex, setHoveredIndex, openCerti
   return (
     <div
       className="group relative border-b border-border overflow-hidden cursor-default transition-opacity duration-300"
-      onMouseEnter={() => { setHoveredIndex(i); setIsHoveredLocal(true); }}
-      onMouseLeave={() => { setHoveredIndex(null); setIsHoveredLocal(false); setHoverCount(c => c + 1); }}
+      onMouseEnter={() => { onMouseEnterRow(i); setIsHoveredLocal(true); }}
+      onMouseLeave={() => { onMouseLeaveRow(); setIsHoveredLocal(false); setHoverCount(c => c + 1); }}
       style={{ opacity: hoveredIndex !== null && hoveredIndex !== i ? 0.35 : 1 }}
       data-cursor="target"
     >

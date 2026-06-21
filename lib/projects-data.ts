@@ -174,7 +174,7 @@ export const projects: Project[] = [
     ],
 
     role: "Frontend Developer",
-    team: "Solo",
+    team: "4 Members",
     duration: "2026",
     category: "Frontend",
 
@@ -227,7 +227,7 @@ export const projects: Project[] = [
       "Vercel",
     ],
 
-    role: "Full Stack Developer",
+    role: "Frontend Developer",
     team: "4 Members",
     duration: "2026",
     category: "AR / Interactive",
@@ -286,7 +286,7 @@ export const projects: Project[] = [
     ],
 
     role: "Full Stack Developer",
-    team: "Solo",
+    team: "4 Members",
     duration: "2025",
     category: "Full Stack",
 
@@ -339,7 +339,7 @@ export const projects: Project[] = [
     ],
 
     role: "Full Stack Developer",
-    team: "Solo",
+    team: "4 Members",
     duration: "2025",
     category: "Full Stack",
 
