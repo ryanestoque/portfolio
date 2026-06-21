@@ -7,6 +7,7 @@ export interface Experience {
   image: string;
   certificate?: string;
   certificateAvailable?: boolean;
+  imagePosition?: string;
 }
 
 export const experiences: Experience[] = [
@@ -20,6 +21,7 @@ export const experiences: Experience[] = [
     image: "/images/experience/ryan-full-stack.webp",
     certificate: "/images/certificates/ryan-full-stack.webp",
     certificateAvailable: false,
+    imagePosition: 'center',
   },
   {
     id: "experience-2",
@@ -31,6 +33,7 @@ export const experiences: Experience[] = [
     image: "/images/experience/with-loml.webp",
     certificate: "/images/certificates/cebu-bohol-cert.webp",
     certificateAvailable: true,
+    imagePosition: 'center',
   },
   {
     id: "experience-3",
@@ -42,6 +45,7 @@ export const experiences: Experience[] = [
     image: "/images/experience/ideas-plug-in-experience.webp",
     certificate: "/images/certificates/ideas-pitch.webp",
     certificateAvailable: true,
+    imagePosition: 'center',
   },
   {
     id: "experience-4",
@@ -53,6 +57,7 @@ export const experiences: Experience[] = [
     image: "/images/experience/its-creatives-committee.webp",
     certificate: "/images/certificates/2024-hcdc-its-certificate.webp",
     certificateAvailable: true,
+    imagePosition: 'center',
   },
   {
     id: "experience-5",
@@ -64,6 +69,7 @@ export const experiences: Experience[] = [
     image: "/images/experience/cetso-representative.webp",
     certificate: "/images/certificates/placeholder-cert-3.jpg",
     certificateAvailable: false,
+    imagePosition: 'center',
   },
   {
     id: "experience-6",
@@ -75,6 +81,7 @@ export const experiences: Experience[] = [
     image: "/images/experience/psits-quiz-bowl.webp",
     certificate: "/images/certificates/psits-2025-cert_1.webp",
     certificateAvailable: true,
+    imagePosition: 'center',
   },
   {
     id: "experience-7",
@@ -86,6 +93,7 @@ export const experiences: Experience[] = [
     image: "/images/experience/codechum-programming-2024.webp",
     certificate: "/images/certificates/codechum-prog-comp.webp",
     certificateAvailable: true,
+    imagePosition: 'center',
   },
   {
     id: "experience-8",
@@ -97,5 +105,6 @@ export const experiences: Experience[] = [
     image: "/images/experience/technofair-prog-2024.webp",
     certificate: "/images/certificates/champ2024.png",
     certificateAvailable: true,
+    imagePosition: 'center',
   },
 ];

@@ -270,7 +270,7 @@ function MobileExperience() {
                       >
                         <div className="pb-6 px-4">
                           {/* Image at top */}
-                          <div className="relative aspect-video w-full overflow-hidden mb-6 bg-border/20 rounded-sm">
+                          <div className="relative aspect-square w-full overflow-hidden mb-6 bg-border/20 rounded-sm">
                             <Image
                               src={exp.image}
                               alt={exp.company}
