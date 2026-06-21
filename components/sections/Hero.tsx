@@ -6,13 +6,26 @@ import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { ease } from "@/lib/animations";
 
+import { useTheme } from "next-themes";
+
 function AbstractVisual() {
+  const { resolvedTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  const imageSrc = mounted && resolvedTheme === "light" 
+    ? "/images/hero/ryan-light.webp" 
+    : "/images/hero/ryan-the-hacker.webp";
+
   return (
     <div className="relative w-full h-full flex items-center justify-center">
       <div className="relative w-[200px] h-[200px] sm:w-[240px] sm:h-[240px] lg:w-full lg:h-full">
         <div className="relative w-full h-full overflow-hidden">
           <Image
-            src="/images/hero/ryan-the-hacker.webp"
+            src={imageSrc}
             alt="Ryan Estoque"
             fill
             className="object-cover" style={{ objectPosition: "center 60%" }}

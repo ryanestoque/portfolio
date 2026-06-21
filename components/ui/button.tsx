@@ -25,7 +25,7 @@ const Button = React.forwardRef<HTMLButtonElement | HTMLAnchorElement, ButtonPro
         onMouseLeave={() => { if (!props.disabled && isHovered) { setIsHovered(false); setHoverCount(c => c + 1); } }}
       >
         {/* Wipe Background - Covers the ENTIRE button container */}
-        <div className="absolute left-0 right-0 top-0 bottom-auto h-0 bg-accent transition-[height] duration-300 ease-[cubic-bezier(0.33,1,0.68,1)] group-hover:top-auto group-hover:bottom-0 group-hover:h-full z-0" />
+        <div className={`absolute left-0 right-0 top-0 bottom-auto h-0 bg-accent transition-[height] duration-300 ease-[cubic-bezier(0.33,1,0.68,1)] z-0 ${!props.disabled ? 'group-hover:top-auto group-hover:bottom-0 group-hover:h-full' : ''}`} />
         
         {/* Icon Box */}
         {icon && (
