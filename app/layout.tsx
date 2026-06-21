@@ -25,7 +25,7 @@ export const metadata: Metadata = {
     template: "%s | Ryan Estoque",
   },
   description:
-    "Ryan Estoque is a Full Stack Developer specializing in Next.js, React, TypeScript, and modern web applications. Explore projects, case studies, and development work.",
+    "Ryan Estoque is a Full Stack Developer specializing in Next.js, React, and Type Script. Explore his case studies and experiences.",
   keywords: [
     "Ryan Estoque",
     "Ryan Christopher Estoque",
@@ -39,7 +39,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Ryan Estoque - Full Stack Developer",
     description:
-      "Ryan Estoque is a Full Stack Developer specializing in Next.js, React, TypeScript, and modern web applications. Explore projects, case studies, and development work.",
+      "Ryan Estoque is a Full Stack Developer specializing in Next.js, React, and Type Script. Explore his case studies and experiences.",
     type: "website",
     images: ["/images/open-graph/og-image.png"],
     siteName: "Ryan Estoque",
