@@ -64,7 +64,8 @@ export default function ProjectSidebar({ project, isInView }: ProjectSidebarProp
                   {project.tags.map((tag, i) => (
                     <WipeTag
                       key={tag}
-                      className="px-3 py-1.5 border border-border bg-surface hover:border-accent/40 text-sm tracking-wide font-normal"
+                      className="px-3 py-1.5 border border-border bg-surface hover:border-accent/40 text-xs tracking-wide font-normal"
+                      data-cursor="target"
                     >
                       {tag}
                     </WipeTag>

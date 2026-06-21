@@ -1,18 +1,16 @@
 "use client";
 
-import { useRef } from "react";
-import { motion, useInView } from "framer-motion";
+import { useRef, useState } from "react";
+import { motion, useInView, AnimatePresence } from "framer-motion";
 import MagneticButton from "../ui/MagneticButton";
 import { ScrollRevealBars } from "@/components/ui/ScrollRevealBars";
 import { Mail } from "lucide-react";
-import { fadeUp } from "@/lib/animations";
+import { fadeUp, ease } from "@/lib/animations";
 import { GithubIcon, LinkedinIcon, FacebookIcon } from "@/components/icons";
 
 export default function Contact() {
   const ref = useRef<HTMLElement>(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
-
-
 
   return (
     <section id="contact" ref={ref} className="relative py-32 md:py-40 overflow-hidden">
@@ -69,25 +67,7 @@ export default function Contact() {
                     { name: "Facebook", url: "https://facebook.com/ryanestoque02", icon: <FacebookIcon className="w-5 h-5" /> },
                   ].map((social) => (
                     <li key={social.name}>
-                      <MagneticButton strength={0.2}>
-                        <a
-                          href={social.url}
-                          target={social.name === "Gmail" ? "_self" : "_blank"}
-                          rel="noopener noreferrer"
-                          className="group relative inline-flex items-center gap-3 text-sm md:text-base text-text-secondary hover:text-text-primary transition-colors duration-300 py-1"
-                          data-cursor="target"
-                        >
-                          <span className="text-text-tertiary group-hover:text-accent transition-colors duration-300">
-                            {social.icon}
-                          </span>
-                          <span>{social.name}</span>
-
-                          {/* Tooltip */}
-                          <span className="absolute right-full mr-4 top-1/2 -translate-y-1/2 px-3 py-1.5 bg-surface-elevated/80 backdrop-blur-md text-text-primary text-sm  opacity-0 translate-x-2 group-hover:translate-x-0 group-hover:opacity-100 transition-all duration-300 whitespace-nowrap border border-border pointer-events-none z-10 hidden sm:block">
-                            {social.url.replace("mailto:", "")}
-                          </span>
-                        </a>
-                      </MagneticButton>
+                      <SocialLink social={social} />
                     </li>
                   ))}
                 </ul>
@@ -97,5 +77,51 @@ export default function Contact() {
         </div>
       </div>
     </section>
+  );
+}
+
+function SocialLink({ social }: { social: any }) {
+  const [isHovered, setIsHovered] = useState(false);
+  const [hoverCount, setHoverCount] = useState(0);
+
+  return (
+    <MagneticButton strength={0.2}>
+      <a
+        href={social.url}
+        target={social.name === "Gmail" ? "_self" : "_blank"}
+        rel="noopener noreferrer"
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => { setIsHovered(false); setHoverCount((c) => c + 1); }}
+        className="group relative inline-flex items-center gap-3 text-sm md:text-base text-text-secondary hover:text-text-primary transition-colors duration-300 py-1"
+        data-cursor="target"
+      >
+        <span className="text-text-tertiary group-hover:text-accent transition-colors duration-300">
+          {social.icon}
+        </span>
+        <span className="relative flex overflow-hidden whitespace-nowrap">
+          <AnimatePresence mode="popLayout">
+            <motion.span
+              key={isHovered ? "hover" : `unhover-${hoverCount}`}
+              initial={hoverCount === 0 && !isHovered ? false : { y: "150%" }}
+              animate={{ y: "0%" }}
+              exit={{ y: "-150%" }}
+              transition={{ duration: 0.3, ease: [0.33, 1, 0.68, 1] }}
+              className="absolute inset-0 flex items-center"
+            >
+              {social.name}
+            </motion.span>
+          </AnimatePresence>
+          {/* Invisible placeholder */}
+          <span className="opacity-0 pointer-events-none">
+            {social.name}
+          </span>
+        </span>
+
+        {/* Tooltip */}
+        <span className="absolute right-full mr-4 top-1/2 -translate-y-1/2 px-3 py-1.5 bg-surface-elevated/80 backdrop-blur-md text-text-primary text-sm opacity-0 translate-x-2 group-hover:translate-x-0 group-hover:opacity-100 transition-all duration-300 whitespace-nowrap border border-border pointer-events-none z-10 hidden sm:block">
+          {social.url.replace("mailto:", "")}
+        </span>
+      </a>
+    </MagneticButton>
   );
 }

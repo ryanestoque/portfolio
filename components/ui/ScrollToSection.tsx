@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
+import { useLenis } from "lenis/react";
 
 /**
  * Reads the `scrollTo` key written to sessionStorage by the Navbar
@@ -14,18 +15,37 @@ import { usePathname } from "next/navigation";
 export default function ScrollToSection() {
   const pathname = usePathname();
 
+  const lenis = useLenis();
+  const scrollToTargetRef = useRef<string | null>(null);
+
   useEffect(() => {
     // 1. Handle Navigation Scroll-To-Section
-    const target = sessionStorage.getItem("scrollTo");
-    if (target) {
-      sessionStorage.removeItem("scrollTo");
-      const frame = requestAnimationFrame(() => {
-        const el = document.querySelector(target);
+    // Only grab from session storage once and store in ref
+    if (!scrollToTargetRef.current) {
+      const target = sessionStorage.getItem("scrollTo");
+      if (target) {
+        scrollToTargetRef.current = target;
+        sessionStorage.removeItem("scrollTo");
+      }
+    }
+
+    if (scrollToTargetRef.current) {
+      // We need to wait for the Preloader exit animation (0.8s) 
+      // and GSAP initialization before scrolling.
+      const timeoutId = setTimeout(() => {
+        const el = document.querySelector(scrollToTargetRef.current!) as HTMLElement;
         if (el) {
-          el.scrollIntoView({ behavior: "smooth" });
+          if (lenis) {
+            lenis.scrollTo(el, { offset: 0, duration: 1.2 });
+            scrollToTargetRef.current = null; // Reset after successful scroll
+          } else {
+            // If lenis is still not ready, we wait. 
+            // The effect will re-run when lenis is ready.
+          }
         }
-      });
-      return () => cancelAnimationFrame(frame);
+      }, 850);
+      
+      return () => clearTimeout(timeoutId);
     }
 
     // 2. Handle Refresh Scroll Restoration for GSAP Pinning
@@ -44,7 +64,7 @@ export default function ScrollToSection() {
         return () => clearTimeout(timeoutId);
       }
     }
-  }, [pathname]);
+  }, [pathname, lenis]);
 
   // Save scroll position before reload
   useEffect(() => {

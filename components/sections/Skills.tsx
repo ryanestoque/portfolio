@@ -9,7 +9,7 @@ import { ease, fadeUp } from "@/lib/animations";
 
 const techCategories = [
   {
-    title: "LANGUAGES",
+    title: "Languages",
     items: [
       "JavaScript",
       "TypeScript",
