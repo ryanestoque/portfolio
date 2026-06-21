@@ -16,19 +16,28 @@ function AbstractVisual() {
     setMounted(true);
   }, []);
 
-  const imageSrc = mounted && resolvedTheme === "light" 
-    ? "/images/hero/ryan-light.webp" 
-    : "/images/hero/ryan-the-hacker.webp";
+  const isLight = mounted && resolvedTheme === "light";
 
   return (
     <div className="relative w-full h-full flex items-center justify-center">
       <div className="relative w-[200px] h-[200px] sm:w-[240px] sm:h-[240px] lg:w-full lg:h-full">
         <div className="relative w-full h-full overflow-hidden">
+          {/* Dark Theme Image */}
           <Image
-            src={imageSrc}
+            src="/images/hero/ryan-the-hacker.webp"
             alt="Ryan Estoque"
             fill
-            className="object-cover" style={{ objectPosition: "center 60%" }}
+            className={`object-cover transition-opacity duration-500 ${isLight ? "opacity-0" : "opacity-100"}`}
+            style={{ objectPosition: "center 60%" }}
+            priority
+          />
+          {/* Light Theme Image */}
+          <Image
+            src="/images/hero/ryan-light.webp"
+            alt="Ryan Estoque Light"
+            fill
+            className={`object-cover transition-opacity duration-500 ${isLight ? "opacity-100" : "opacity-0"}`}
+            style={{ objectPosition: "center 60%" }}
             priority
           />
         </div>

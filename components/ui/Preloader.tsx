@@ -6,6 +6,7 @@ import gsap from "gsap";
 import { useRouter, usePathname } from "next/navigation";
 
 const CRITICAL_IMAGES = [
+  "/images/hero/ryan-light.webp",
   "/images/hero/ryan-the-hacker.webp",
   "/images/experience/ryan-full-stack.webp",
   "/images/experience/with-loml.webp",
