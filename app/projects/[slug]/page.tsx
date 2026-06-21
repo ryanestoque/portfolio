@@ -92,7 +92,7 @@ function ProjectContent({ project }: { project: Project }) {
           )}
 
           {(project.github || project.demo) && (
-            <div className="flex flex-row w-full items-center gap-3 sm:gap-4 mb-10">
+            <div className="flex flex-col sm:flex-row w-full items-center gap-3 sm:gap-4 mb-10">
               {project.demo && (
                 project.demoAvailable === false ? (
                   <div className="relative group/tooltip w-full">

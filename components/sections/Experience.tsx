@@ -103,6 +103,7 @@ function DesktopExperience() {
                       src={activeExperience.image}
                       alt={activeExperience.company}
                       fill
+                      priority
                       className="object-cover"
                       sizes="(max-width: 1024px) 100vw, 50vw"
                     />
@@ -241,6 +242,7 @@ function MobileExperience() {
                               src={exp.image}
                               alt={exp.company}
                               fill
+                              priority
                               className="object-cover"
                               sizes="(max-width: 1024px) 100vw, 50vw"
                             />
