@@ -1,8 +1,8 @@
 "use client";
 
-import { use, useEffect, useRef } from "react";
+import { use, useEffect, useRef, useState } from "react";
 import { notFound } from "next/navigation";
-import { motion, useInView } from "framer-motion";
+import { motion, useInView, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import TransitionLink from "@/components/ui/TransitionLink";
 import { getProjectBySlug, projects } from "@/lib/projects-data";
@@ -353,13 +353,8 @@ function ProjectContent({ project }: { project: Project }) {
                         Tech Stack
                       </span>
                       <div className="flex flex-wrap gap-2">
-                        {project.tags.map((tag) => (
-                          <span
-                            key={tag}
-                            className="text-sm tracking-wide px-3 py-1.5 border border-border text-text-primary hover:text-text-primary hover:border-accent/40 hover:bg-surface-elevated transition-all duration-300"
-                          >
-                            {tag}
-                          </span>
+                        {project.tags.map((tag, i) => (
+                          <ProjectTag key={tag} tag={tag} index={i} />
                         ))}
                       </div>
                     </div>
@@ -409,7 +404,7 @@ function ProjectContent({ project }: { project: Project }) {
           animate={isInView ? "visible" : "hidden"}
           className="mt-16"
         >
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-6">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
             {/* Previous Project */}
             {/* <div className="flex-1">
               {prevProject && (
@@ -479,5 +474,49 @@ function ProjectContent({ project }: { project: Project }) {
         </motion.div>
       </div>
     </section>
+  );
+}
+
+function ProjectTag({ tag, index }: { tag: string; index: number }) {
+  const [isHovered, setIsHovered] = useState(false);
+  const [hoverCount, setHoverCount] = useState(0);
+
+  return (
+    <motion.span
+      className="group relative inline-flex items-center justify-center px-3 py-1.5 border border-border bg-surface overflow-hidden cursor-default transition-colors duration-300 hover:border-accent/40"
+      initial={{ opacity: 1, y: 0 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{
+        delay: 0.2 + index * 0.04,
+        duration: 0.5,
+        ease,
+      }}
+      onMouseEnter={() => { if (window.innerWidth >= 768) setIsHovered(true) }}
+      onMouseLeave={() => { if (isHovered) { setIsHovered(false); setHoverCount(c => c + 1); } }}
+      data-cursor="target"
+    >
+      {/* Wipe Background */}
+      <span className="absolute left-0 right-0 top-0 bottom-auto h-0 bg-accent transition-[height] duration-300 ease-[cubic-bezier(0.33,1,0.68,1)] group-hover:top-auto group-hover:bottom-0 group-hover:h-full z-0" />
+      
+      {/* Text Area */}
+      <span className="relative z-10 flex items-center justify-center overflow-hidden text-sm tracking-wide font-normal">
+        <AnimatePresence mode="popLayout">
+          <motion.span
+            key={isHovered ? "hover" : `unhover-${hoverCount}`}
+            initial={hoverCount === 0 && !isHovered ? false : { y: "150%" }}
+            animate={{ y: "0%" }}
+            exit={{ y: "-150%" }}
+            transition={{ duration: 0.3, ease: [0.33, 1, 0.68, 1] }}
+            className={`absolute flex items-center justify-center inset-0 whitespace-nowrap ${isHovered ? 'text-background' : 'text-text-primary'}`}
+          >
+            {tag}
+          </motion.span>
+        </AnimatePresence>
+        {/* Invisible placeholder */}
+        <span className="opacity-0 pointer-events-none whitespace-nowrap">
+          {tag}
+        </span>
+      </span>
+    </motion.span>
   );
 }
