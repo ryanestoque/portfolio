@@ -63,7 +63,7 @@ export default function Contact() {
                   {[
                     { name: "Gmail", url: "mailto:estoque02ryan@gmail.com", icon: <Mail className="w-5 h-5" /> },
                     { name: "GitHub", url: "https://github.com/ryanestoque", icon: <GithubIcon className="w-5 h-5" /> },
-                    { name: "LinkedIn", url: "www.linkedin.com/in/ryan-estoque-3bb659418", icon: <LinkedinIcon className="w-5 h-5" /> },
+                    { name: "LinkedIn", url: "https://linkedin.com/in/ryan-estoque-3bb659418", icon: <LinkedinIcon className="w-5 h-5" /> },
                     { name: "Facebook", url: "https://facebook.com/ryanestoque02", icon: <FacebookIcon className="w-5 h-5" /> },
                   ].map((social) => (
                     <li key={social.name}>
