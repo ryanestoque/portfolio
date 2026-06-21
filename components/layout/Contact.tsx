@@ -63,7 +63,7 @@ export default function Contact() {
                   {[
                     { name: "Gmail", url: "mailto:estoque02ryan@gmail.com", icon: <Mail className="w-5 h-5" /> },
                     { name: "GitHub", url: "https://github.com/ryanestoque", icon: <GithubIcon className="w-5 h-5" /> },
-                    { name: "LinkedIn", url: "#", icon: <LinkedinIcon className="w-5 h-5" /> },
+                    { name: "LinkedIn", url: "www.linkedin.com/in/ryan-estoque-3bb659418", icon: <LinkedinIcon className="w-5 h-5" /> },
                     { name: "Facebook", url: "https://facebook.com/ryanestoque02", icon: <FacebookIcon className="w-5 h-5" /> },
                   ].map((social) => (
                     <li key={social.name}>
@@ -118,7 +118,7 @@ function SocialLink({ social }: { social: any }) {
         </span>
 
         {/* Tooltip */}
-        <span className="absolute right-full mr-4 top-1/2 -translate-y-1/2 px-3 py-1.5 bg-surface-elevated/80 backdrop-blur-md text-text-primary text-sm opacity-0 translate-x-2 group-hover:translate-x-0 group-hover:opacity-100 transition-all duration-300 whitespace-nowrap border border-border pointer-events-none z-10 hidden sm:block">
+        <span className="absolute right-full mr-4 top-1/2 -translate-y-1/2 px-3 py-1.5 bg-surface-elevated backdrop-blur-md text-text-primary text-sm opacity-0 translate-x-2 group-hover:translate-x-0 group-hover:opacity-100 transition-all duration-300 whitespace-nowrap border border-border pointer-events-none z-10 hidden sm:block">
           {social.url.replace("mailto:", "")}
         </span>
       </a>

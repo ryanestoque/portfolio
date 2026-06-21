@@ -81,7 +81,7 @@ export default function DesktopExperience() {
           <AnimatePresence>
             {hoveredIndex !== null && (
               <motion.div
-                className="fixed pointer-events-none z-[100] max-w-sm bg-surface-elevated/80 backdrop-blur-md border border-border p-4 shadow-2xl"
+                className="fixed pointer-events-none z-[100] max-w-sm bg-surface-elevated backdrop-blur-md border border-border p-4 shadow-2xl"
                 style={{
                   left: tooltipX,
                   top: tooltipY
