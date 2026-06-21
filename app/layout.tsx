@@ -7,6 +7,7 @@ import { SmoothScroll } from "@/components/ui/smooth-scroll";
 import { ThemeProvider } from "@/components/theme-provider";
 import { PreloaderProvider } from "@/components/ui/PreloaderProvider";
 import Preloader from "@/components/ui/Preloader";
+import { Analytics } from "@vercel/analytics/next";
 
 export const clashDisplay = localFont({
   src: "../public/fonts/clash-display/ClashDisplay-Variable.woff2",
@@ -74,6 +75,7 @@ export default function RootLayout({
             </SmoothScroll>
           </PreloaderProvider>
         </ThemeProvider>
+        <Analytics />
       </body>
     </html>
   );
