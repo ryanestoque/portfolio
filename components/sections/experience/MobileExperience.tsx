@@ -8,6 +8,7 @@ import type { Experience } from "@/lib/experience-data";
 import CertificateLightbox from "@/components/ui/CertificateLightbox";
 import { FileText, ChevronDown } from "lucide-react";
 import { ScrollRevealBars } from "@/components/ui/ScrollRevealBars";
+import { Button } from "@/components/ui/button";
 
 export default function MobileExperience() {
   const [expandedId, setExpandedId] = useState<string | null>(null);
@@ -117,23 +118,19 @@ export default function MobileExperience() {
                           </div>
 
                           {/* Certificate Button */}
-                          <button
+                          <Button
                             onClick={(e) => {
                               e.stopPropagation();
                               if (!exp.certificateAvailable) return;
                               if (exp.certificate) openCertificate(exp.certificate, exp.company);
                             }}
                             disabled={!exp.certificateAvailable}
-                            className={`inline-flex items-center gap-2 px-4 py-2 text-xs tracking-wider border transition-all duration-300 ${
-                              exp.certificateAvailable
-                                ? "border-border text-text-secondary hover:text-text-primary hover:border-accent/40 cursor-pointer"
-                                : "border-border/50 text-text-secondary/50 cursor-not-allowed"
-                            }`}
+                            className="w-full"
                             aria-label={exp.certificateAvailable ? `View ${exp.company} certificate` : "Certificate not yet available"}
+                            icon={<FileText className="w-4 h-4" />}
                           >
-                            <FileText className="w-4 h-4" />
-                            {exp.certificateAvailable ? "View certificate" : "Certifcate not yet available"}
-                          </button>
+                            {exp.certificateAvailable ? "View certificate" : "Certificate not yet available"}
+                          </Button>
                         </div>
                       </motion.div>
                     )}

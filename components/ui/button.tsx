@@ -43,7 +43,7 @@ const Button = React.forwardRef<HTMLButtonElement | HTMLAnchorElement, ButtonPro
               animate={{ y: "0%" }}
               exit={{ y: "-150%" }}
               transition={{ duration: 0.3, ease: [0.33, 1, 0.68, 1] }}
-              className={`absolute flex items-center justify-center inset-0 text-xs font-medium uppercase tracking-wider whitespace-nowrap ${isHovered ? 'text-background' : 'text-text-primary'}`}
+              className={`absolute flex items-center justify-center inset-0 text-[11px] md:text-xs font-medium uppercase tracking-wider whitespace-nowrap ${isHovered ? 'text-background' : 'text-text-primary'}`}
             >
               {children}
             </motion.span>
