@@ -8,6 +8,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { PreloaderProvider } from "@/components/ui/PreloaderProvider";
 import Preloader from "@/components/ui/Preloader";
 import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next"
 
 export const clashDisplay = localFont({
   src: "../public/fonts/clash-display/ClashDisplay-Variable.woff2",
@@ -76,6 +77,7 @@ export default function RootLayout({
           </PreloaderProvider>
         </ThemeProvider>
         <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );

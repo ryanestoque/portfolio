@@ -15,8 +15,6 @@ export default function ProjectsPage() {
   const ref = useRef<HTMLElement>(null);
   const isInView = useInView(ref, { once: true, margin: "-50px" });
 
-
-
   return (
     <>
       <Navbar />
@@ -61,6 +59,7 @@ export default function ProjectsPage() {
             >
               <Button
                 href="/"
+                onClick={() => sessionStorage.setItem("scrollTo", "#projects")}
                 data-cursor="target"
                 icon={
                   <svg
