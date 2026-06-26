@@ -38,7 +38,7 @@ export default function Contact() {
               </ScrollRevealBars>
             </h2>
             <motion.div
-              className="text-sm font-medium md:text-base text-text-secondary mt-10 tracking-wide"
+              className="text-sm font-regular md:text-base text-text-secondary mt-10 tracking-wide"
               custom={4}
               variants={fadeUp}
               initial="hidden"
