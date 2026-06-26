@@ -16,6 +16,12 @@ const CRITICAL_IMAGES = [
   "/images/experience/ideas-plug-in-experience.webp",
   "/images/experience/codechum-programming-2024.webp",
   "/images/experience/psits-quiz-bowl.webp",
+  "/images/projects/crosshere-dark.png",
+  "/images/projects/crosshere-light.png",
+  "/images/projects/dripdrop-dark.png",
+  "/images/projects/dripdrop-light.png",
+  "/images/projects/efz-neo-dark.png",
+  "/images/projects/efz-neo-light.png",
 ];
 
 const MIN_DISPLAY_MS = 500;
