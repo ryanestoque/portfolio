@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useCallback } from "react";
+import { useEffect, useCallback, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 
@@ -17,6 +17,14 @@ export default function CertificateLightbox({
   altText,
   onClose,
 }: CertificateLightboxProps) {
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    if (isOpen) {
+      setIsLoading(true);
+    }
+  }, [isOpen, imageSrc]);
+
   const handleKeyDown = useCallback(
     (e: KeyboardEvent) => {
       if (e.key === "Escape") onClose();
@@ -77,13 +85,17 @@ export default function CertificateLightbox({
             transition={{ duration: 0.3, ease: [0.33, 1, 0.68, 1] }}
             onClick={(e) => e.stopPropagation()}
           >
+            {isLoading && (
+              <div className="absolute inset-0 w-full h-full bg-border/20 animate-pulse rounded-md" />
+            )}
             <Image
               src={imageSrc}
               alt={altText}
               fill
-              className="object-contain"
+              className={`object-contain transition-opacity duration-500 ${isLoading ? 'opacity-0' : 'opacity-100'}`}
               sizes="90vw"
               priority
+              onLoad={() => setIsLoading(false)}
             />
           </motion.div>
         </motion.div>
