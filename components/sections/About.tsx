@@ -30,7 +30,7 @@ const stages = [
       <>
         Throughout my academic and personal development journey, I have built a
         diverse range systems, from business management
-        solutions to interactive 3D web experiences and IoT hardware
+        solutions to interactive web experiences and IoT hardware
         integrations.
       </>
     ),
