@@ -8,18 +8,10 @@ import { useRouter, usePathname } from "next/navigation";
 const CRITICAL_IMAGES = [
   "/images/hero/ryan-light.webp",
   "/images/hero/ryan-the-hacker.webp",
-  "/images/experience/ryan-full-stack.webp",
-  "/images/experience/with-loml.webp",
-  "/images/experience/technofair-prog-2024.webp",
-  "/images/experience/cetso-representative.webp",
-  "/images/experience/its-creatives-committee.webp",
-  "/images/experience/ideas-plug-in-experience.webp",
-  "/images/experience/codechum-programming-2024.webp",
-  "/images/experience/psits-quiz-bowl.webp",
 ];
 
-const MIN_DISPLAY_MS = 2500;
-const ASSET_TIMEOUT_MS = 12000;
+const MIN_DISPLAY_MS = 500;
+const ASSET_TIMEOUT_MS = 3000;
 
 export default function Preloader() {
   const { completeLoading, transitionHref, completeTransition } = usePreloader();

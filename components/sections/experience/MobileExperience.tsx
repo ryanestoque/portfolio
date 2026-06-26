@@ -101,7 +101,6 @@ export default function MobileExperience() {
                               src={exp.image}
                               alt={exp.company}
                               fill
-                              priority
                               className="object-cover"
                               sizes="(max-width: 1024px) 100vw, 50vw"
                             />
