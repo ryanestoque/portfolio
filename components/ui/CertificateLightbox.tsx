@@ -86,7 +86,16 @@ export default function CertificateLightbox({
             onClick={(e) => e.stopPropagation()}
           >
             {isLoading && (
-              <div className="absolute inset-0 w-full h-full bg-border/20 animate-pulse rounded-md" />
+              <div className="absolute inset-0 flex items-center justify-center">
+                <div className="w-48 sm:w-64 h-[2px] bg-foreground/20 rounded-full overflow-hidden relative">
+                  <motion.div 
+                    className="absolute inset-y-0 left-0 w-1/2 bg-foreground rounded-full"
+                    initial={{ x: "-100%" }}
+                    animate={{ x: "200%" }}
+                    transition={{ repeat: Infinity, duration: 1.2, ease: "easeInOut" }}
+                  />
+                </div>
+              </div>
             )}
             <Image
               src={imageSrc}

@@ -5,27 +5,7 @@ import { usePreloader } from "./PreloaderProvider";
 import gsap from "gsap";
 import { useRouter, usePathname } from "next/navigation";
 
-const CRITICAL_IMAGES = [
-  "/images/hero/ryan-light.webp",
-  "/images/hero/ryan-the-hacker.webp",
-  "/images/experience/ryan-full-stack.webp",
-  "/images/experience/with-loml.webp",
-  "/images/experience/technofair-prog-2024.webp",
-  "/images/experience/cetso-representative.webp",
-  "/images/experience/its-creatives-committee.webp",
-  "/images/experience/ideas-plug-in-experience.webp",
-  "/images/experience/codechum-programming-2024.webp",
-  "/images/experience/psits-quiz-bowl.webp",
-  "/images/projects/crosshere-dark.png",
-  "/images/projects/crosshere-light.png",
-  "/images/projects/dripdrop-dark.png",
-  "/images/projects/dripdrop-light.png",
-  "/images/projects/efz-neo-dark.png",
-  "/images/projects/efz-neo-light.png",
-];
-
 const MIN_DISPLAY_MS = 500;
-const ASSET_TIMEOUT_MS = 3000;
 
 export default function Preloader() {
   const { completeLoading, transitionHref, completeTransition } = usePreloader();
@@ -41,81 +21,25 @@ export default function Preloader() {
   const isTransitioningRef = useRef(false);
   const lastPathnameRef = useRef(pathname);
 
-  /* ── Preload images and handle progress ──────────────── */
+  /* ── Preload visual animation (Relies on Next.js for actual image loading) ── */
   useEffect(() => {
     document.body.classList.add("loading-locked");
 
-    let assetsReady = false;
-    let timerReady = false;
-
-    let loaded = 0;
-    const total = CRITICAL_IMAGES.length;
-
-    const updateProgress = (newLoaded: number) => {
-      if (total === 0) return;
-      const percent = (newLoaded / total) * 100;
-      if (progressTweenRef.current) progressTweenRef.current.kill();
-      if (progressBarRef.current) {
-        progressTweenRef.current = gsap.to(progressBarRef.current, {
-          width: `${percent}%`,
-          duration: 0.3,
-          ease: "power2.out"
-        });
-      }
-    };
-
-    const tryExit = () => {
-      if (assetsReady && timerReady && !hasExitedRef.current) {
-        hasExitedRef.current = true;
-        if (progressTweenRef.current) progressTweenRef.current.kill();
-        
-        // Finish progress to 100% then trigger exit
-        gsap.to(progressBarRef.current, {
-          width: "100%",
-          duration: 0.4,
-          ease: "power2.out",
-          onComplete: () => {
+    if (progressBarRef.current) {
+      progressTweenRef.current = gsap.to(progressBarRef.current, {
+        width: "100%",
+        duration: MIN_DISPLAY_MS / 1000,
+        ease: "power2.inOut",
+        onComplete: () => {
+          if (!hasExitedRef.current) {
+            hasExitedRef.current = true;
             setExiting(true);
           }
-        });
-      }
-    };
-
-    const timer = setTimeout(() => {
-      timerReady = true;
-      tryExit();
-    }, MIN_DISPLAY_MS);
-
-    const hardTimeout = setTimeout(() => {
-      assetsReady = true;
-      timerReady = true;
-      tryExit();
-    }, ASSET_TIMEOUT_MS);
-    
-    if (total === 0) {
-      assetsReady = true;
-      tryExit();
-    } else {
-      const onDone = () => {
-        loaded++;
-        updateProgress(loaded);
-        if (loaded >= total) {
-          assetsReady = true;
-          tryExit();
         }
-      };
-
-      CRITICAL_IMAGES.forEach((src) => {
-        const img = new Image();
-        img.onload = onDone;
-        img.onerror = onDone;
-        img.src = src;
       });
     }
 
     return () => {
-      clearTimeout(timer);
-      clearTimeout(hardTimeout);
       if (progressTweenRef.current) progressTweenRef.current.kill();
     };
   }, []);
