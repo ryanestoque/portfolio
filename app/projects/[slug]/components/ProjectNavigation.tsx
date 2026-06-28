@@ -18,7 +18,7 @@ export default function ProjectNavigation({ isInView }: ProjectNavigationProps) 
       <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
         {/* All Projects */}
         <Button
-          href="/projects"
+          href="/"
           data-cursor="target"
           icon={
             <svg
@@ -32,7 +32,7 @@ export default function ProjectNavigation({ isInView }: ProjectNavigationProps) 
             </svg>
           }
         >
-          Back to Projects
+          Back to Home
         </Button>
       </div>
     </motion.div>
