@@ -19,6 +19,7 @@ export default function ProjectNavigation({ isInView }: ProjectNavigationProps) 
         {/* All Projects */}
         <Button
           href="/"
+          onClick={() => sessionStorage.setItem("scrollTo", "#projects")}
           data-cursor="target"
           icon={
             <svg

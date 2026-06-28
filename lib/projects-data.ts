@@ -309,6 +309,7 @@ export const projects: Project[] = [
     demo: "https://arado-enterprises.vercel.app/",
 
     featured: false,
+    demoAvailable: false,
   },
   {
     id: "06",
