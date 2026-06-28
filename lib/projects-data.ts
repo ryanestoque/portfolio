@@ -315,13 +315,13 @@ export const projects: Project[] = [
     slug: "wordol",
 
     title: "Wordol",
-    subtitle: ": A Cebuano Wordle Game",
+    subtitle: "A Cebuano Wordle Game",
 
     description:
       "A Cebuano word puzzle game inspired by the popular game Wordle",
 
     longDescription:
-      "",
+      "Wordol is an engaging web-based word puzzle game specifically tailored for the Cebuano language. Inspired by the global phenomenon Wordle, it provides daily challenges to native speakers and language learners alike. The game aims to promote and preserve the Cebuano vocabulary through interactive gameplay, featuring streak tracking and progress saving via Firebase.",
 
     year: "2025",
     status: "Completed",
@@ -345,18 +345,16 @@ export const projects: Project[] = [
     category: "Full Stack",
 
     problem:
-      "The retail business relied on manual tracking for sales and inventory, resulting in data inaccuracies, stock discrepancies, and difficulty generating business insights.",
+      "There is a lack of modern, interactive digital tools designed to promote and preserve local Philippine languages like Cebuano, making it difficult for younger generations to engage with their native language online.",
 
     solution:
-      "A full-stack POS and inventory system with real-time data synchronization, automated stock tracking, and comprehensive reporting dashboards for informed decision-making.",
+      "A culturally localized word puzzle game that offers an entertaining daily challenge, encouraging vocabulary retention and language appreciation among Cebuano speakers while providing a smooth, modern web experience.",
 
     features: [
-      "Point of Sale interface with barcode scanning support",
-      "Real-time inventory tracking with low-stock alerts",
-      "Role-based access control with JWT authentication",
-      "Sales analytics and reporting dashboards",
-      "Product management with category organization",
-      "Transaction history with receipt generation",
+      "Daily Cebuano five-word puzzles with six attempts",
+      "Real-time letter position feedback and validation",
+      "Player statistics and win streak tracking with Firebase",
+      "Responsive design with seamless dark mode support",
     ],
 
     github: "https://github.com/ryanestoque/wordol-web",
