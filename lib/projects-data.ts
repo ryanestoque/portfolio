@@ -359,10 +359,10 @@ export const projects: Project[] = [
     ],
 
     github: "https://github.com/ryanestoque/wordol-web",
-    demo: "https://wordol.vercel.app",
+    demo: "https://wordol-ph.vercel.app",
 
     featured: false,
-    demoAvailable: false,
+    demoAvailable: true,
   },
   {
     id: "07",
