@@ -327,6 +327,7 @@ export const projects: Project[] = [
     status: "Completed",
 
     image: "/images/projects/wordol-light.png",
+    darkImage: "/images/projects/wordol-dark.png",
     gallery: [],
 
     tags: [
