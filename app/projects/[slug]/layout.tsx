@@ -21,17 +21,27 @@ export async function generateMetadata({ params }: Omit<Props, "children">): Pro
   return {
     title: project.title, // This will become "Project Title | Ryan Estoque" because of the template in your root layout
     description: project.description,
+    alternates: {
+      canonical: `/projects/${slug}`,
+    },
     openGraph: {
       title: `${project.title} | Ryan Estoque`,
       description: project.description,
+      url: `https://ryanestoque.dev/projects/${slug}`,
       images: [
         {
           url: project.image,
           width: 1200,
           height: 630,
-          alt: project.title,
+          alt: `${project.title} — ${project.subtitle ?? "Project"} screenshot`,
         },
       ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${project.title} | Ryan Estoque`,
+      description: project.description,
+      images: [project.image],
     },
   };
 }

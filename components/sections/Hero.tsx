@@ -34,7 +34,7 @@ function AbstractVisual() {
           {/* Light Theme Image */}
           <Image
             src="/images/hero/ryan-light.webp"
-            alt="Ryan Estoque Light"
+            alt="Ryan Estoque"
             fill
             className={`object-cover transition-opacity duration-500 ${isLight ? "opacity-100" : "opacity-0"}`}
             style={{ objectPosition: "center 60%" }}

@@ -369,13 +369,13 @@ export const projects: Project[] = [
     slug: "cross-server",
 
     title: "Cross-Server",
-    subtitle: "A Cebuano Wordle Game",
+    subtitle: "HCDC Canteen Web App",
 
     description:
-      "A 2024 unofficial online Holy Cross of Davo College (HCDC) Canteen mockup utilizing local storage",
+      "A 2024 unofficial online Holy Cross of Davao College (HCDC) Canteen mockup utilizing local storage",
 
     longDescription:
-      "",
+      "Cross-Server is an unofficial canteen web app mockup for Holy Cross of Davao College (HCDC), built with vanilla web technologies. The app simulates an online ordering experience — allowing users to browse a menu, manage a cart, and proceed through a checkout flow — all persisted through local storage without a backend.",
 
     year: "2025",
     status: "Completed",
@@ -393,21 +393,19 @@ export const projects: Project[] = [
     role: "Full Stack Developer",
     team: "Solo",
     duration: "2025",
-    category: "Full Stack",
+    category: "Frontend",
 
     problem:
-      "The retail business relied on manual tracking for sales and inventory, resulting in data inaccuracies, stock discrepancies, and difficulty generating business insights.",
+      "The school canteen lacked a digital interface, requiring students to queue in person with no way to browse the menu or plan orders ahead of time.",
 
     solution:
-      "A full-stack POS and inventory system with real-time data synchronization and comprehensive reporting dashboards for informed decision-making.",
+      "A lightweight web app built with vanilla HTML, CSS, and JavaScript that simulates canteen ordering using local storage for cart and order persistence — no backend required.",
 
     features: [
-      "Point of Sale interface with barcode scanning support",
-      "Real-time inventory tracking with low-stock alerts",
-      "Role-based access control with JWT authentication",
-      "Sales analytics and reporting dashboards",
-      "Product management with category organization",
-      "Transaction history with receipt generation",
+      "Menu browsing by food category",
+      "Cart management with local storage persistence",
+      "Order summary and checkout flow",
+      "Responsive design optimized for mobile use",
     ],
 
     github: "https://github.com/ryanestoque/cross-server",

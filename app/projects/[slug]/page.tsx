@@ -66,7 +66,7 @@ function ProjectContent({ project }: { project: Project }) {
         >
           <Image
             src={project.image}
-            alt={project.title}
+            alt={`${project.title}${project.subtitle ? ` — ${project.subtitle}` : ""} screenshot`}
             fill
             sizes="(max-width: 768px) 100vw, 1400px"
             className={`object-cover ${project.darkImage ? "dark:hidden" : ""}`}
@@ -75,7 +75,7 @@ function ProjectContent({ project }: { project: Project }) {
           {project.darkImage && (
             <Image
               src={project.darkImage}
-              alt={project.title}
+              alt={`${project.title}${project.subtitle ? ` — ${project.subtitle}` : ""} dark mode screenshot`}
               fill
               sizes="(max-width: 768px) 100vw, 1400px"
               className="object-cover hidden dark:block"

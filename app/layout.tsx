@@ -42,13 +42,46 @@ export const metadata: Metadata = {
     description:
       "Ryan Estoque is a Full Stack Developer specializing in Next.js, React, and TypeScript. Explore his case studies and experiences.",
     type: "website",
+    url: "https://ryanestoque.dev",
     images: ["/images/open-graph/ryan-portfolio-og-image.png"],
     siteName: "Ryan Estoque",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Ryan Estoque - Full Stack Developer",
+    description:
+      "Ryan Estoque is a Full Stack Developer specializing in Next.js, React, and TypeScript. Explore his case studies and experiences.",
+    images: ["/images/open-graph/ryan-portfolio-og-image.png"],
   },
   alternates: {
     canonical: "/",
   },
 };
+
+const jsonLd = [
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    name: "Ryan Estoque",
+    alternateName: "Ryan Christopher Estoque",
+    url: "https://ryanestoque.dev",
+    jobTitle: "Full Stack Developer",
+    knowsAbout: ["Next.js", "React", "TypeScript", "Full Stack Development", "Web Development"],
+    address: {
+      "@type": "PostalAddress",
+      addressLocality: "Davao City",
+      addressCountry: "PH",
+    },
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    name: "Ryan Estoque",
+    url: "https://ryanestoque.dev",
+    description:
+      "Ryan Estoque is a Full Stack Developer specializing in Next.js, React, and TypeScript.",
+  },
+];
 
 export default function RootLayout({
   children,
@@ -62,6 +95,10 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <body className="min-h-screen flex flex-col bg-background text-foreground">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
@@ -82,4 +119,3 @@ export default function RootLayout({
     </html>
   );
 }
-
