@@ -50,7 +50,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Ryan Estoque - Full Stack Developer",
     description:
-      "Ryan Estoque is a Full Stack Developer specializing in Next.js, React, and TypeScript. Explore his case studies and experiences.",
+      "Ryan Estoque is a Full Stack Developer from Davao City, Philippines, specializing in Next.js, React, and TypeScript. Explore his case studies and experiences.",
     images: ["/images/open-graph/ryan-portfolio-og-image.png"],
   },
   alternates: {
