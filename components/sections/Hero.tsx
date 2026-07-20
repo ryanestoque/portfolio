@@ -133,7 +133,7 @@ export default function Hero() {
               </Button>
 
               <Button
-                href="/cv.pdf"
+                href="/cv/cv.pdf"
                 className="w-full"
                 icon={
                   <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
