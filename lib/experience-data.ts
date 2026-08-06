@@ -25,7 +25,7 @@ export const experiences: Experience[] = [
   },
   {
     id: "experience-2",
-    role: "3rd-Year BSIT Student",
+    role: "4th-Year BSIT Student",
     company: "BSIT Educational Tour 2025",
     dateRange: "November 2025",
     description:

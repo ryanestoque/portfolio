@@ -13,7 +13,7 @@ const stages = [
     label: "01",
     paragraph: (
       <>
-        I am a 3rd-Year BSIT Student &amp;{" "}
+        I am a 4th-Year BSIT Student &amp;{" "}
         <span className="font-medium text-text-primary">
           Full Stack Developer
         </span>{" "}
