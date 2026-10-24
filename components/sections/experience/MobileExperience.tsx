@@ -9,6 +9,7 @@ import CertificateLightbox from "@/components/ui/CertificateLightbox";
 import { FileText, ChevronDown } from "lucide-react";
 import { ScrollRevealBars } from "@/components/ui/ScrollRevealBars";
 import { Button } from "@/components/ui/button";
+import SectionHeader from "@/components/ui/SectionHeader";
 
 export default function MobileExperience() {
   const [expandedId, setExpandedId] = useState<string | null>(null);
@@ -34,13 +35,7 @@ export default function MobileExperience() {
         <div className="max-w-[1400px] mx-auto px-6 md:px-10">
           {/* Section Label */}
           <div className="flex items-center gap-3 mb-12">
-            <span className="text-xs tracking-[0.3em] uppercase text-text-tertiary">
-              04
-            </span>
-            <div className="w-12 h-[1px] bg-border" />
-            <span className="text-xs tracking-[0.3em] uppercase text-text-tertiary">
-              ROAD TO MASTERY
-            </span>
+            <SectionHeader number="03" label="ROAD TO MASTERY" />
           </div>
 
           <div className="mb-14">
