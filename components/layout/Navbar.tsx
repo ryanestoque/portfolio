@@ -91,7 +91,7 @@ export default function Navbar() {
               </button>
             </MagneticButton>
 
-            {/* Status + Hamburger */}
+            {/* Theme Toggle + Hamburger */}
             <div className="flex items-center gap-3">
               {/* Theme Toggle — always visible */}
               <ThemeToggle />

@@ -1,0 +1,134 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-25T14:35:00+08:00",
+  "title": "Design System: Ryan Estoque Portfolio",
+  "extensions": {
+    "colorMeta": {
+      "blueprint-navy": { "role": "primary", "displayName": "Blueprint Navy", "canonical": "#172554", "tonalRamp": ["#0b1230", "#172554", "#1e3a8a", "#1e40af", "#1d4ed8", "#3b82f6", "#93c5fd", "#dbeafe"] },
+      "blueprint-navy-raised": { "role": "primary", "displayName": "Blueprint Navy Raised", "canonical": "#1e3a8a", "tonalRamp": ["#0b1230", "#172554", "#1e3a8a", "#1e40af", "#1d4ed8", "#3b82f6", "#93c5fd", "#dbeafe"] },
+      "drafting-ice": { "role": "neutral", "displayName": "Drafting Ice", "canonical": "#dbeafe", "tonalRamp": ["#172554", "#1e3a8a", "#1d4ed8", "#3b82f6", "#60a5fa", "#93c5fd", "#bfdbfe", "#dbeafe"] },
+      "drafting-ice-raised": { "role": "neutral", "displayName": "Drafting Ice Raised", "canonical": "#bfdbfe", "tonalRamp": ["#172554", "#1e3a8a", "#1d4ed8", "#3b82f6", "#60a5fa", "#93c5fd", "#bfdbfe", "#dbeafe"] },
+      "navy-ink-75": { "role": "neutral", "displayName": "Navy Ink 75 (light-theme secondary text)", "canonical": "rgba(23, 37, 84, 0.75)" },
+      "navy-ink-60": { "role": "neutral", "displayName": "Navy Ink 60 (light-theme tertiary text)", "canonical": "rgba(23, 37, 84, 0.6)" },
+      "navy-rule-30": { "role": "neutral", "displayName": "Navy Rule 30 (light-theme border)", "canonical": "rgba(23, 37, 84, 0.3)" },
+      "navy-rule-10": { "role": "neutral", "displayName": "Navy Rule 10 (light-theme subtle border)", "canonical": "rgba(23, 37, 84, 0.1)" },
+      "navy-grid-07": { "role": "neutral", "displayName": "Navy Grid 07 (light-theme grid line)", "canonical": "rgba(23, 37, 84, 0.07)" },
+      "ice-ink-75": { "role": "neutral", "displayName": "Ice Ink 75 (dark-theme secondary text)", "canonical": "rgba(219, 234, 254, 0.75)" },
+      "ice-ink-60": { "role": "neutral", "displayName": "Ice Ink 60 (dark-theme tertiary text)", "canonical": "rgba(219, 234, 254, 0.6)" },
+      "ice-rule-30": { "role": "neutral", "displayName": "Ice Rule 30 (dark-theme border)", "canonical": "rgba(219, 234, 254, 0.3)" },
+      "ice-rule-10": { "role": "neutral", "displayName": "Ice Rule 10 (dark-theme subtle border)", "canonical": "rgba(219, 234, 254, 0.1)" },
+      "ice-grid-07": { "role": "neutral", "displayName": "Ice Grid 07 (dark-theme grid line)", "canonical": "rgba(219, 234, 254, 0.07)" }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Display", "purpose": "Hero name only; one per page." },
+      "headline": { "displayName": "Headline", "purpose": "Section statements; one word may drop to weight 400." },
+      "title": { "displayName": "Title", "purpose": "Project card titles and menu links." },
+      "body-lead": { "displayName": "Body Lead", "purpose": "About story paragraphs and the hero role line." },
+      "body": { "displayName": "Body", "purpose": "Card descriptions and general copy, in Ink 75." },
+      "label": { "displayName": "Label", "purpose": "Uppercase section markers and location line, 0.3em tracking." },
+      "button-label": { "displayName": "Button Label", "purpose": "Uppercase button text only." }
+    },
+    "shadows": [
+      { "name": "floating-tooltip", "value": "0 25px 50px -12px rgba(0,0,0,0.25)", "purpose": "Only on the cursor-following experience preview tooltip." }
+    ],
+    "motion": [
+      { "name": "ease-standard", "value": "cubic-bezier(0.33, 1, 0.68, 1)", "purpose": "Shared easing for all UI motion (lib/animations.ts `ease`)." },
+      { "name": "duration-hover", "value": "300ms", "purpose": "Wipe fills, text rolls, colour changes, magnetic return." },
+      { "name": "duration-card", "value": "500ms", "purpose": "Card border and overlay transitions." },
+      { "name": "duration-image", "value": "700ms", "purpose": "Project image hover scale to 1.05." },
+      { "name": "duration-menu", "value": "600ms", "purpose": "Full-screen menu slide-in." },
+      { "name": "reveal-bars", "value": "GSAP power4.inOut, 0.8–1s, 0.15s stagger", "purpose": "Ink bar shrinks right to reveal headlines on scroll." },
+      { "name": "marquee", "value": "30s linear infinite", "purpose": "Continuous marquee strips." }
+    ],
+    "breakpoints": [
+      { "name": "sm", "value": "640px" },
+      { "name": "md", "value": "768px" },
+      { "name": "lg", "value": "1024px" },
+      { "name": "xl", "value": "1280px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Wipe Button",
+      "kind": "button",
+      "refersTo": "button-wipe",
+      "description": "Primary action: square bordered button with ink icon box; ink wipes up on hover and the label inverts.",
+      "html": "<a class=\"ds-btn-wipe\" href=\"#\"><span class=\"ds-btn-wipe__fill\"></span><span class=\"ds-btn-wipe__icon\"><svg width=\"16\" height=\"16\" fill=\"none\" viewBox=\"0 0 24 24\" stroke=\"currentColor\" stroke-width=\"1.5\"><path stroke-linecap=\"round\" stroke-linejoin=\"round\" d=\"M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75\"/></svg></span><span class=\"ds-btn-wipe__label\">Contact Me</span></a>",
+      "css": ".ds-btn-wipe { position: relative; display: inline-flex; align-items: center; overflow: hidden; background: var(--surface, #dbeafe); border: 1px solid var(--border-clr, rgba(23,37,84,0.3)); border-radius: 0; text-decoration: none; font-family: var(--font-satoshi, Satoshi, sans-serif); } .ds-btn-wipe__fill { position: absolute; left: 0; right: 0; bottom: 0; height: 0; background: var(--accent-clr, #172554); transition: height 300ms cubic-bezier(0.33,1,0.68,1); z-index: 0; } .ds-btn-wipe__icon { position: relative; z-index: 1; display: flex; align-items: center; justify-content: center; width: 44px; height: 44px; background: var(--fg, #172554); color: var(--bg, #dbeafe); flex-shrink: 0; } .ds-btn-wipe__label { position: relative; z-index: 1; padding: 14px 24px; min-height: 44px; box-sizing: border-box; display: flex; align-items: center; font-size: 12px; font-weight: 500; letter-spacing: 0.05em; text-transform: uppercase; color: var(--t-primary, #172554); transition: color 300ms cubic-bezier(0.33,1,0.68,1); white-space: nowrap; } .ds-btn-wipe:hover .ds-btn-wipe__fill, .ds-btn-wipe:focus-visible .ds-btn-wipe__fill { height: 100%; } .ds-btn-wipe:hover .ds-btn-wipe__label, .ds-btn-wipe:focus-visible .ds-btn-wipe__label { color: var(--bg, #dbeafe); } .ds-btn-wipe:focus-visible { outline: 2px solid var(--accent-clr, #172554); outline-offset: 2px; }"
+    },
+    {
+      "name": "Wipe Tag",
+      "kind": "chip",
+      "refersTo": "tag",
+      "description": "Square bordered tag for skills and stack; ink wipe on hover.",
+      "html": "<span class=\"ds-tag\"><span class=\"ds-tag__fill\"></span><span class=\"ds-tag__label\">Next.js</span></span>",
+      "css": ".ds-tag { position: relative; display: inline-flex; align-items: center; overflow: hidden; padding: 8px 16px; border: 1px solid var(--border-clr, rgba(23,37,84,0.3)); border-radius: 0; font-family: var(--font-satoshi, Satoshi, sans-serif); font-size: 12px; letter-spacing: 0.025em; } .ds-tag__fill { position: absolute; left: 0; right: 0; bottom: 0; height: 0; background: var(--accent-clr, #172554); transition: height 300ms cubic-bezier(0.33,1,0.68,1); } .ds-tag__label { position: relative; color: var(--t-primary, #172554); transition: color 300ms cubic-bezier(0.33,1,0.68,1); } .ds-tag:hover .ds-tag__fill { height: 100%; } .ds-tag:hover .ds-tag__label { color: var(--bg, #dbeafe); }"
+    },
+    {
+      "name": "Project Card",
+      "kind": "card",
+      "refersTo": "project-card",
+      "description": "Square bordered case-study card: 16:9 screenshot, title + year, two-line description, stack tags.",
+      "html": "<a class=\"ds-card\" href=\"#\"><div class=\"ds-card__media\"></div><div class=\"ds-card__body\"><div class=\"ds-card__head\"><h3 class=\"ds-card__title\">CrossHere</h3><span class=\"ds-card__year\">2026</span></div><p class=\"ds-card__desc\">A real-time, role-based healthcare emergency management platform designed for modern schools.</p><div class=\"ds-card__tags\"><span class=\"ds-card__tag\">Next.js</span><span class=\"ds-card__tag\">Supabase</span><span class=\"ds-card__tag\">+6</span></div></div></a>",
+      "css": ".ds-card { display: flex; flex-direction: column; max-width: 420px; background: var(--surface, #dbeafe); border: 1px solid var(--border-clr, rgba(23,37,84,0.3)); border-radius: 0; text-decoration: none; transition: border-color 500ms; } .ds-card:hover, .ds-card:focus-visible { border-color: rgba(23,37,84,0.6); } .ds-card__media { aspect-ratio: 16/9; background: var(--surface-el, #bfdbfe); transition: transform 700ms; } .ds-card__body { padding: 24px; } .ds-card__head { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; margin-bottom: 12px; } .ds-card__title { margin: 0; font-family: var(--font-clash-display, 'Clash Display', sans-serif); font-size: 24px; font-weight: 500; color: var(--t-primary, #172554); } .ds-card__year { font-family: var(--font-satoshi, Satoshi, sans-serif); font-size: 12px; letter-spacing: 0.05em; text-transform: uppercase; color: var(--t-tertiary, rgba(23,37,84,0.6)); padding-top: 6px; } .ds-card__desc { margin: 0 0 20px; font-family: var(--font-satoshi, Satoshi, sans-serif); font-size: 16px; line-height: 1.625; color: var(--t-secondary, rgba(23,37,84,0.75)); } .ds-card__tags { display: flex; flex-wrap: wrap; gap: 8px; } .ds-card__tag { font-family: var(--font-satoshi, Satoshi, sans-serif); font-size: 12px; padding: 8px 16px; border: 1px solid var(--border-clr, rgba(23,37,84,0.3)); color: var(--t-primary, #172554); }"
+    },
+    {
+      "name": "Navbar",
+      "kind": "nav",
+      "refersTo": "navbar",
+      "description": "Fixed 72px bar: wordmark left, theme toggle and two-line hamburger right, hairline bottom rule.",
+      "html": "<nav class=\"ds-nav\"><button class=\"ds-nav__mark\">Ryan Estoque</button><div class=\"ds-nav__actions\"><button class=\"ds-nav__icon\" aria-label=\"Toggle theme\"><svg width=\"18\" height=\"18\" fill=\"none\" viewBox=\"0 0 24 24\" stroke=\"currentColor\" stroke-width=\"1.5\"><path stroke-linecap=\"round\" stroke-linejoin=\"round\" d=\"M21.75 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z\"/></svg></button><button class=\"ds-nav__icon ds-nav__burger\" aria-label=\"Toggle menu\"><span></span><span></span></button></div></nav>",
+      "css": ".ds-nav { display: flex; align-items: center; justify-content: space-between; height: 72px; padding: 0 24px; background: var(--bg, #dbeafe); border-bottom: 1px solid var(--border-clr, rgba(23,37,84,0.3)); } .ds-nav__mark { background: none; border: 0; padding: 0; font-family: var(--font-clash-display, 'Clash Display', sans-serif); font-size: 18px; font-weight: 600; letter-spacing: -0.025em; color: var(--t-primary, #172554); cursor: pointer; } .ds-nav__actions { display: flex; align-items: center; gap: 12px; } .ds-nav__icon { width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; background: none; border: 0; color: var(--t-primary, #172554); cursor: pointer; } .ds-nav__burger { flex-direction: column; gap: 10px; } .ds-nav__burger span { display: block; width: 20px; height: 2px; background: currentColor; } .ds-nav__mark:focus-visible, .ds-nav__icon:focus-visible { outline: 2px solid var(--accent-clr, #172554); outline-offset: 2px; }"
+    },
+    {
+      "name": "Section Marker",
+      "kind": "custom",
+      "description": "Number, 48px hairline, uppercase label at 0.3em tracking; opens every major section.",
+      "html": "<div class=\"ds-marker\"><span>01</span><i></i><span>Philosophy</span></div>",
+      "css": ".ds-marker { display: flex; align-items: center; gap: 12px; font-family: var(--font-satoshi, Satoshi, sans-serif); font-size: 12px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--t-secondary, rgba(23,37,84,0.75)); } .ds-marker i { display: block; width: 48px; height: 1px; background: var(--accent-clr, #172554); opacity: 0.75; }"
+    },
+    {
+      "name": "Bracketed Portrait Frame",
+      "kind": "custom",
+      "description": "Square image framed by four 2px L-shaped corner brackets offset outside the edge, like crop marks.",
+      "html": "<div class=\"ds-frame\"><div class=\"ds-frame__img\"></div><i class=\"tl\"></i><i class=\"tr\"></i><i class=\"bl\"></i><i class=\"br\"></i></div>",
+      "css": ".ds-frame { position: relative; width: 200px; height: 200px; margin: 20px; } .ds-frame__img { width: 100%; height: 100%; background: var(--surface-el, #bfdbfe); } .ds-frame i { position: absolute; width: 16px; height: 16px; border-color: var(--accent-clr, #172554); border-style: solid; border-width: 0; } .ds-frame .tl { top: -12px; left: -12px; border-top-width: 2px; border-left-width: 2px; } .ds-frame .tr { top: -12px; right: -12px; border-top-width: 2px; border-right-width: 2px; } .ds-frame .bl { bottom: -12px; left: -12px; border-bottom-width: 2px; border-left-width: 2px; } .ds-frame .br { bottom: -12px; right: -12px; border-bottom-width: 2px; border-right-width: 2px; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Engineer's Blueprint",
+    "overview": "The portfolio is a drafting sheet: Blueprint Navy and Drafting Ice laid over a fixed 50px grid. Every edge is square-cut and every rule is a hairline. Nothing is decorated that isn't also measured. The mood is technical and confident, but also minimal, editorial, and calm. Large Clash Display headlines carry the authority, and Satoshi body copy stays quiet underneath.\n\nThe play lives in motion, not in ornament. Text rolls up out of its line on hover, fills wipe up from the bottom, bars slide off headlines to reveal them, and a square difference-blend cursor tracks the pointer. At rest the page is still and flat; under the hand it comes alive. That contrast between precise stillness and responsive motion is the identity.\n\nThe two themes don't use two palettes. They are one palette inverted: dark mode is navy paper with ice ink, light mode is ice paper with navy ink. Depth comes from colour inversion, borders, and the grid, never from shadow, gradient, or glow.",
+    "keyCharacteristics": [
+      "Strictly two-tone (navy and ice); the two swap roles between themes.",
+      "A fixed 50px drafting grid sits behind every page.",
+      "Square corners everywhere (0px radius).",
+      "Hairline borders at 30% ink for structure, 10% for subtle division.",
+      "Flat at rest; hover states invert colour with an upward wipe.",
+      "One shared easing curve, `cubic-bezier(0.33, 1, 0.68, 1)`, for all UI motion.",
+      "Brand fonts: Clash Display (headings) and Satoshi (body)."
+    ],
+    "rules": [
+      { "name": "The Two-Tone Rule", "body": "Only navy, ice, and their opacity steps. No new hues, tints, or brand colours without exception.", "section": "colors" },
+      { "name": "The Inversion Rule", "body": "Emphasis comes from swapping paper and ink (navy on ice becomes ice on navy), not from adding a colour.", "section": "colors" },
+      { "name": "The Weight-Drop Rule", "body": "Inside a 600-weight headline, one key word may drop to 400 for emphasis. Never use italics or colour for this.", "section": "typography" },
+      { "name": "The Section Marker Rule", "body": "Every major section opens with the label strip: number, a 48px hairline, then the uppercase label at 0.3em tracking.", "section": "typography" },
+      { "name": "The Flat-By-Default Rule", "body": "No shadows, glows, or gradients on surfaces. If something needs to stand out, invert it or give it a border.", "section": "elevation" }
+    ],
+    "dos": [
+      "Do use only the theme tokens (`bg-background`, `text-text-primary`, `border-border`, `bg-accent`) so every component inverts correctly between themes.",
+      "Do keep every corner at 0px and every border at 1px Rule 30.",
+      "Do use the shared ease `cubic-bezier(0.33, 1, 0.68, 1)` and 300ms for hover state changes; save 500 to 700ms for card and image transitions.",
+      "Do express hover as inversion: an ink wipe up from the bottom, with the label rolling into paper colour.",
+      "Do open each major section with the Section Marker strip, then a Headline that uses the Weight-Drop Rule.",
+      "Do provide separate light and dark imagery wherever a screenshot or portrait appears.",
+      "Do honour `prefers-reduced-motion`: drop text rolls, reveal bars, and smooth scroll to instant state changes."
+    ],
+    "donts": [
+      "Don't add any colour beyond navy, ice, and their opacity steps.",
+      "Don't use rounded cards, pill buttons, or rounded image frames.",
+      "Don't use gradients, glows, or glassmorphism as decoration. Blur is only for functional overlays (tooltips, lightbox, scrolled navbar).",
+      "Don't use the generic SaaS look: icon-in-circle feature grids, purple gradients, or floating shadowed cards.",
+      "Don't add drop shadows to surfaces at rest."
+    ]
+  }
+}
