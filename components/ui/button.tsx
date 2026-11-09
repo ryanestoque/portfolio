@@ -3,7 +3,7 @@
 import * as React from "react";
 import TransitionLink from "./TransitionLink";
 import { Slot } from "radix-ui";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 
 export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   href?: string;
@@ -17,6 +17,7 @@ const Button = React.forwardRef<HTMLButtonElement | HTMLAnchorElement, ButtonPro
   ({ className, href, icon, children, asChild, ...props }, ref) => {
     const [isHovered, setIsHovered] = React.useState(false);
     const [hoverCount, setHoverCount] = React.useState(0);
+    const prefersReducedMotion = useReducedMotion();
 
     const content = (
       <div
@@ -25,7 +26,7 @@ const Button = React.forwardRef<HTMLButtonElement | HTMLAnchorElement, ButtonPro
         onMouseLeave={() => { if (!props.disabled && isHovered) { setIsHovered(false); setHoverCount(c => c + 1); } }}
       >
         {/* Wipe Background - Covers the ENTIRE button container */}
-        <div className={`absolute left-0 right-0 top-0 bottom-auto h-0 bg-accent transition-[height] duration-300 ease-[cubic-bezier(0.33,1,0.68,1)] z-0 ${!props.disabled ? 'group-hover:top-auto group-hover:bottom-0 group-hover:h-full' : ''}`} />
+        <div className={`absolute inset-0 bg-accent scale-y-0 origin-top transition-transform duration-300 ease-[cubic-bezier(0.33,1,0.68,1)] motion-reduce:transition-none z-0 ${!props.disabled ? 'group-hover:origin-bottom group-hover:scale-y-100' : ''}`} />
 
         {/* Icon Box */}
         {icon && (
@@ -35,15 +36,15 @@ const Button = React.forwardRef<HTMLButtonElement | HTMLAnchorElement, ButtonPro
         )}
 
         {/* Main Text Area */}
-        <div className="relative z-10 flex-1 px-5 md:px-6 py-3.5 flex items-center justify-center overflow-hidden min-h-[44px]">
+        <div className="relative z-10 flex-1 px-3 sm:px-5 md:px-6 py-3.5 flex items-center justify-center overflow-hidden min-h-[44px]">
           <AnimatePresence mode="popLayout">
             <motion.span
               key={isHovered ? "hover" : `unhover-${hoverCount}`}
-              initial={hoverCount === 0 && !isHovered ? false : { y: "150%" }}
+              initial={(hoverCount === 0 && !isHovered) || prefersReducedMotion ? false : { y: "150%" }}
               animate={{ y: "0%" }}
-              exit={{ y: "-150%" }}
-              transition={{ duration: 0.3, ease: [0.33, 1, 0.68, 1] }}
-              className={`absolute flex items-center justify-center inset-0 text-[11px] md:text-xs font-medium uppercase tracking-wider whitespace-nowrap ${isHovered ? 'text-background' : 'text-text-primary'}`}
+              exit={prefersReducedMotion ? undefined : { y: "-150%" }}
+              transition={{ duration: prefersReducedMotion ? 0 : 0.3, ease: [0.33, 1, 0.68, 1] }}
+              className={`absolute flex items-center justify-center inset-0 text-xs font-medium uppercase tracking-wider whitespace-nowrap ${isHovered ? 'text-background' : 'text-text-primary'}`}
             >
               {children}
             </motion.span>
@@ -56,7 +57,7 @@ const Button = React.forwardRef<HTMLButtonElement | HTMLAnchorElement, ButtonPro
       </div>
     );
 
-    const outerClassName = `inline-block outline-none ${className?.includes('w-full') ? 'w-full block' : ''}`;
+    const outerClassName = `inline-block focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent ${className?.includes('w-full') ? 'w-full block' : ''}`;
 
     if (asChild) {
       return (
@@ -88,7 +89,8 @@ const Button = React.forwardRef<HTMLButtonElement | HTMLAnchorElement, ButtonPro
               const target = document.querySelector(href);
               if (target) {
                 e.preventDefault();
-                target.scrollIntoView({ behavior: 'smooth' });
+                const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+                target.scrollIntoView({ behavior: reducedMotion ? 'auto' : 'smooth' });
               }
             }}
             {...(props as any)}
