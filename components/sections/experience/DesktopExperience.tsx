@@ -22,12 +22,97 @@ export default function DesktopExperience() {
   const tooltipY = useTransform(mouseY, (y) => y + 20);
 
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const pointerRef = useRef<{ x: number; y: number; hasPosition: boolean }>({
+    x: 0,
+    y: 0,
+    hasPosition: false,
+  });
+
+  const activateRow = useCallback((idx: number) => {
+    if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    setHoveredIndex((prev) => (prev === idx ? prev : idx));
+    setActiveIndex((prev) => {
+      if (prev !== idx) setHasInteracted(true);
+      return idx;
+    });
+  }, []);
+
+  const clearHoveredRow = useCallback(() => {
+    setHoveredIndex((prev) => (prev === null ? prev : null));
+    setActiveIndex((prev) => {
+      if (prev !== 0) setHasInteracted(true);
+      return 0;
+    });
+  }, []);
 
   useEffect(() => {
+    let rafId: number | null = null;
+
+    const syncRowUnderCursor = () => {
+      rafId = null;
+      if (!pointerRef.current.hasPosition) return;
+
+      // Skip hit-testing if the section itself is completely off-screen
+      if (sectionRef.current) {
+        const rect = sectionRef.current.getBoundingClientRect();
+        if (rect.bottom < 0 || rect.top > window.innerHeight) {
+          clearHoveredRow();
+          return;
+        }
+      }
+
+      const el = document.elementFromPoint(
+        pointerRef.current.x,
+        pointerRef.current.y
+      );
+      const rowEl = el?.closest<HTMLElement>("[data-exp-index]");
+
+      if (rowEl) {
+        const idx = Number(rowEl.dataset.expIndex);
+        if (!Number.isNaN(idx)) {
+          activateRow(idx);
+        }
+      } else {
+        clearHoveredRow();
+      }
+    };
+
+    const onWindowMouseMove = (e: MouseEvent) => {
+      pointerRef.current.x = e.clientX;
+      pointerRef.current.y = e.clientY;
+      pointerRef.current.hasPosition = true;
+    };
+
+    const onWindowWheel = (e: WheelEvent) => {
+      pointerRef.current.x = e.clientX;
+      pointerRef.current.y = e.clientY;
+      pointerRef.current.hasPosition = true;
+      mouseX.set(e.clientX);
+      mouseY.set(e.clientY);
+      if (rafId === null) {
+        rafId = requestAnimationFrame(syncRowUnderCursor);
+      }
+    };
+
+    const handleScroll = () => {
+      if (!pointerRef.current.hasPosition) return;
+      if (rafId === null) {
+        rafId = requestAnimationFrame(syncRowUnderCursor);
+      }
+    };
+
+    window.addEventListener("mousemove", onWindowMouseMove, { passive: true });
+    window.addEventListener("wheel", onWindowWheel, { passive: true });
+    window.addEventListener("scroll", handleScroll, { passive: true });
+
     return () => {
+      window.removeEventListener("mousemove", onWindowMouseMove);
+      window.removeEventListener("wheel", onWindowWheel);
+      window.removeEventListener("scroll", handleScroll);
+      if (rafId !== null) cancelAnimationFrame(rafId);
       if (timeoutRef.current) clearTimeout(timeoutRef.current);
     };
-  }, []);
+  }, [activateRow, clearHoveredRow, mouseX, mouseY]);
 
   const [lightbox, setLightbox] = useState<{
     open: boolean;
@@ -39,20 +124,33 @@ export default function DesktopExperience() {
     setLightbox({ open: true, src, alt: `${company} Certificate` });
   }, []);
 
-  const handleMouseEnterRow = useCallback((i: number) => {
-    if (timeoutRef.current) clearTimeout(timeoutRef.current);
-    setHoveredIndex(i);
-    setActiveIndex((prev) => {
-      if (prev !== i) setHasInteracted(true);
-      return i;
-    });
-  }, []);
+  const handleMouseEnterRow = useCallback(
+    (i: number) => {
+      activateRow(i);
+    },
+    [activateRow]
+  );
 
   const handleMouseLeaveRow = useCallback(() => {
+    if (timeoutRef.current) clearTimeout(timeoutRef.current);
     timeoutRef.current = setTimeout(() => {
-      setHoveredIndex(null);
+      if (pointerRef.current.hasPosition) {
+        const el = document.elementFromPoint(
+          pointerRef.current.x,
+          pointerRef.current.y
+        );
+        const rowEl = el?.closest<HTMLElement>("[data-exp-index]");
+        if (rowEl) {
+          const idx = Number(rowEl.dataset.expIndex);
+          if (!Number.isNaN(idx)) {
+            activateRow(idx);
+            return;
+          }
+        }
+      }
+      clearHoveredRow();
     }, 50);
-  }, []);
+  }, [activateRow, clearHoveredRow]);
 
   return (
     <>
@@ -79,26 +177,30 @@ export default function DesktopExperience() {
             </div>
           </div>
 
-          {/* ── Tooltip ───────────────────────────── */}
-          <AnimatePresence>
-            {hoveredIndex !== null && (
-              <motion.div
-                className="fixed pointer-events-none z-[100] max-w-sm bg-surface-elevated backdrop-blur-md border border-border p-4 shadow-2xl"
-                style={{
-                  left: tooltipX,
-                  top: tooltipY
-                }}
-                initial={{ opacity: 0, y: 10, scale: 0.95 }}
-                animate={{ opacity: 1, y: 0, scale: 1 }}
-                exit={{ opacity: 0, y: 10, scale: 0.95 }}
-                transition={{ duration: 0.2 }}
-              >
-                <p className="text-sm text-text-primary leading-relaxed">
-                  {experiences[hoveredIndex].description}
-                </p>
-              </motion.div>
-            )}
-          </AnimatePresence>
+          {/* ── Tooltip (GPU-composited via transform x/y) ── */}
+          <motion.div
+            className="fixed top-0 left-0 pointer-events-none z-[100] will-change-transform"
+            style={{
+              x: tooltipX,
+              y: tooltipY,
+            }}
+          >
+            <AnimatePresence>
+              {hoveredIndex !== null && (
+                <motion.div
+                  className="max-w-sm bg-surface-elevated border border-border p-4 shadow-2xl"
+                  initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  exit={{ opacity: 0, y: 10, scale: 0.95 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  <p className="text-sm text-text-primary leading-relaxed">
+                    {experiences[hoveredIndex].description}
+                  </p>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </motion.div>
 
           {/* ── Two-Column Layout ─────────────────── */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-start">
@@ -161,10 +263,25 @@ export default function DesktopExperience() {
             <div
               className="relative w-full"
               onMouseMove={(e) => {
+                pointerRef.current.x = e.clientX;
+                pointerRef.current.y = e.clientY;
+                pointerRef.current.hasPosition = true;
                 mouseX.set(e.clientX);
                 mouseY.set(e.clientY);
+
+                const target = e.target as HTMLElement | null;
+                const rowEl = target?.closest?.("[data-exp-index]") as HTMLElement | null;
+                if (rowEl) {
+                  const idx = Number(rowEl.dataset.expIndex);
+                  if (!Number.isNaN(idx)) {
+                    activateRow(idx);
+                  }
+                }
               }}
               onMouseEnter={(e) => {
+                pointerRef.current.x = e.clientX;
+                pointerRef.current.y = e.clientY;
+                pointerRef.current.hasPosition = true;
                 mouseX.set(e.clientX);
                 mouseY.set(e.clientY);
               }}
@@ -175,7 +292,8 @@ export default function DesktopExperience() {
                     key={exp.id}
                     exp={exp}
                     i={i}
-                    hoveredIndex={hoveredIndex}
+                    isHovered={hoveredIndex === i}
+                    isDimmed={hoveredIndex !== null && hoveredIndex !== i}
                     onMouseEnterRow={handleMouseEnterRow}
                     onMouseLeaveRow={handleMouseLeaveRow}
                     openCertificate={openCertificate}

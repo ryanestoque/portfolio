@@ -4,6 +4,8 @@ import { useEffect, useRef } from "react";
 import { usePreloader } from "./PreloaderProvider";
 import { gsap } from "gsap";
 
+const CURSOR_SELECTOR = '[data-cursor="project"], [data-cursor="target"]';
+
 export default function CustomCursor() {
   const cursorRef = useRef<HTMLDivElement>(null);
   const bracketsRef = useRef<HTMLDivElement>(null);
@@ -20,6 +22,7 @@ export default function CustomCursor() {
     const ease = 0.2;
     let needsSnap = true;
     let isVisible = false;
+    let scrollRafId: number | null = null;
 
     const setVisibility = (visible: boolean) => {
       if (!cursorRef.current) return;
@@ -80,10 +83,21 @@ export default function CustomCursor() {
         });
       }
     };
-    
-    const onMouseMove = (e: MouseEvent) => {
-      mouseX = e.clientX;
-      mouseY = e.clientY;
+
+    const hitTestAtPoint = () => {
+      scrollRafId = null;
+      if (!isVisible || needsSnap) return;
+      const target = document.elementFromPoint(mouseX, mouseY) as HTMLElement | null;
+      if (target && typeof target.closest === "function") {
+        setHovering(!!target.closest(CURSOR_SELECTOR));
+      } else {
+        setHovering(false);
+      }
+    };
+
+    const updatePointer = (x: number, y: number, eventTarget?: EventTarget | null) => {
+      mouseX = x;
+      mouseY = y;
       if (needsSnap) {
         curX = mouseX;
         curY = mouseY;
@@ -91,13 +105,33 @@ export default function CustomCursor() {
       }
       setVisibility(true);
 
-      const target = e.target as HTMLElement;
-      if (target && typeof target.closest === "function") {
-        const hovering = !!target.closest('[data-cursor="project"], [data-cursor="target"]');
-        setHovering(hovering);
+      const target = eventTarget as HTMLElement | null;
+      if (target && target.isConnected && typeof target.closest === "function") {
+        setHovering(!!target.closest(CURSOR_SELECTOR));
+      } else {
+        const pointTarget = document.elementFromPoint(mouseX, mouseY) as HTMLElement | null;
+        setHovering(!!pointTarget?.closest?.(CURSOR_SELECTOR));
       }
     };
-    
+
+    const onMouseMove = (e: MouseEvent) => {
+      updatePointer(e.clientX, e.clientY, e.target);
+    };
+
+    const onWheel = (e: WheelEvent) => {
+      updatePointer(e.clientX, e.clientY, e.target);
+      if (scrollRafId === null) {
+        scrollRafId = requestAnimationFrame(hitTestAtPoint);
+      }
+    };
+
+    const onScroll = () => {
+      if (!isVisible || needsSnap) return;
+      if (scrollRafId === null) {
+        scrollRafId = requestAnimationFrame(hitTestAtPoint);
+      }
+    };
+
     const onMouseLeave = () => {
       mouseX = -200;
       mouseY = -200;
@@ -111,19 +145,24 @@ export default function CustomCursor() {
       curX += (mouseX - curX) * ease;
       curY += (mouseY - curY) * ease;
       if (cursorRef.current) {
-        cursorRef.current.style.transform = `translate(${curX}px, ${curY}px)`;
+        cursorRef.current.style.transform = `translate3d(${curX}px, ${curY}px, 0)`;
       }
       raf = requestAnimationFrame(tick);
     };
-    
-    document.addEventListener("mousemove", onMouseMove);
+
+    document.addEventListener("mousemove", onMouseMove, { passive: true });
+    window.addEventListener("wheel", onWheel, { passive: true });
+    window.addEventListener("scroll", onScroll, { passive: true });
     document.documentElement.addEventListener("mouseleave", onMouseLeave);
     raf = requestAnimationFrame(tick);
-    
+
     return () => {
       document.removeEventListener("mousemove", onMouseMove);
+      window.removeEventListener("wheel", onWheel);
+      window.removeEventListener("scroll", onScroll);
       document.documentElement.removeEventListener("mouseleave", onMouseLeave);
       cancelAnimationFrame(raf);
+      if (scrollRafId !== null) cancelAnimationFrame(scrollRafId);
     };
   }, []);
 
