@@ -4,7 +4,7 @@ import React, { useEffect, useRef } from "react";
 import { gsap } from "@/lib/gsap";
 import { cn } from "@/lib/utils";
 
-interface ScrollRevealBarsProps {
+interface ScrollRevealBarsProps extends React.HTMLAttributes<HTMLSpanElement> {
   children: React.ReactNode;
   className?: string;
   numberOfBars?: number;
@@ -20,6 +20,7 @@ export const ScrollRevealBars: React.FC<ScrollRevealBarsProps> = ({
   duration = 0.8,
   stagger = 0.1,
   delay = 0,
+  ...rest
 }) => {
   const containerRef = useRef<HTMLSpanElement>(null);
   const barsRef = useRef<(HTMLSpanElement | null)[]>([]);
@@ -41,7 +42,7 @@ export const ScrollRevealBars: React.FC<ScrollRevealBarsProps> = ({
         // Animation to reveal
         gsap.to(bars, {
           scrollTrigger: {
-            trigger: container,
+            trigger: container.offsetParent ? container : (container.parentElement ?? container),
             start: "top bottom",
           },
           scaleX: 0,
@@ -63,7 +64,11 @@ export const ScrollRevealBars: React.FC<ScrollRevealBarsProps> = ({
   }, [duration, stagger, delay, numberOfBars]);
 
   return (
-    <span ref={containerRef} className={cn("relative overflow-hidden inline-block", className)}>
+    <span
+      ref={containerRef}
+      className={cn("relative overflow-hidden inline-block", className)}
+      {...rest}
+    >
       {children}
       {/* Absolute overlay for the bars */}
       <span

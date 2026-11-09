@@ -17,7 +17,7 @@ export default function SectionHeader({ number, label }: SectionHeaderProps) {
       <span className="text-xs tracking-[0.3em] uppercase text-text-secondary">
         {number}
       </span>
-      <div className="w-12 h-[1px] bg-accent/75" />
+      <div className="w-12 h-[1px] bg-accent/75" aria-hidden="true" />
       <span className="text-xs tracking-[0.3em] uppercase text-text-secondary">
         {label}
       </span>

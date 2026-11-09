@@ -1,14 +1,14 @@
 "use client";
 
 import { useState, type ReactNode, type ComponentPropsWithoutRef } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { ease } from "@/lib/animations";
 
 /* ──────────────────────────────────────────────── */
 /*  Types                                            */
 /* ──────────────────────────────────────────────── */
 
-interface WipeTagProps extends Omit<ComponentPropsWithoutRef<typeof motion.span>, "onMouseEnter" | "onMouseLeave"> {
+interface WipeTagProps extends Omit<ComponentPropsWithoutRef<"span">, "onMouseEnter" | "onMouseLeave"> {
   children: ReactNode;
   /** CSS classes applied when the tag is hovered */
   activeClassName?: string;
@@ -30,8 +30,9 @@ interface WipeTagProps extends Omit<ComponentPropsWithoutRef<typeof motion.span>
  * Shared pattern extracted from SkillTag, ProjectTag, and similar
  * components. Features:
  * - popLayout AnimatePresence with hoverCount tracking
- * - Wipe-fill background on hover
- * - Invisible placeholder for stable sizing
+ * - GPU-accelerated scaleY wipe-fill background synchronized with text state
+ * - Respects prefers-reduced-motion and hover-capable input devices
+ * - Invisible aria-hidden placeholder for stable sizing
  */
 export default function WipeTag({
   children,
@@ -44,12 +45,18 @@ export default function WipeTag({
 }: WipeTagProps) {
   const [isHovered, setIsHovered] = useState(false);
   const [hoverCount, setHoverCount] = useState(0);
+  const prefersReducedMotion = useReducedMotion();
 
   return (
-    <motion.span
+    <span
       className={`group relative inline-flex items-center justify-center overflow-hidden cursor-default transition-colors duration-300 ${className}`}
       onMouseEnter={() => {
-        if (window.innerWidth >= hoverBreakpoint) setIsHovered(true);
+        if (
+          window.innerWidth >= hoverBreakpoint &&
+          window.matchMedia("(hover: hover) and (pointer: fine)").matches
+        ) {
+          setIsHovered(true);
+        }
       }}
       onMouseLeave={() => {
         if (isHovered) {
@@ -59,9 +66,12 @@ export default function WipeTag({
       }}
       {...rest}
     >
-      {/* Wipe Background */}
+      {/* Wipe Background — compositor-only scaleY tied to isHovered */}
       <span
-        className={`absolute left-0 right-0 top-0 bottom-auto h-0 transition-[height] duration-300 ease-[cubic-bezier(0.33,1,0.68,1)] group-hover:top-auto group-hover:bottom-0 group-hover:h-full z-0 ${wipeClassName}`}
+        aria-hidden="true"
+        className={`absolute inset-0 transition-transform duration-300 ease-[cubic-bezier(0.33,1,0.68,1)] motion-reduce:transition-none z-0 ${
+          isHovered ? "origin-bottom scale-y-100" : "origin-top scale-y-0"
+        } ${wipeClassName}`}
       />
 
       {/* Text Area */}
@@ -69,10 +79,10 @@ export default function WipeTag({
         <AnimatePresence mode="popLayout">
           <motion.span
             key={isHovered ? "hover" : `unhover-${hoverCount}`}
-            initial={hoverCount === 0 && !isHovered ? false : { y: "150%" }}
+            initial={(hoverCount === 0 && !isHovered) || prefersReducedMotion ? false : { y: "150%" }}
             animate={{ y: "0%" }}
-            exit={{ y: "-150%" }}
-            transition={{ duration: 0.3, ease: [0.33, 1, 0.68, 1] }}
+            exit={prefersReducedMotion ? undefined : { y: "-150%" }}
+            transition={{ duration: prefersReducedMotion ? 0 : 0.3, ease }}
             className={`absolute flex items-center justify-center inset-0 whitespace-nowrap ${
               isHovered ? activeClassName : inactiveClassName
             }`}
@@ -81,10 +91,13 @@ export default function WipeTag({
           </motion.span>
         </AnimatePresence>
         {/* Invisible placeholder to maintain width and height */}
-        <span className="opacity-0 pointer-events-none whitespace-nowrap">
+        <span
+          aria-hidden="true"
+          className="opacity-0 pointer-events-none select-none whitespace-nowrap"
+        >
           {children}
         </span>
       </span>
-    </motion.span>
+    </span>
   );
 }
