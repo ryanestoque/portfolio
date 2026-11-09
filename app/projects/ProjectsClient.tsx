@@ -42,7 +42,11 @@ export default function ProjectsClient() {
                   initial="hidden"
                   animate={isInView ? "visible" : "hidden"}
                 >
-                  <ProjectCard project={project} aspectRatioClass="aspect-[16/10]" />
+                  <ProjectCard
+                    project={project}
+                    aspectRatioClass="aspect-[16/10]"
+                    loading={i < 2 ? "eager" : "lazy"}
+                  />
                 </motion.div>
               ))}
             </div>

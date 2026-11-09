@@ -50,8 +50,8 @@ export const projects: Project[] = [
     year: "2026",
     status: "In Progress",
 
-    image: "/images/projects/crosshere-light.png",
-    darkImage: "/images/projects/crosshere-dark.png",
+    image: "/images/projects/crosshere-light.webp",
+    darkImage: "/images/projects/crosshere-dark.webp",
     gallery: [],
 
     tags: [
@@ -105,8 +105,8 @@ export const projects: Project[] = [
     year: "2026",
     status: "Completed",
 
-    image: "/images/projects/dripdrop-light.png",
-    darkImage: "/images/projects/dripdrop-dark.png",
+    image: "/images/projects/dripdrop-light.webp",
+    darkImage: "/images/projects/dripdrop-dark.webp",
     gallery: [],
 
     tags: [
@@ -160,8 +160,8 @@ export const projects: Project[] = [
     year: "2026",
     status: "Completed",
 
-    image: "/images/projects/efz-neo-light.png",
-    darkImage: "/images/projects/efz-neo-dark.png",
+    image: "/images/projects/efz-neo-light.webp",
+    darkImage: "/images/projects/efz-neo-dark.webp",
     gallery: [],
 
     tags: [
@@ -213,7 +213,7 @@ export const projects: Project[] = [
     year: "2026",
     status: "Completed",
 
-    image: "/images/projects/flag-and-play-light.png",
+    image: "/images/projects/flag-and-play-light.webp",
     gallery: [],
 
     tags: [
@@ -267,7 +267,7 @@ export const projects: Project[] = [
     year: "2025",
     status: "Completed",
 
-    image: "/images/projects/arado-pos-light.png",
+    image: "/images/projects/arado-pos-light.webp",
     gallery: [],
 
     tags: [
@@ -327,8 +327,8 @@ export const projects: Project[] = [
     year: "2025",
     status: "Completed",
 
-    image: "/images/projects/wordol-light.png",
-    darkImage: "/images/projects/wordol-dark.png",
+    image: "/images/projects/wordol-light.webp",
+    darkImage: "/images/projects/wordol-dark.webp",
     gallery: [],
 
     tags: [
@@ -380,7 +380,7 @@ export const projects: Project[] = [
     year: "2025",
     status: "Completed",
 
-    image: "/images/projects/cross-server.png",
+    image: "/images/projects/cross-server.webp",
     gallery: [],
 
     tags: [

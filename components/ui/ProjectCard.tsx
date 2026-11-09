@@ -3,7 +3,6 @@
 import Image from "next/image";
 import TransitionLink from "@/components/ui/TransitionLink";
 import type { Project } from "@/lib/projects-data";
-import WipeTag from "@/components/ui/WipeTag";
 
 export interface ProjectCardProps {
   project: Project;
@@ -11,6 +10,10 @@ export interface ProjectCardProps {
   maxTags?: number;
   /** Aspect ratio class for the image container. Defaults to "aspect-video". */
   aspectRatioClass?: string;
+  /** Image loading strategy. Defaults to "lazy". */
+  loading?: "lazy" | "eager";
+  /** Whether to preload the image in document head (only for above-the-fold LCP). Defaults to false. */
+  preload?: boolean;
   /** Extra classes for the card container */
   className?: string;
 }
@@ -19,34 +22,38 @@ export default function ProjectCard({
   project,
   maxTags = 4,
   aspectRatioClass = "aspect-video",
+  loading = "lazy",
+  preload = false,
   className = "",
 }: ProjectCardProps) {
   return (
     <TransitionLink
       href={`/projects/${project.slug}`}
-      className={`group flex flex-col h-full border border-border bg-surface hover:border-accent/30 transition-all duration-500 ${className}`}
+      className={`group flex flex-col h-full border border-border bg-surface hover:border-accent focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent transition-colors duration-500 ${className}`}
       data-cursor="project"
     >
-      {/* Image Preview */}
+      {/* Image Preview — decorative thumbnail inside named link; h3 provides the accessible link title */}
       <div className={`relative ${aspectRatioClass} overflow-hidden flex-shrink-0`}>
         <Image
           src={project.image}
-          alt={project.title}
+          alt=""
           fill
-          priority
-          sizes="(max-width: 768px) 100vw, 50vw"
-          className={`object-cover transition-transform duration-700 group-hover:scale-105 ${
+          preload={preload}
+          loading={preload ? undefined : loading}
+          sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 38vw"
+          className={`object-cover transition-transform duration-700 group-hover:scale-105 motion-reduce:transition-none motion-reduce:group-hover:scale-100 ${
             project.darkImage ? "dark:hidden" : ""
           }`}
         />
         {project.darkImage && (
           <Image
             src={project.darkImage}
-            alt={project.title}
+            alt=""
             fill
-            priority
-            sizes="(max-width: 768px) 100vw, 50vw"
-            className="object-cover transition-transform duration-700 group-hover:scale-105 hidden dark:block"
+            preload={preload}
+            loading={preload ? undefined : loading}
+            sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 38vw"
+            className="object-cover transition-transform duration-700 group-hover:scale-105 motion-reduce:transition-none motion-reduce:group-hover:scale-100 hidden dark:block"
           />
         )}
         <div className="absolute inset-0 bg-background/0 group-hover:bg-background/10 transition-colors duration-500" />
@@ -58,7 +65,7 @@ export default function ProjectCard({
           <h3 className="font-heading text-xl lg:text-2xl font-medium text-text-primary group-hover:text-accent transition-colors duration-500">
             {project.title}
           </h3>
-          <span className="text-[11px] lg:text-xs tracking-wider uppercase text-text-tertiary flex-shrink-0 pt-1.5">
+          <span className="text-xs tracking-wider uppercase text-text-tertiary flex-shrink-0 pt-1">
             {project.year}
           </span>
         </div>

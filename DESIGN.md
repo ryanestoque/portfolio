@@ -216,7 +216,7 @@ The system is flat. Surfaces have no shadow at rest; depth comes from three thin
 - **Content:** 20 to 24px padding. Title (Clash Display 500), year as an uppercase tertiary label, a two-line clamped description, then up to four tags plus a "+N" overflow tag.
 
 ### Navigation
-- **Bar:** the "Ryan Estoque" wordmark (Clash Display 600, 18px) on the left. The theme toggle and a two-line hamburger sit on the right, inside magnetic wrappers.
+- **Bar:** the "Ryan Estoque" wordmark (Clash Display 600, 18px) on the left. The theme toggle and a two-line hamburger sit on the right.
 - **Menu:** a full-screen paper panel slides down (600ms). Links in Clash Display 500 at 30 to 36px are each revealed by an ink bar that shrinks off to the right, staggered 0.1s. Hovered links roll to the accent colour.
 
 ### Section Marker
@@ -225,8 +225,8 @@ A number, a 48px hairline in 75% accent, then an uppercase label, all at 0.75rem
 ### Scroll Reveal Bars
 Headlines are covered by a solid ink bar that shrinks to the right (scaleX 1 to 0, transform origin right, GSAP `power4.inOut`, 0.8 to 1s, staggered 0.15s per line) when they scroll into view.
 
-### Custom Cursor and Magnetic Elements
-A 12px square difference-blend cursor replaces the system cursor at 768px and up. Interactive elements marked `data-cursor="target"` attract it. Magnetic wrappers pull buttons toward the pointer (strength 0.15 to 0.2, 300ms return).
+### Custom Cursor
+A 12px square difference-blend cursor replaces the system cursor at 768px and up. Interactive elements marked `data-cursor="target"` or `data-cursor="project"` expand it into rotating blueprint corner brackets.
 
 ## Do's and Don'ts
 

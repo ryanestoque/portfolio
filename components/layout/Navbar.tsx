@@ -4,7 +4,6 @@ import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { useLenis } from "lenis/react";
-import MagneticButton from "../ui/MagneticButton";
 import ThemeToggle from "../ui/ThemeToggle";
 import { usePreloader } from "../ui/PreloaderProvider";
 import { ease } from "@/lib/animations";
@@ -81,15 +80,13 @@ export default function Navbar() {
       >
         <div className="max-w-[1400px] mx-auto px-6 md:px-10 lg:px-16">
           <div className="flex items-center justify-between h-[72px]">
-            <MagneticButton strength={0.15}>
-              <button
-                onClick={() => handleNavClick("#home")}
-                className="font-heading text-lg font-semibold tracking-tight text-text-primary hover:text-accent transition-colors duration-300"
-                data-cursor="target"
-              >
-                Ryan Estoque
-              </button>
-            </MagneticButton>
+            <button
+              onClick={() => handleNavClick("#home")}
+              className="font-heading text-lg font-semibold tracking-tight text-text-primary hover:text-accent transition-colors duration-300"
+              data-cursor="target"
+            >
+              Ryan Estoque
+            </button>
 
             {/* Theme Toggle + Hamburger */}
             <div className="flex items-center gap-3">
@@ -97,13 +94,12 @@ export default function Navbar() {
               <ThemeToggle />
 
               {/* Hamburger */}
-              <MagneticButton strength={0.2}>
-                <button
-                  onClick={() => setMenuOpen(!menuOpen)}
-                  className="relative w-10 h-10 flex items-center justify-center text-text-primary hover:text-accent transition-colors"
-                  aria-label="Toggle menu"
-                  data-cursor="target"
-                >
+              <button
+                onClick={() => setMenuOpen(!menuOpen)}
+                className="relative w-10 h-10 flex items-center justify-center text-text-primary hover:text-accent transition-colors"
+                aria-label="Toggle menu"
+                data-cursor="target"
+              >
                 <div className="relative w-6 h-4 scale-[0.85]">
                   <motion.span
                     className="absolute left-0 w-full h-[2px] bg-text-primary origin-center"
@@ -125,8 +121,7 @@ export default function Navbar() {
                     transition={{ duration: 0.3, ease }}
                   />
                 </div>
-                </button>
-              </MagneticButton>
+              </button>
             </div>
           </div>
         </div>
