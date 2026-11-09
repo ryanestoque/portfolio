@@ -14,7 +14,8 @@ export default function DesktopExperience() {
   const sectionRef = useRef<HTMLElement>(null);
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const [activeIndex, setActiveIndex] = useState<number>(0);
-  
+  const [hasInteracted, setHasInteracted] = useState(false);
+
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
   const tooltipX = useTransform(mouseX, (x) => x + 20);
@@ -34,8 +35,6 @@ export default function DesktopExperience() {
     alt: string;
   }>({ open: false, src: "", alt: "" });
 
-  const activeExperience = experiences[activeIndex];
-
   const openCertificate = useCallback((src: string, company: string) => {
     setLightbox({ open: true, src, alt: `${company} Certificate` });
   }, []);
@@ -43,7 +42,10 @@ export default function DesktopExperience() {
   const handleMouseEnterRow = useCallback((i: number) => {
     if (timeoutRef.current) clearTimeout(timeoutRef.current);
     setHoveredIndex(i);
-    setActiveIndex(i);
+    setActiveIndex((prev) => {
+      if (prev !== i) setHasInteracted(true);
+      return i;
+    });
   }, []);
 
   const handleMouseLeaveRow = useCallback(() => {
@@ -106,28 +108,52 @@ export default function DesktopExperience() {
                 className="experience-image-container relative aspect-square w-full overflow-hidden border border-border bg-accent"
                 data-cursor="target"
               >
-                <AnimatePresence mode="wait">
-                  <motion.div
-                    key={activeExperience.id}
-                    className="absolute inset-0"
-                    initial={{ clipPath: "inset(100% 0 0 0)" }}
-                    animate={{ clipPath: "inset(0% 0 0 0)" }}
-                    exit={{ clipPath: "inset(0 0 100% 0)" }}
-                    transition={{ duration: 0.6, ease }}
-                  >
-                    <Image
-                      src={activeExperience.image}
-                      alt={activeExperience.company}
-                      fill
-                      priority
-                      className="object-cover"
-                      sizes="(max-width: 1024px) 100vw, 50vw"
-                    />
-                  </motion.div>
-                </AnimatePresence>
+                {experiences.map((exp, i) => {
+                  const isActive = i === activeIndex;
+
+                  return (
+                    <motion.div
+                      key={exp.id}
+                      className="absolute inset-0 will-change-[clip-path]"
+                      initial={{
+                        clipPath: i === 0 ? "inset(0% 0% 0% 0%)" : "inset(0% 0% 100% 0%)",
+                        zIndex: i === 0 ? 2 : 1,
+                      }}
+                      animate={
+                        isActive
+                          ? {
+                              clipPath: hasInteracted
+                                ? ["inset(100% 0% 0% 0%)", "inset(0% 0% 0% 0%)"]
+                                : "inset(0% 0% 0% 0%)",
+                              zIndex: 2,
+                            }
+                          : {
+                              clipPath: "inset(0% 0% 100% 0%)",
+                              zIndex: 1,
+                            }
+                      }
+                      transition={{ duration: 0.6, ease }}
+                    >
+                      <Image
+                        src={exp.image}
+                        alt={exp.company}
+                        fill
+                        priority={i === 0}
+                        loading="eager"
+                        decoding="sync"
+                        onLoad={(e) => {
+                          e.currentTarget.decode?.().catch(() => {});
+                        }}
+                        className="object-cover"
+                        style={{ objectPosition: exp.imagePosition || "center" }}
+                        sizes="(max-width: 1024px) 100vw, 50vw"
+                      />
+                    </motion.div>
+                  );
+                })}
 
                 {/* Subtle overlay gradient */}
-                <div className="absolute inset-0 bg-gradient-to-t from-background/20 to-transparent pointer-events-none" />
+                <div className="absolute inset-0 z-10 bg-gradient-to-t from-background/20 to-transparent pointer-events-none" />
               </div>
             </div>
 

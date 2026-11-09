@@ -19,21 +19,21 @@ const Button = React.forwardRef<HTMLButtonElement | HTMLAnchorElement, ButtonPro
     const [hoverCount, setHoverCount] = React.useState(0);
 
     const content = (
-      <div 
+      <div
         className={`group relative inline-flex items-center border border-border overflow-hidden ${props.disabled ? 'bg-surface opacity-60 cursor-not-allowed' : 'bg-surface'} ${className || ""}`}
         onMouseEnter={() => { if (!props.disabled && window.innerWidth >= 768) setIsHovered(true) }}
         onMouseLeave={() => { if (!props.disabled && isHovered) { setIsHovered(false); setHoverCount(c => c + 1); } }}
       >
         {/* Wipe Background - Covers the ENTIRE button container */}
         <div className={`absolute left-0 right-0 top-0 bottom-auto h-0 bg-accent transition-[height] duration-300 ease-[cubic-bezier(0.33,1,0.68,1)] z-0 ${!props.disabled ? 'group-hover:top-auto group-hover:bottom-0 group-hover:h-full' : ''}`} />
-        
+
         {/* Icon Box */}
         {icon && (
           <div className="relative z-10 flex items-center justify-center w-11 h-11 bg-foreground text-background shrink-0">
             {icon}
           </div>
         )}
-        
+
         {/* Main Text Area */}
         <div className="relative z-10 flex-1 px-5 md:px-6 py-3.5 flex items-center justify-center overflow-hidden min-h-[44px]">
           <AnimatePresence mode="popLayout">
@@ -68,7 +68,7 @@ const Button = React.forwardRef<HTMLButtonElement | HTMLAnchorElement, ButtonPro
 
     if (href) {
       const isExternal = href.startsWith('http') || href.startsWith('mailto:') || href.endsWith('.pdf');
-      
+
       if (isExternal) {
         return (
           <a href={href} target="_blank" rel="noopener noreferrer" className={outerClassName} ref={ref as any} {...(props as any)}>
@@ -79,10 +79,10 @@ const Button = React.forwardRef<HTMLButtonElement | HTMLAnchorElement, ButtonPro
 
       if (href.startsWith('#')) {
         return (
-          <a 
-            href={href} 
-            className={outerClassName} 
-            ref={ref as any} 
+          <a
+            href={href}
+            className={outerClassName}
+            ref={ref as any}
             onClick={(e) => {
               if (props.onClick) props.onClick(e as any);
               const target = document.querySelector(href);

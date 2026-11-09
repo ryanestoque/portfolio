@@ -89,22 +89,22 @@ export default function Hero() {
             >
               <motion.h1 className="font-heading font-semibold leading-[1] tracking-tight flex flex-col sm:flex-row lg:flex-col justify-center lg:justify-start items-center lg:items-start sm:gap-4 lg:gap-0">
                 <span className="block overflow-hidden">
-                    <motion.span
-                      data-hero="firstname"
-                      className="block text-[clamp(4.5rem,10vw,9rem)] text-gradient"
-                    >
-                      {headingLine1}
-                    </motion.span>
+                  <motion.span
+                    data-hero="firstname"
+                    className="block text-[clamp(4.5rem,10vw,9rem)] text-gradient"
+                  >
+                    {headingLine1}
+                  </motion.span>
                 </span>
 
                 {/* Line 2 */}
                 <span className="block overflow-hidden">
-                    <motion.span
-                      data-hero="lastname"
-                      className="block text-[clamp(4.5rem,10vw,9rem)] text-gradient"
-                    >
-                      {headingLine2}
-                    </motion.span>
+                  <motion.span
+                    data-hero="lastname"
+                    className="block text-[clamp(4.5rem,10vw,9rem)] text-gradient"
+                  >
+                    {headingLine2}
+                  </motion.span>
                 </span>
               </motion.h1>
             </motion.div>

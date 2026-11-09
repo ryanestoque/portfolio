@@ -90,18 +90,17 @@ export default function DesktopExperienceRow({
                   if (exp.certificate) openCertificate(exp.certificate, exp.company);
                 }}
                 disabled={!exp.certificateAvailable}
-                className={`group/innerbtn relative inline-flex items-center justify-center w-[34px] h-[34px] border overflow-hidden transition-all duration-300 ${
-                  exp.certificateAvailable 
+                className={`group/innerbtn relative inline-flex items-center justify-center w-[34px] h-[34px] border overflow-hidden transition-all duration-300 ${exp.certificateAvailable
                     ? (isHoveredLocal ? "border-background/30 cursor-pointer" : "border-border cursor-pointer hover:border-accent/40")
                     : (isHoveredLocal ? "border-background/20 text-background/50 cursor-not-allowed" : "border-border/50 text-text-tertiary/50 cursor-not-allowed")
-                }`}
+                  }`}
                 aria-label={exp.certificateAvailable ? `View ${exp.company} certificate` : "Certificate not yet available"}
               >
                 {/* Wipe Background (only if available) */}
                 {exp.certificateAvailable && (
                   <span className={`absolute left-0 right-0 top-0 bottom-auto h-0 transition-[height] duration-300 ease-[cubic-bezier(0.33,1,0.68,1)] group-hover/innerbtn:top-auto group-hover/innerbtn:bottom-0 group-hover/innerbtn:h-full z-0 ${isHoveredLocal ? 'bg-background' : 'bg-accent'}`} />
                 )}
-                
+
                 {/* Icon Area */}
                 <span className="relative z-10 flex items-center justify-center w-full h-full">
                   {exp.certificateAvailable ? (
@@ -114,11 +113,10 @@ export default function DesktopExperienceRow({
                         exit="exit"
                         variants={iconVariants as any}
                         transition={{ duration: 0.3, ease: [0.33, 1, 0.68, 1] }}
-                        className={`absolute inset-0 flex items-center justify-center ${
-                          isHoveredLocal 
+                        className={`absolute inset-0 flex items-center justify-center ${isHoveredLocal
                             ? (isHoveredBtn ? 'text-text-primary' : 'text-background')
                             : (isHoveredBtn ? 'text-background' : 'text-text-tertiary group-hover/innerbtn:text-text-primary')
-                        }`}
+                          }`}
                       >
                         <FileText className="w-5 h-5" />
                       </motion.div>
