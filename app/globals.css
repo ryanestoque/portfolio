@@ -199,26 +199,6 @@ body.loading-locked {
   animation: marquee 30s linear infinite;
 }
 
-/* ── Experience Section ──────────────────────────── */
-.experience-row {
-  position: relative;
-  transition: opacity 0.4s ease;
-}
-
-.experience-row-bg {
-  position: absolute;
-  inset: 0;
-  background: var(--surface-el);
-  transform-origin: left;
-  transition: transform 0.5s cubic-bezier(0.33, 1, 0.68, 1);
-  pointer-events: none;
-  z-index: 0;
-}
-
-.experience-image-container {
-  will-change: transform;
-}
-
 /* ── Certificate Lightbox ────────────────────────── */
 .lightbox-overlay {
   position: fixed;
