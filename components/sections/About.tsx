@@ -1,58 +1,38 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { motion, useInView } from "framer-motion";
-import { gsap, ScrollTrigger } from "@/lib/gsap";
+import { gsap } from "@/lib/gsap";
 import { ScrollRevealBars } from "@/components/ui/ScrollRevealBars";
-import { ease } from "@/lib/animations";
+import SectionHeader from "@/components/ui/SectionHeader";
 
-gsap.registerPlugin(ScrollTrigger);
-
-const stages = [
-  {
-    label: "01",
-    paragraph: (
-      <>
-        I am a 4th-Year BSIT Student &amp;{" "}
-        <span className="font-medium text-text-primary">
-          Full Stack Developer
-        </span>{" "}
-        specializing in modern Web and Android applications. I built responsive
-        frontends, scalable backends, and practical digital experiences. Rather
-        than creating for the sake of creating, I believe meaningful software
-        begins with a problem worth solving.
-      </>
-    ),
-  },
-  {
-    label: "02",
-    paragraph: (
-      <>
-        Throughout my academic and personal development journey, I have built a
-        diverse range systems, from business management
-        solutions to interactive web experiences and IoT hardware
-        integrations.
-      </>
-    ),
-  },
-  {
-    label: "03",
-    paragraph: (
-      <>
-        Currently, I challenge myself through complex academic projects and
-        self-directed learning. I focus on creating scalable systems that are
-        practical, highly interactive, and ready for deployment, while utilizing
-        modern technologies such as AI-assisted tools to streamline workflows.
-      </>
-    ),
-  },
+const paragraphs = [
+  <>
+    I am a 4th-Year BSIT Student &amp;{" "}
+    <span className="font-medium text-text-primary">
+      Full Stack Developer
+    </span>{" "}
+    specializing in modern Web and Android applications. I build responsive
+    frontends, scalable backends, and practical digital experiences. Rather
+    than creating for the sake of creating, I believe meaningful software
+    begins with a problem worth solving.
+  </>,
+  <>
+    Throughout my academic and personal development journey, I have built a
+    diverse range of systems, from business management solutions to
+    interactive web experiences and IoT hardware integrations.
+  </>,
+  <>
+    Currently, I challenge myself through complex academic projects and
+    self-directed learning. I focus on creating scalable systems that are
+    practical, highly interactive, and ready for deployment, while utilizing
+    modern technologies such as AI-assisted tools to streamline workflows.
+  </>,
 ];
 
-function ScrollDrivenStory() {
-  const sectionRef = useRef<HTMLDivElement>(null);
+export default function About() {
+  const sectionRef = useRef<HTMLElement>(null);
   const panelRefs = useRef<(HTMLDivElement | null)[]>([]);
-  const progressFillRef = useRef<HTMLDivElement>(null);
-  const scrollIndicatorRef = useRef<HTMLDivElement>(null);
+  const contentRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   useEffect(() => {
     const section = sectionRef.current;
@@ -60,169 +40,100 @@ function ScrollDrivenStory() {
 
     const mm = gsap.matchMedia();
 
-    mm.add("(min-width: 1024px)", () => {
-      const ctx = gsap.context(() => {
-        const panels = panelRefs.current.filter(Boolean) as HTMLDivElement[];
-        panels.forEach((panel) => {
-          gsap.fromTo(
-            panel,
-            { y: 60, opacity: 0 },
-            {
-              y: 0,
-              opacity: 1,
-              ease: "none",
-              scrollTrigger: {
-                trigger: panel,
-                start: "top 85%",
-                end: "top 40%",
-                scrub: 0.8,
-              },
-            }
-          );
-        });
+    mm.add(
+      "(min-width: 1024px) and (prefers-reduced-motion: no-preference)",
+      () => {
+        const ctx = gsap.context(() => {
+          panelRefs.current.forEach((panel, i) => {
+            const content = contentRefs.current[i];
+            if (!panel || !content) return;
 
-        if (progressFillRef.current) {
-          gsap.fromTo(
-            progressFillRef.current,
-            { scaleY: 0 },
-            {
-              scaleY: 1,
-              ease: "none",
-              scrollTrigger: {
-                trigger: section,
-                start: "top top",
-                end: "bottom bottom",
-                scrub: true,
-              },
-            }
-          );
-        }
+            gsap.fromTo(
+              content,
+              { y: 60, opacity: 0 },
+              {
+                y: 0,
+                opacity: 1,
+                ease: "none",
+                scrollTrigger: {
+                  trigger: panel,
+                  start: "top 85%",
+                  end: "top 40%",
+                  scrub: 0.8,
+                },
+              }
+            );
+          });
+        }, section);
 
-        if (scrollIndicatorRef.current) {
-          gsap.fromTo(
-            scrollIndicatorRef.current,
-            { opacity: 1 },
-            {
-              opacity: 0,
-              ease: "none",
-              scrollTrigger: {
-                trigger: section,
-                start: "80% bottom",
-                end: "bottom 60%",
-                scrub: 0.6,
-              },
-            }
-          );
-        }
-      }, section);
-
-      return () => ctx.revert();
-    });
+        return () => ctx.revert();
+      }
+    );
 
     return () => mm.revert();
   }, []);
 
   return (
-    <div
+    <section
+      id="about"
       ref={sectionRef}
-      className="hidden lg:block relative -mb-40"
-      style={{ minHeight: `${stages.length * 100}vh` }}
+      aria-labelledby="about-heading"
+      className="relative py-32 lg:py-0 motion-reduce:lg:py-32"
     >
       <div className="max-w-[1400px] mx-auto px-6 md:px-10 lg:px-16">
-        <div className="grid grid-cols-12 gap-8">
-          <div
-            className="col-span-5"
-            style={{ position: "sticky", top: 0, height: "100vh", alignSelf: "start" }}
-          >
-            <div className="h-full flex flex-col justify-center">
-              <div className="relative">
-                <div className="absolute bottom-full left-0 mb-12 flex items-center gap-3 whitespace-nowrap">
-                  <span className="text-xs tracking-[0.3em] uppercase text-text-secondary">01</span>
-                  <div className="w-12 h-[1px] bg-accent/50" />
-                  <span className="text-xs tracking-[0.3em] uppercase text-text-secondary">PHILOSOPHY</span>
-                </div>
-                <h2 className="font-heading text-[clamp(2.5rem,6vw,5rem)] font-semibold leading-[1.1] text-gradient flex flex-col items-start">
+        <div className="lg:grid lg:grid-cols-12 lg:gap-8">
+          <div className="lg:col-span-5 lg:sticky lg:top-0 lg:h-screen lg:self-start motion-reduce:lg:static motion-reduce:lg:h-auto">
+            <div className="lg:h-full lg:flex lg:flex-col lg:justify-center lg:pt-[72px] motion-reduce:lg:pt-0">
+              <div className="mb-12">
+                <SectionHeader number="01" label="PHILOSOPHY" />
+              </div>
+
+              <h2
+                id="about-heading"
+                className="font-heading text-[clamp(2.5rem,6vw,5rem)] font-semibold leading-[1.1] text-text-primary flex flex-col items-start mb-14 lg:mb-0"
+              >
+                <span className="sr-only">Driven by necessity to create.</span>
+                <span aria-hidden="true" className="flex flex-col items-start">
                   <ScrollRevealBars duration={1} delay={0}>
                     <span>Driven by</span>
                   </ScrollRevealBars>
                   <ScrollRevealBars duration={1} delay={0.15}>
-                    <span><span className="font-normal">necessity</span> to</span>
+                    <span>
+                      <span className="font-normal">necessity</span> to
+                    </span>
                   </ScrollRevealBars>
                   <ScrollRevealBars duration={1} delay={0.3}>
                     <span>create.</span>
                   </ScrollRevealBars>
-                </h2>
-              </div>
+                </span>
+              </h2>
             </div>
           </div>
 
-          <div className="col-span-7 xl:col-span-6 xl:col-start-7">
-            {stages.map((stage, i) => (
+          <div className="lg:col-span-7 xl:col-span-6 xl:col-start-7 flex flex-col gap-8 lg:gap-0 motion-reduce:lg:gap-12">
+            {paragraphs.map((paragraph, i) => (
               <div
                 key={i}
-                ref={(el) => { panelRefs.current[i] = el; }}
-                className="flex items-center"
-                style={{ height: "100vh" }}
+                ref={(el) => {
+                  panelRefs.current[i] = el;
+                }}
+                className="lg:h-screen lg:flex lg:items-center motion-reduce:lg:h-auto"
               >
-                <div className="w-full">
-                  <p className="text-lg xl:text-2xl leading-relaxed text-text-secondary font-normal">
-                    {stage.paragraph}
+                <div
+                  ref={(el) => {
+                    contentRefs.current[i] = el;
+                  }}
+                  className="w-full"
+                >
+                  <p className="text-base md:text-lg xl:text-2xl leading-relaxed text-text-secondary font-normal">
+                    {paragraph}
                   </p>
                 </div>
               </div>
             ))}
           </div>
-
         </div>
       </div>
-    </div>
-  );
-}
-
-function MobileStory() {
-  return (
-    <div className="lg:hidden relative">
-      <div className="max-w-[1400px] mx-auto px-6 md:px-10">
-        {/* Section label */}
-        <div className="flex items-center gap-3 mb-12">
-          <span className="text-xs tracking-[0.3em] uppercase text-text-secondary">01</span>
-          <div className="w-8 h-[1px] bg-accent/75" />
-          <span className="text-xs tracking-[0.3em] uppercase text-text-secondary">PHILOSOPHY</span>
-        </div>
-
-        <div className="mb-14">
-          <h2 className="font-heading text-[clamp(2.5rem,6vw,5rem)] font-semibold leading-[1.1] text-gradient flex flex-col items-start">
-            <ScrollRevealBars duration={1} delay={0}>
-              <span>Driven by</span>
-            </ScrollRevealBars>
-            <ScrollRevealBars duration={1} delay={0.15}>
-              <span><span className="font-normal">necessity</span> to</span>
-            </ScrollRevealBars>
-            <ScrollRevealBars duration={1} delay={0.3}>
-              <span>create.</span>
-            </ScrollRevealBars>
-          </h2>
-        </div>
-
-        <div className="flex flex-col gap-8">
-          {stages.map((stage, i) => (
-            <div key={i}>
-              <p className="text-base md:text-lg leading-relaxed text-text-secondary font-medium">
-                {stage.paragraph}
-              </p>
-            </div>
-          ))}
-        </div>
-      </div>
-    </div>
-  );
-}
-
-export default function About() {
-  return (
-    <section id="about" className="relative py-32">
-      <ScrollDrivenStory />
-      <MobileStory />
     </section>
   );
 }

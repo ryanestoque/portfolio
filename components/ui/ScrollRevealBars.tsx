@@ -1,13 +1,8 @@
 "use client";
 
 import React, { useEffect, useRef } from "react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { gsap } from "@/lib/gsap";
 import { cn } from "@/lib/utils";
-
-if (typeof window !== "undefined") {
-  gsap.registerPlugin(ScrollTrigger);
-}
 
 interface ScrollRevealBarsProps {
   children: React.ReactNode;
@@ -26,43 +21,57 @@ export const ScrollRevealBars: React.FC<ScrollRevealBarsProps> = ({
   stagger = 0.1,
   delay = 0,
 }) => {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const barsRef = useRef<(HTMLDivElement | null)[]>([]);
+  const containerRef = useRef<HTMLSpanElement>(null);
+  const barsRef = useRef<(HTMLSpanElement | null)[]>([]);
 
   useEffect(() => {
-    if (!containerRef.current) return;
+    const container = containerRef.current;
+    if (!container) return;
 
-    // Ensure plugin is registered again just in case
-    gsap.registerPlugin(ScrollTrigger);
+    const bars = barsRef.current.filter(Boolean) as HTMLSpanElement[];
+    if (bars.length === 0) return;
 
-    let ctx = gsap.context(() => {
-      // Initial state: bars cover the element
-      gsap.set(barsRef.current, { scaleX: 1, transformOrigin: "right" });
+    const mm = gsap.matchMedia();
 
-      // Animation to reveal
-      gsap.to(barsRef.current, {
-        scrollTrigger: {
-          trigger: containerRef.current,
-          start: "top bottom", // Trigger when top of container hits 85% of viewport
-        },
-        scaleX: 0,
-        duration: duration,
-        stagger: stagger,
-        delay: delay,
-        ease: "power4.inOut",
-      });
-    }, containerRef);
+    mm.add("(prefers-reduced-motion: no-preference)", () => {
+      const ctx = gsap.context(() => {
+        // Initial state: bars cover the element
+        gsap.set(bars, { scaleX: 1, transformOrigin: "right" });
 
-    return () => ctx.revert();
-  }, [duration, stagger]);
+        // Animation to reveal
+        gsap.to(bars, {
+          scrollTrigger: {
+            trigger: container,
+            start: "top bottom",
+          },
+          scaleX: 0,
+          duration,
+          stagger,
+          delay,
+          ease: "power4.inOut",
+        });
+      }, container);
+
+      return () => ctx.revert();
+    });
+
+    mm.add("(prefers-reduced-motion: reduce)", () => {
+      gsap.set(bars, { scaleX: 0 });
+    });
+
+    return () => mm.revert();
+  }, [duration, stagger, delay, numberOfBars]);
 
   return (
-    <div ref={containerRef} className={cn("relative overflow-hidden inline-block", className)}>
+    <span ref={containerRef} className={cn("relative overflow-hidden inline-block", className)}>
       {children}
       {/* Absolute overlay for the bars */}
-      <div className="absolute inset-0 flex flex-col pointer-events-none z-10" aria-hidden="true">
+      <span
+        className="absolute inset-0 flex flex-col pointer-events-none z-10 motion-reduce:hidden [[data-no-js]_&]:hidden"
+        aria-hidden="true"
+      >
         {Array.from({ length: numberOfBars }).map((_, index) => (
-          <div
+          <span
             key={index}
             ref={(el) => {
               barsRef.current[index] = el;
@@ -70,7 +79,10 @@ export const ScrollRevealBars: React.FC<ScrollRevealBarsProps> = ({
             className="flex-1 bg-foreground w-full origin-right"
           />
         ))}
-      </div>
-    </div>
+      </span>
+      <noscript>
+        <style>{`.motion-reduce\\:hidden { display: none !important; }`}</style>
+      </noscript>
+    </span>
   );
 };
