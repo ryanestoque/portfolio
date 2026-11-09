@@ -83,30 +83,32 @@ export default function About() {
       <div className="max-w-[1400px] mx-auto px-6 md:px-10 lg:px-16">
         <div className="lg:grid lg:grid-cols-12 lg:gap-8">
           <div className="lg:col-span-5 lg:sticky lg:top-0 lg:h-screen lg:self-start motion-reduce:lg:static motion-reduce:lg:h-auto">
-            <div className="lg:h-full lg:flex lg:flex-col lg:justify-center lg:pt-[72px] motion-reduce:lg:pt-0">
-              <div className="mb-12">
-                <SectionHeader number="01" label="PHILOSOPHY" />
-              </div>
+            <div className="lg:h-full lg:flex lg:flex-col lg:justify-center">
+              <div className="relative">
+                <div className="mb-12 lg:absolute lg:bottom-full lg:left-0 motion-reduce:lg:static">
+                  <SectionHeader number="01" label="PHILOSOPHY" />
+                </div>
 
-              <h2
-                id="about-heading"
-                className="font-heading text-[clamp(2.5rem,6vw,5rem)] font-semibold leading-[1.1] text-text-primary flex flex-col items-start mb-14 lg:mb-0"
-              >
-                <span className="sr-only">Driven by necessity to create.</span>
-                <span aria-hidden="true" className="flex flex-col items-start">
-                  <ScrollRevealBars duration={1} delay={0}>
-                    <span>Driven by</span>
-                  </ScrollRevealBars>
-                  <ScrollRevealBars duration={1} delay={0.15}>
-                    <span>
-                      <span className="font-normal">necessity</span> to
-                    </span>
-                  </ScrollRevealBars>
-                  <ScrollRevealBars duration={1} delay={0.3}>
-                    <span>create.</span>
-                  </ScrollRevealBars>
-                </span>
-              </h2>
+                <h2
+                  id="about-heading"
+                  className="font-heading text-[clamp(2.5rem,6vw,5rem)] font-semibold leading-[1.1] text-text-primary flex flex-col items-start mb-14 lg:mb-0"
+                >
+                  <span className="sr-only">Driven by necessity to create.</span>
+                  <span aria-hidden="true" className="flex flex-col items-start">
+                    <ScrollRevealBars duration={1} delay={0}>
+                      <span>Driven by</span>
+                    </ScrollRevealBars>
+                    <ScrollRevealBars duration={1} delay={0.15}>
+                      <span>
+                        <span className="font-normal">necessity</span> to
+                      </span>
+                    </ScrollRevealBars>
+                    <ScrollRevealBars duration={1} delay={0.3}>
+                      <span>create.</span>
+                    </ScrollRevealBars>
+                  </span>
+                </h2>
+              </div>
             </div>
           </div>
 
