@@ -153,6 +153,8 @@ body.loading-locked {
 
 .navbar-scrolled {
   background: var(--bg-navbar-scrolled);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   border-bottom: 1px solid var(--border-clr);
 }
 
