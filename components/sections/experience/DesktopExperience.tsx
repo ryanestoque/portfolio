@@ -75,6 +75,10 @@ export default function DesktopExperience() {
 
   const clearHoveredRow = useCallback(() => {
     setHoveredIndex((prev) => (prev === null ? prev : null));
+    setActiveIndex((prev) => {
+      if (prev !== 0) setHasInteracted(true);
+      return 0;
+    });
     setIsKeyboardFocused(false);
     setIsBtnHovered(false);
   }, []);
