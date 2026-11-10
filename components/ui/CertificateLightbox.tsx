@@ -235,7 +235,7 @@ export default function CertificateLightbox({
             >
               {isLoading && !hasError && (
                 <div
-                  className="absolute inset-0 flex flex-col items-center justify-center gap-3 z-10"
+                  className="absolute inset-0 flex items-center justify-center z-10"
                   role="status"
                   aria-live="polite"
                   aria-label="Loading certificate"
@@ -260,9 +260,6 @@ export default function CertificateLightbox({
                       }
                     />
                   </div>
-                  <span className="text-xs uppercase tracking-[0.2em] text-[rgba(219,234,254,0.75)]">
-                    Loading certificate
-                  </span>
                 </div>
               )}
 
