@@ -30,6 +30,7 @@ const techCategories = [
     title: "BACKEND",
     items: [
       "Node.js",
+      "FastAPI",
       "Express.js",
       "Django REST Framework",
       "JWT",
