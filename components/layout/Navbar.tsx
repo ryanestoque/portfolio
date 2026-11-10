@@ -327,15 +327,23 @@ function MenuLink({
           setHoverCount((c) => c + 1);
         }
       }}
-      onFocus={() => {
-        if (window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
+      onFocus={(e) => {
+        if (
+          window.innerWidth >= 768 &&
+          window.matchMedia("(hover: hover) and (pointer: fine)").matches &&
+          e.currentTarget.matches(":focus-visible")
+        ) {
           setIsHovered(true);
         }
       }}
       onBlur={() => {
         if (isHovered) {
           setIsHovered(false);
-          setHoverCount((c) => c + 1);
+          if (document.hidden) {
+            setHoverCount(0);
+          } else {
+            setHoverCount((c) => c + 1);
+          }
         }
       }}
       className="group relative overflow-hidden inline-flex items-center justify-center min-h-11 font-heading text-3xl md:text-4xl font-medium transition-colors duration-300 motion-reduce:transition-none py-2.5 sm:py-3 md:py-4 px-4 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-accent"
@@ -344,7 +352,11 @@ function MenuLink({
       {/* Blueprint Inversion Wipe Background */}
       <span
         aria-hidden="true"
-        className="absolute inset-0 bg-accent scale-y-0 origin-top transition-transform duration-300 ease-[cubic-bezier(0.33,1,0.68,1)] motion-reduce:transition-none group-hover:origin-bottom group-hover:scale-y-100 group-focus-visible:origin-bottom group-focus-visible:scale-y-100 z-0"
+        className={`absolute inset-0 bg-accent transition-transform duration-300 ease-[cubic-bezier(0.33,1,0.68,1)] motion-reduce:transition-none z-0 ${
+          isHovered
+            ? "origin-bottom scale-y-100"
+            : "scale-y-0 origin-top group-hover:origin-bottom group-hover:scale-y-100 group-focus-visible:origin-bottom group-focus-visible:scale-y-100"
+        }`}
       />
 
       <motion.span

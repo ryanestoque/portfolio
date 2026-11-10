@@ -14,6 +14,25 @@ export default function ThemeToggle() {
 
   useEffect(() => {
     setMounted(true);
+
+    const resetHoverState = () => {
+      setIsHovered(false);
+      setHoverCount(0);
+    };
+
+    const handleVisibilityChange = () => {
+      if (document.hidden) {
+        resetHoverState();
+      }
+    };
+
+    window.addEventListener("blur", resetHoverState);
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+
+    return () => {
+      window.removeEventListener("blur", resetHoverState);
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+    };
   }, []);
 
   const isLight = resolvedTheme === "light";
@@ -51,15 +70,23 @@ export default function ThemeToggle() {
           setHoverCount((c) => c + 1);
         }
       }}
-      onFocus={() => {
-        if (window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
+      onFocus={(e) => {
+        if (
+          window.innerWidth >= 768 &&
+          window.matchMedia("(hover: hover) and (pointer: fine)").matches &&
+          e.currentTarget.matches(":focus-visible")
+        ) {
           setIsHovered(true);
         }
       }}
       onBlur={() => {
         if (isHovered) {
           setIsHovered(false);
-          setHoverCount((c) => c + 1);
+          if (document.hidden) {
+            setHoverCount(0);
+          } else {
+            setHoverCount((c) => c + 1);
+          }
         }
       }}
       aria-label={isLight ? "Switch to dark mode" : "Switch to light mode"}
@@ -70,7 +97,11 @@ export default function ThemeToggle() {
       {/* Wipe Background */}
       <span
         aria-hidden="true"
-        className="absolute left-0 right-0 top-0 bottom-auto h-0 bg-accent transition-[height] duration-300 ease-[cubic-bezier(0.33,1,0.68,1)] motion-reduce:transition-none group-hover:top-auto group-hover:bottom-0 group-hover:h-full group-focus-visible:top-auto group-focus-visible:bottom-0 group-focus-visible:h-full z-0"
+        className={`absolute left-0 right-0 bg-accent transition-[height] duration-300 ease-[cubic-bezier(0.33,1,0.68,1)] motion-reduce:transition-none z-0 ${
+          isHovered
+            ? "top-auto bottom-0 h-full"
+            : "top-0 bottom-auto h-0 group-hover:top-auto group-hover:bottom-0 group-hover:h-full group-focus-visible:top-auto group-focus-visible:bottom-0 group-focus-visible:h-full"
+        }`}
       />
 
       {/* Icon Area */}
@@ -90,12 +121,13 @@ export default function ThemeToggle() {
                 : "text-text-secondary group-hover:text-background group-focus-visible:text-background"
             }`}
           >
-            <AnimatePresence mode="wait" initial={false}>
+            <AnimatePresence initial={false}>
               {showSun ? (
                 /* Sun icon */
                 <motion.svg
                   key="sun"
                   aria-hidden="true"
+                  className="absolute"
                   xmlns="http://www.w3.org/2000/svg"
                   width="16"
                   height="16"
@@ -133,6 +165,7 @@ export default function ThemeToggle() {
                 <motion.svg
                   key="moon"
                   aria-hidden="true"
+                  className="absolute"
                   xmlns="http://www.w3.org/2000/svg"
                   width="16"
                   height="16"
