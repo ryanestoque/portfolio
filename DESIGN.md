@@ -7,7 +7,7 @@ colors:
   drafting-ice: "#dbeafe"
   drafting-ice-raised: "#bfdbfe"
   navy-ink-75: "rgba(23, 37, 84, 0.75)"
-  navy-ink-60: "rgba(23, 37, 84, 0.6)"
+  navy-ink-68: "rgba(23, 37, 84, 0.68)"
   navy-rule-30: "rgba(23, 37, 84, 0.3)"
   navy-rule-10: "rgba(23, 37, 84, 0.1)"
   navy-grid-07: "rgba(23, 37, 84, 0.07)"
@@ -131,7 +131,7 @@ One hue family, two poles. Every colour role is either Blueprint Navy, Drafting 
 ### Neutral
 - **Drafting Ice** (`drafting-ice`): the paper in light mode and the ink in dark mode.
 - **Drafting Ice Raised** (`drafting-ice-raised`): the raised surface in light mode, with the same roles as Navy Raised.
-- **Ink 75 / Ink 60** (`navy-ink-75`, `navy-ink-60`, `ice-ink-*`): secondary text (body paragraphs, labels) and tertiary text (years, metadata). The opacity steps replace a grey scale.
+- **Ink 75 / Ink 68 (light) / Ink 60 (dark)** (`navy-ink-75`, `navy-ink-68`, `ice-ink-75`, `ice-ink-60`): secondary text (body paragraphs, labels) and tertiary text (years, metadata). The opacity steps replace a grey scale.
 - **Rule 30** (`*-rule-30`): default borders on buttons, cards, tags, and the navbar bottom edge.
 - **Rule 10** (`*-rule-10`): subtle dividers and the dim accent wash.
 - **Grid 07** (`*-grid-07`): the 1px lines of the fixed background grid.
@@ -170,7 +170,7 @@ The theme tokens in `app/globals.css` (`--bg`, `--fg`, `--surface`, `--surface-e
 
 - **Container:** max-width 1400px, centred. Horizontal gutters are 24px (mobile), 40px (md, 768px and up), and 64px (lg, 1024px and up).
 - **Background grid:** 50px by 50px, 1px lines in Grid 07, `background-attachment: fixed`, so content scrolls over a stationary drafting sheet.
-- **Navbar:** fixed, 72px tall, a solid paper background with a Rule 30 bottom border. Once scrolled, the background becomes 80% opaque.
+- **Navbar:** fixed, 72px tall, a solid paper background with a Rule 30 bottom border. It stays fully solid when scrolled.
 - **Section rhythm:** sections use 128px vertical padding (`py-32`); Contact uses up to 160px.
 - **Desktop storytelling:** About uses a 12-column grid. A sticky headline sits in 5 columns and the paragraphs scroll past in 6 to 7, each panel 100vh tall.
 - **Responsive:** Tailwind breakpoints (sm 640, md 768, lg 1024, xl 1280). Layouts stack and centre below lg, then split left-aligned at lg and up. The custom cursor and hover text-roll only turn on at 768px and up.

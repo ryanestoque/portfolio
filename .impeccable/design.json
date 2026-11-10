@@ -9,7 +9,7 @@
       "drafting-ice": { "role": "neutral", "displayName": "Drafting Ice", "canonical": "#dbeafe", "tonalRamp": ["#172554", "#1e3a8a", "#1d4ed8", "#3b82f6", "#60a5fa", "#93c5fd", "#bfdbfe", "#dbeafe"] },
       "drafting-ice-raised": { "role": "neutral", "displayName": "Drafting Ice Raised", "canonical": "#bfdbfe", "tonalRamp": ["#172554", "#1e3a8a", "#1d4ed8", "#3b82f6", "#60a5fa", "#93c5fd", "#bfdbfe", "#dbeafe"] },
       "navy-ink-75": { "role": "neutral", "displayName": "Navy Ink 75 (light-theme secondary text)", "canonical": "rgba(23, 37, 84, 0.75)" },
-      "navy-ink-60": { "role": "neutral", "displayName": "Navy Ink 60 (light-theme tertiary text)", "canonical": "rgba(23, 37, 84, 0.6)" },
+      "navy-ink-68": { "role": "neutral", "displayName": "Navy Ink 68 (light-theme tertiary text)", "canonical": "rgba(23, 37, 84, 0.68)" },
       "navy-rule-30": { "role": "neutral", "displayName": "Navy Rule 30 (light-theme border)", "canonical": "rgba(23, 37, 84, 0.3)" },
       "navy-rule-10": { "role": "neutral", "displayName": "Navy Rule 10 (light-theme subtle border)", "canonical": "rgba(23, 37, 84, 0.1)" },
       "navy-grid-07": { "role": "neutral", "displayName": "Navy Grid 07 (light-theme grid line)", "canonical": "rgba(23, 37, 84, 0.07)" },
