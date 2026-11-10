@@ -137,11 +137,11 @@ export default function Projects() {
           >
             <span className="sr-only">Works proudly crafted.</span>
 
-            {/* Desktop / Tablet view (>= 425px) */}
+            {/* Desktop / Tablet / Standard Mobile view (>= 340px) */}
             <ScrollRevealBars
               duration={1}
               delay={0}
-              className="hidden min-[425px]:inline-block"
+              className="hidden min-[340px]:inline-block"
               aria-hidden="true"
             >
               <span>
@@ -151,17 +151,17 @@ export default function Projects() {
             <ScrollRevealBars
               duration={1}
               delay={0.15}
-              className="hidden min-[425px]:inline-block"
+              className="hidden min-[340px]:inline-block"
               aria-hidden="true"
             >
               <span>crafted.</span>
             </ScrollRevealBars>
 
-            {/* Mobile view (< 425px) */}
+            {/* Narrow Mobile view (< 340px) */}
             <ScrollRevealBars
               duration={1}
               delay={0}
-              className="min-[425px]:hidden"
+              className="min-[340px]:hidden"
               aria-hidden="true"
             >
               <span>Works</span>
@@ -169,7 +169,7 @@ export default function Projects() {
             <ScrollRevealBars
               duration={1}
               delay={0.15}
-              className="min-[425px]:hidden"
+              className="min-[340px]:hidden"
               aria-hidden="true"
             >
               <span className="font-normal">proudly</span>
@@ -177,7 +177,7 @@ export default function Projects() {
             <ScrollRevealBars
               duration={1}
               delay={0.3}
-              className="min-[425px]:hidden"
+              className="min-[340px]:hidden"
               aria-hidden="true"
             >
               <span>crafted.</span>
