@@ -86,7 +86,7 @@ export default function About() {
             <div className="lg:h-full lg:flex lg:flex-col lg:justify-center">
               <div className="relative">
                 <div className="mb-12 lg:absolute lg:bottom-full lg:left-0 motion-reduce:lg:static">
-                  <SectionHeader number="01" label="PHILOSOPHY" />
+                  <SectionHeader number="I" label="BLUEPRINT" />
                 </div>
 
                 <h2

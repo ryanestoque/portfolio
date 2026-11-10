@@ -126,8 +126,8 @@ export default function Projects() {
     >
       {/* ── Section Header ──────────────────────── */}
       <div className="relative z-10 w-full max-w-[1400px] mx-auto px-6 md:px-10 lg:px-16">
-        <div className="flex items-center gap-3 mb-16 lg:mb-6 xl:mb-10 motion-reduce:lg:mb-16">
-          <SectionHeader number="04" label="BUILDS" />
+        <div className="mb-16 lg:mb-6 xl:mb-10 motion-reduce:lg:mb-16">
+          <SectionHeader number="IV" label="BUILDS" />
         </div>
 
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-20 lg:mb-8 xl:mb-12 motion-reduce:lg:mb-20">

@@ -243,8 +243,8 @@ export default function DesktopExperience() {
         <div className="relative z-10 max-w-[1400px] mx-auto px-6 md:px-10 lg:px-16">
           {/* ── Section Header ────────────────────── */}
           <div>
-            <div className="flex items-center gap-3 mb-16">
-              <SectionHeader number="03" label="ROAD TO MASTERY" />
+            <div className="mb-16">
+              <SectionHeader number="III" label="ROAD TO MASTERY" />
             </div>
 
             <div className="mb-20">

@@ -35,8 +35,8 @@ export default function MobileExperience() {
       >
         <div className="max-w-[1400px] mx-auto px-6 md:px-10">
           {/* Section Label */}
-          <div className="flex items-center gap-3 mb-12">
-            <SectionHeader number="03" label="ROAD TO MASTERY" />
+          <div className="mb-12">
+            <SectionHeader number="III" label="ROAD TO MASTERY" />
           </div>
 
           <div className="mb-14">

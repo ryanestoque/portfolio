@@ -158,7 +158,7 @@ The theme tokens in `app/globals.css` (`--bg`, `--fg`, `--surface`, `--surface-e
 - **Title** (500, 1.25 to 1.5rem): project card titles and the menu links (1.875 to 2.25rem).
 - **Body Lead** (400, 1.125 to 1.5rem, line-height 1.625): About story paragraphs and the hero role line.
 - **Body** (400, 0.875 to 1rem, line-height 1.625): card descriptions and general copy, in Ink 75.
-- **Label** (400, 0.75rem, letter-spacing 0.3em, UPPERCASE): section markers ("01 — PHILOSOPHY") and the location line.
+- **Label** (400, 0.75rem, letter-spacing 0.3em, UPPERCASE): section markers ("I — BLUEPRINT") and the location line.
 - **Button Label** (500, 0.6875 to 0.75rem, letter-spacing 0.05em, UPPERCASE): buttons only.
 
 ### Named Rules

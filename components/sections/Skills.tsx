@@ -75,8 +75,8 @@ export default function Skills() {
       className="relative py-32 overflow-hidden"
     >
       <div className="relative z-10 max-w-[1400px] mx-auto px-6 md:px-10 lg:px-16">
-        <div className="flex items-center gap-3 mb-16">
-          <SectionHeader number="02" label="ARSENAL" />
+        <div className="mb-16">
+          <SectionHeader number="II" label="TOOLBOX" />
         </div>
 
         <div className="mb-20">
