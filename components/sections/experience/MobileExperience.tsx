@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import Image from "next/image";
-import { experiences } from "@/lib/experience-data";
+import { experiences, type Experience } from "@/lib/experience-data";
 import CertificateLightbox from "@/components/ui/CertificateLightbox";
 import { FileText, ChevronDown } from "lucide-react";
 import { ScrollRevealBars } from "@/components/ui/ScrollRevealBars";
@@ -16,11 +16,20 @@ export default function MobileExperience() {
     open: boolean;
     src: string;
     alt: string;
-  }>({ open: false, src: "", alt: "" });
+    title: string;
+    subtitle: string;
+  }>({ open: false, src: "", alt: "", title: "", subtitle: "" });
   const prefersReducedMotion = useReducedMotion();
 
-  const openCertificate = (src: string, company: string) => {
-    setLightbox({ open: true, src, alt: `${company} Certificate` });
+  const openCertificate = (exp: Experience) => {
+    if (!exp.certificate) return;
+    setLightbox({
+      open: true,
+      src: exp.certificate,
+      alt: `${exp.company} Certificate`,
+      title: exp.company,
+      subtitle: `${exp.role} · ${exp.dateRange}`,
+    });
   };
 
   const toggleAccordion = (id: string) => {
@@ -147,20 +156,20 @@ export default function MobileExperience() {
 
                           {/* Certificate Button */}
                           <Button
+                            type="button"
                             onClick={(e) => {
                               e.stopPropagation();
                               if (!exp.certificateAvailable) return;
-                              if (exp.certificate)
-                                openCertificate(exp.certificate, exp.company);
+                              openCertificate(exp);
                             }}
                             disabled={!exp.certificateAvailable}
                             className="w-full"
                             aria-label={
                               exp.certificateAvailable
                                 ? `View ${exp.company} certificate`
-                                : "Certificate not yet available"
+                                : `${exp.company} — certificate not yet available`
                             }
-                            icon={<FileText className="w-4 h-4" />}
+                            icon={<FileText className="w-4 h-4" aria-hidden="true" />}
                           >
                             {exp.certificateAvailable
                               ? "View certificate"
@@ -181,7 +190,9 @@ export default function MobileExperience() {
         isOpen={lightbox.open}
         imageSrc={lightbox.src}
         altText={lightbox.alt}
-        onClose={() => setLightbox({ open: false, src: "", alt: "" })}
+        title={lightbox.title}
+        subtitle={lightbox.subtitle}
+        onClose={() => setLightbox((prev) => ({ ...prev, open: false }))}
       />
     </>
   );

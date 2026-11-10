@@ -19,7 +19,7 @@ export interface DesktopExperienceRowProps {
   onFocusRow: (i: number) => void;
   onBlurRow: () => void;
   onBtnHoverChange: (hovered: boolean) => void;
-  openCertificate: (src: string, company: string) => void;
+  openCertificate: (exp: Experience) => void;
 }
 
 /* ──────────────────────────────────────────────── */
@@ -51,6 +51,7 @@ function DesktopExperienceRowComponent({
   const [btnHoverCount, setBtnHoverCount] = useState(0);
 
   const effectiveBtnHover = isHovered && isHoveredBtn;
+  const tooltipId = `cert-tooltip-${exp.id}`;
 
   return (
     <div
@@ -77,16 +78,28 @@ function DesktopExperienceRowComponent({
           onBlurRow();
         }
       }}
+      onKeyDown={(e) => {
+        if (
+          e.target === e.currentTarget &&
+          (e.key === "Enter" || e.key === " ") &&
+          exp.certificateAvailable &&
+          exp.certificate
+        ) {
+          e.preventDefault();
+          openCertificate(exp);
+        }
+      }}
       style={{ opacity: isDimmed ? 0.35 : 1 }}
       data-cursor="target"
     >
       {/* Screen-reader accessible description */}
       <span className="sr-only">{exp.description}</span>
 
-      {/* Wipe Background — strictly driven by `isHovered` so scroll & pointer never desync */}
+      {/* Wipe Background — compositor-driven scaleY strictly synced to `isHovered` */}
       <div
-        className={`pointer-events-none absolute left-0 right-0 bg-accent transition-[height] duration-300 ease-[cubic-bezier(0.33,1,0.68,1)] motion-reduce:transition-none z-0 ${
-          isHovered ? "top-auto bottom-0 h-full" : "top-0 bottom-auto h-0"
+        aria-hidden="true"
+        className={`pointer-events-none absolute inset-0 bg-accent transition-transform duration-300 ease-[cubic-bezier(0.33,1,0.68,1)] motion-reduce:transition-none z-0 ${
+          isHovered ? "origin-bottom scale-y-100" : "origin-top scale-y-0"
         }`}
       />
 
@@ -136,7 +149,7 @@ function DesktopExperienceRowComponent({
             </div>
 
             {/* Right Column: Certificate Button (44x44px per DESIGN.md button-wipe-icon-box) */}
-            <div className="pointer-events-auto flex-shrink-0 min-w-[80px] flex justify-end relative group/btn">
+            <div className="pointer-events-auto flex-shrink-0 min-w-[80px] flex justify-end items-center relative group/btn">
               <button
                 type="button"
                 onMouseEnter={() => {
@@ -160,9 +173,10 @@ function DesktopExperienceRowComponent({
                 onClick={(e) => {
                   if (!exp.certificateAvailable) return;
                   e.stopPropagation();
-                  if (exp.certificate) openCertificate(exp.certificate, exp.company);
+                  if (exp.certificate) openCertificate(exp);
                 }}
                 aria-disabled={!exp.certificateAvailable}
+                aria-describedby={tooltipId}
                 className={`group/innerbtn relative inline-flex items-center justify-center w-11 h-11 border overflow-hidden transition-all duration-300 motion-reduce:transition-none focus-visible:outline-2 focus-visible:outline-offset-2 ${
                   exp.certificateAvailable
                     ? isHovered
@@ -175,16 +189,17 @@ function DesktopExperienceRowComponent({
                 aria-label={
                   exp.certificateAvailable
                     ? `View ${exp.company} certificate`
-                    : "Certificate not yet available"
+                    : `${exp.company} — certificate not yet available`
                 }
               >
-                {/* Wipe Background (only if available) */}
+                {/* Wipe Background (compositor-driven scaleY, only if available) */}
                 {exp.certificateAvailable && (
                   <span
-                    className={`pointer-events-none absolute left-0 right-0 transition-[height] duration-300 ease-[cubic-bezier(0.33,1,0.68,1)] motion-reduce:transition-none z-0 ${
+                    aria-hidden="true"
+                    className={`pointer-events-none absolute inset-0 transition-transform duration-300 ease-[cubic-bezier(0.33,1,0.68,1)] motion-reduce:transition-none z-0 ${
                       effectiveBtnHover
-                        ? "top-auto bottom-0 h-full"
-                        : "top-0 bottom-auto h-0"
+                        ? "origin-bottom scale-y-100"
+                        : "origin-top scale-y-0"
                     } ${isHovered ? "bg-background" : "bg-accent"}`}
                   />
                 )}
@@ -226,10 +241,11 @@ function DesktopExperienceRowComponent({
                 </span>
               </button>
 
-              {/* Tooltip */}
+              {/* Horizontal Tooltip — anchored to the left of the button so row vertical overflow never clips it */}
               <div
+                id={tooltipId}
                 role="tooltip"
-                className="absolute bottom-full right-0 mb-3 px-3 py-1.5 border text-xs tracking-wider whitespace-nowrap opacity-0 group-hover/btn:opacity-100 group-focus-within/btn:opacity-100 transition-opacity duration-300 motion-reduce:transition-none pointer-events-none z-50 bg-surface-elevated text-text-secondary border-border"
+                className="absolute right-full top-1/2 -translate-y-1/2 mr-3 px-3 py-1.5 border text-xs tracking-wider whitespace-nowrap opacity-0 group-hover/btn:opacity-100 group-focus-within/btn:opacity-100 transition-opacity duration-300 motion-reduce:transition-none pointer-events-none z-50 bg-surface-elevated text-text-primary border-border"
               >
                 {exp.certificateAvailable
                   ? "View certificate"

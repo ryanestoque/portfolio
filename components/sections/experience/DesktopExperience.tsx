@@ -9,7 +9,7 @@ import {
   useReducedMotion,
 } from "framer-motion";
 import Image from "next/image";
-import { experiences } from "@/lib/experience-data";
+import { experiences, type Experience } from "@/lib/experience-data";
 import CertificateLightbox from "@/components/ui/CertificateLightbox";
 import { ScrollRevealBars } from "@/components/ui/ScrollRevealBars";
 import SectionHeader from "@/components/ui/SectionHeader";
@@ -123,7 +123,13 @@ export default function DesktopExperience() {
 
     const syncRowUnderCursor = () => {
       rafId = null;
-      if (!desktopMedia.matches || !pointerRef.current.hasPosition) return;
+      if (
+        !desktopMedia.matches ||
+        !pointerRef.current.hasPosition ||
+        lightboxOpenRef.current
+      ) {
+        return;
+      }
 
       // Skip hit-testing if the section itself is completely off-screen
       if (sectionRef.current) {
@@ -193,10 +199,21 @@ export default function DesktopExperience() {
     open: boolean;
     src: string;
     alt: string;
-  }>({ open: false, src: "", alt: "" });
+    title: string;
+    subtitle: string;
+  }>({ open: false, src: "", alt: "", title: "", subtitle: "" });
+  const lightboxOpenRef = useRef(false);
+  lightboxOpenRef.current = lightbox.open;
 
-  const openCertificate = useCallback((src: string, company: string) => {
-    setLightbox({ open: true, src, alt: `${company} Certificate` });
+  const openCertificate = useCallback((exp: Experience) => {
+    if (!exp.certificate) return;
+    setLightbox({
+      open: true,
+      src: exp.certificate,
+      alt: `${exp.company} Certificate`,
+      title: exp.company,
+      subtitle: `${exp.role} · ${exp.dateRange}`,
+    });
   }, []);
 
   const handleMouseEnterRow = useCallback(
@@ -439,7 +456,9 @@ export default function DesktopExperience() {
         isOpen={lightbox.open}
         imageSrc={lightbox.src}
         altText={lightbox.alt}
-        onClose={() => setLightbox({ open: false, src: "", alt: "" })}
+        title={lightbox.title}
+        subtitle={lightbox.subtitle}
+        onClose={() => setLightbox((prev) => ({ ...prev, open: false }))}
       />
     </>
   );

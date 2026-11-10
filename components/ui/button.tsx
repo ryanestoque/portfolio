@@ -19,18 +19,43 @@ const Button = React.forwardRef<HTMLButtonElement | HTMLAnchorElement, ButtonPro
     const [hoverCount, setHoverCount] = React.useState(0);
     const prefersReducedMotion = useReducedMotion();
 
+    const activateHover = () => {
+      if (!props.disabled && typeof window !== "undefined" && window.innerWidth >= 768) {
+        setIsHovered(true);
+      }
+    };
+
+    const deactivateHover = () => {
+      if (!props.disabled && isHovered) {
+        setIsHovered(false);
+        setHoverCount((c) => c + 1);
+      }
+    };
+
     const content = (
       <div
         className={`group relative inline-flex items-center border border-border overflow-hidden ${props.disabled ? 'bg-surface opacity-60 cursor-not-allowed' : 'bg-surface'} ${className || ""}`}
-        onMouseEnter={() => { if (!props.disabled && window.innerWidth >= 768) setIsHovered(true) }}
-        onMouseLeave={() => { if (!props.disabled && isHovered) { setIsHovered(false); setHoverCount(c => c + 1); } }}
+        onMouseEnter={activateHover}
+        onMouseLeave={deactivateHover}
       >
         {/* Wipe Background - Covers the ENTIRE button container */}
-        <div className={`absolute inset-0 bg-accent scale-y-0 origin-top transition-transform duration-300 ease-[cubic-bezier(0.33,1,0.68,1)] motion-reduce:transition-none z-0 ${!props.disabled ? 'group-hover:origin-bottom group-hover:scale-y-100' : ''}`} />
+        <div
+          aria-hidden="true"
+          className={`absolute inset-0 bg-accent transition-transform duration-300 ease-[cubic-bezier(0.33,1,0.68,1)] motion-reduce:transition-none z-0 ${
+            !props.disabled && isHovered
+              ? "origin-bottom scale-y-100"
+              : !props.disabled
+                ? "scale-y-0 origin-top group-hover:origin-bottom group-hover:scale-y-100"
+                : "scale-y-0 origin-top"
+          }`}
+        />
 
         {/* Icon Box */}
         {icon && (
-          <div className="relative z-10 flex items-center justify-center w-11 h-11 bg-foreground text-background shrink-0">
+          <div
+            aria-hidden="true"
+            className="relative z-10 flex items-center justify-center w-11 h-11 bg-foreground text-background shrink-0"
+          >
             {icon}
           </div>
         )}
@@ -50,18 +75,39 @@ const Button = React.forwardRef<HTMLButtonElement | HTMLAnchorElement, ButtonPro
             </motion.span>
           </AnimatePresence>
           {/* Invisible placeholder to maintain width since the absolute span doesn't take up space */}
-          <span className="opacity-0 pointer-events-none text-xs font-medium uppercase tracking-wider whitespace-nowrap">
+          <span
+            aria-hidden="true"
+            className="opacity-0 pointer-events-none select-none text-xs font-medium uppercase tracking-wider whitespace-nowrap"
+          >
             {children}
           </span>
         </div>
       </div>
     );
 
+    const handleFocus = (e: React.FocusEvent<HTMLElement>) => {
+      if (e.currentTarget.matches(":focus-visible")) {
+        activateHover();
+      }
+      props.onFocus?.(e as React.FocusEvent<HTMLButtonElement>);
+    };
+
+    const handleBlur = (e: React.FocusEvent<HTMLElement>) => {
+      deactivateHover();
+      props.onBlur?.(e as React.FocusEvent<HTMLButtonElement>);
+    };
+
     const outerClassName = `inline-block focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent ${className?.includes('w-full') ? 'w-full block' : ''}`;
 
     if (asChild) {
       return (
-        <Slot.Root className={outerClassName} ref={ref as any} {...props}>
+        <Slot.Root
+          className={outerClassName}
+          ref={ref as any}
+          {...props}
+          onFocus={handleFocus}
+          onBlur={handleBlur}
+        >
           {content}
         </Slot.Root>
       )
@@ -72,7 +118,16 @@ const Button = React.forwardRef<HTMLButtonElement | HTMLAnchorElement, ButtonPro
 
       if (isExternal) {
         return (
-          <a href={href} target="_blank" rel="noopener noreferrer" className={outerClassName} ref={ref as any} {...(props as any)}>
+          <a
+            href={href}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={outerClassName}
+            ref={ref as any}
+            {...(props as any)}
+            onFocus={handleFocus}
+            onBlur={handleBlur}
+          >
             {content}
           </a>
         );
@@ -94,6 +149,8 @@ const Button = React.forwardRef<HTMLButtonElement | HTMLAnchorElement, ButtonPro
               }
             }}
             {...(props as any)}
+            onFocus={handleFocus}
+            onBlur={handleBlur}
           >
             {content}
           </a>
@@ -101,14 +158,27 @@ const Button = React.forwardRef<HTMLButtonElement | HTMLAnchorElement, ButtonPro
       }
 
       return (
-        <TransitionLink href={href} className={outerClassName} ref={ref as any} {...(props as any)}>
+        <TransitionLink
+          href={href}
+          className={outerClassName}
+          ref={ref as any}
+          {...(props as any)}
+          onFocus={handleFocus}
+          onBlur={handleBlur}
+        >
           {content}
         </TransitionLink>
       );
     }
 
     return (
-      <button className={outerClassName} ref={ref as any} {...props}>
+      <button
+        className={outerClassName}
+        ref={ref as any}
+        {...props}
+        onFocus={handleFocus}
+        onBlur={handleBlur}
+      >
         {content}
       </button>
     )

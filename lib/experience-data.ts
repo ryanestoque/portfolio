@@ -118,7 +118,7 @@ export const experiences: Experience[] = [
     image: "/images/experience/technofair-prog-2024.webp",
     imageAlt:
       "Ryan Estoque awarded Champion at the 2024 HCDC-CET Technofair Programming Competition",
-    certificate: "/images/certificates/champ2024.png",
+    certificate: "/images/certificates/champ2024.webp",
     certificateAvailable: true,
     imagePosition: "center",
   },
