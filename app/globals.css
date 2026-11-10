@@ -25,7 +25,7 @@
 /* ── Light theme values (default) ──────────────── */
 :root {
   --bg: #dbeafe;
-  --bg-navbar-scrolled: #dbeafecc;
+  --bg-navbar-scrolled: #dbeafe;
   --fg: rgb(23, 37, 84);
   --surface: #dbeafe;
   --surface-el: #bfdbfe;
@@ -44,7 +44,7 @@
 /* ── Dark theme values ────────────────────────── */
 .dark {
   --bg: #172554;
-  --bg-navbar-scrolled: #172554cc;
+  --bg-navbar-scrolled: #172554;
   --fg: rgb(219, 234, 254);
   --surface: #172554;
   --surface-el: #1e3a8a;
@@ -146,15 +146,9 @@ body.loading-locked {
 } */
 
 /* ── Navbar — solid separation ────────────────── */
-.navbar {
-  background: var(--bg);
-  border-bottom: 1px solid var(--border-clr);
-}
-
+.navbar,
 .navbar-scrolled {
-  background: var(--bg-navbar-scrolled);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  background: var(--bg);
   border-bottom: 1px solid var(--border-clr);
 }
 

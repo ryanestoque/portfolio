@@ -178,7 +178,7 @@ The theme tokens in `app/globals.css` (`--bg`, `--fg`, `--surface`, `--surface-e
 
 ## Elevation & Depth
 
-The system is flat. Surfaces have no shadow at rest; depth comes from three things: the inversion of paper and ink, hairline borders, and the raised-surface tone (`*-raised`). Translucent blurred backgrounds appear only on functional overlays that must sit above content: tooltips, the certificate lightbox (85% black with a 12px blur), and the scrolled navbar.
+The system is flat. Surfaces have no shadow at rest; depth comes from three things: the inversion of paper and ink, hairline borders, and the raised-surface tone (`*-raised`). Translucent blurred backgrounds appear only on functional overlays that must sit above content: tooltips and the certificate lightbox (85% black with a 12px blur). The navbar remains completely solid.
 
 ### Shadow Vocabulary
 - **Floating tooltip** (`box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25)`): only on the cursor-following experience preview, which floats above a scrolling list.
@@ -242,6 +242,6 @@ A 12px square difference-blend cursor replaces the system cursor at 768px and up
 ### Don't:
 - **Don't** add any colour beyond navy, ice, and their opacity steps.
 - **Don't** use rounded cards, pill buttons, or rounded image frames.
-- **Don't** use gradients, glows, or glassmorphism as decoration. Blur is only for functional overlays (tooltips, lightbox, scrolled navbar).
+- **Don't** use gradients, glows, or glassmorphism as decoration. Blur is only for functional overlays (tooltips, lightbox).
 - **Don't** use the generic SaaS look: icon-in-circle feature grids, purple gradients, or floating shadowed cards.
 - **Don't** add drop shadows to surfaces at rest.
